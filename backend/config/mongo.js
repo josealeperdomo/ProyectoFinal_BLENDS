@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 
 const dbConnect = () =>{
-    mongoose.connect('mongodb://localhost27017/redsocial')
+    const DB_URI = process.env.DB_URI
+    mongoose.connect(DB_URI)
     .then(()=>{
         console.log('Conexion exitosa a la base de datos')
     })
