@@ -7,9 +7,9 @@ const getUsers = async (req,res)=>{
 
 const createUser = async(req,res)=>{
     try {
-        const {name, email, password, role} = req.body
+        const {nombre, apellido, usuario, email, password, imagen_perfil, rol} = req.body
         const user = await userModel.create({
-            name, email, password : await userModel.encryptPassword(password), role
+            nombre, apellido, usuario, email, password : await userModel.encryptPassword(password), imagen_perfil, rol
         })
         res.status(200).json({user})
     } catch (error) {
