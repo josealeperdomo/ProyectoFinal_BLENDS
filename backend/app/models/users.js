@@ -35,6 +35,7 @@ const UserSchema = new mongoose.Schema({
     },
     biografia:{
         type: String,
+        default: "¡Hola soy nuevo en Blends!",
         maxLength: 255
     }
     ,
