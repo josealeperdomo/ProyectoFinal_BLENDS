@@ -64,6 +64,11 @@ UserSchema.statics.encryptPassword = async(password)=>{
     })
 }
 
+UserSchema.methods.setImg = (filename)=>{
+    host = process.env.HOST
+    port = process.env.PORT
+    this.imagen_perfil = `${host}:${port}/public/${filename}`
+}
 
 UserSchema.statics.comparePassword = async(password, hashPassword)=>{
     return await bcrypt.compare(password, hashPassword)
