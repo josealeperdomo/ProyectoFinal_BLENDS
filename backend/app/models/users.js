@@ -1,5 +1,3 @@
-const  mongoose = require("mongoose");
-
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt')
 
@@ -55,7 +53,7 @@ const UserSchema = new mongoose.Schema({
         maxLength: 5
     }
 },{
-    timestamos:true,
+    timestamps:true,
     versionKey: false
 })
 
@@ -66,11 +64,6 @@ UserSchema.statics.encryptPassword = async(password)=>{
     })
 }
 
-UserSchema.methods.setImg = (filename)=>{
-    host = process.env.HOST
-    port = process.env.PORT
-    this.imagen_perfil = `${host}:${port}/public/${filename}`
-}
 
 UserSchema.statics.comparePassword = async(password, hashPassword)=>{
     return await bcrypt.compare(password, hashPassword)
