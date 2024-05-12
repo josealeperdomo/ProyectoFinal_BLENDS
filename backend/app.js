@@ -6,15 +6,11 @@ const uuid = require('uuid')
 const app = express()
 const { dbConnect } = require('./config/mongo')
 const path = require('path')
+const {storage} = require('./app/controllers/users')
 
 dbConnect()
 
-const storage = multer.diskStorage({
-    destination: 'storage/imgs',
-    filename: (req,file,cb)=>{
-        cb(null, uuid.v4() + path.extname(file.originalname));
-    }
-})
+
 
 const PORT = process.env.PORT || 3000
 app.use(cors())

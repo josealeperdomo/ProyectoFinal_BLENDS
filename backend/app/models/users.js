@@ -64,10 +64,10 @@ UserSchema.statics.encryptPassword = async(password)=>{
     })
 }
 
-UserSchema.methods.setImg = (filename)=>{
-    host = process.env.HOST
-    port = process.env.PORT
-    this.imagen_perfil = `${host}:${port}/public/${filename}`
+UserSchema.methods.setImg = function(imagen_perfil) {
+    const host = process.env.HOST
+    const port = process.env.PORT
+    this.imagen_perfil = `${host}:${port}/public/${imagen_perfil}`
 }
 
 UserSchema.statics.comparePassword = async(password, hashPassword)=>{
