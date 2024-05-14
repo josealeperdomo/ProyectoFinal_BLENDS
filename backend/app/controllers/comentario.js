@@ -1,59 +1,57 @@
 const Comentario = require('../models/comentario');
 
-const crearComentario = async (req, res) => {
+const ComentariosController = {
+  // Mostrar todos los comentarios de una publicación
+  mostrarComentariosDePublicacion: async (req, res) => {
     try {
-        const { id } = req.params;
-        const { texto } = req.body;
-
-        const comentario = new Comentario({
-            publicacionId: id,
-            texto,
-            usuarioId: req.user._id 
-        });
-
-        await comentario.save();
-
-        res.status(201).json({ message: 'Comentario creado con éxito', comentario });
+      const comentarios = await Comentario.find({ id_Publicacion: req.params.id }).populate('usuario_comentario');
+      res.json(comentarios);
     } catch (error) {
-        res.status(500).json({ message: 'Error al crear comentario', error: error.message });
+      res.status(500).json({ message: error.message });
     }
+  },
+
+  // Crear un nuevo comentario para una publicación
+  crearComentario: async (req, res) => {
+    try {
+      const nuevoComentario = new Comentario({
+        id_Publicacion: req.body.id_Publicacion,
+        usuario_comentario: req.body.usuario_comentario,
+        texto: req.body.texto,
+        enlace: req.body.enlace
+      });
+      const comentarioGuardado = await nuevoComentario.save();
+      res.status(201).json(comentarioGuardado);
+    } catch (error) {
+      res.status(400).json({ message: 'Error al crear el comentario' });
+    }
+  },
+
+  // Editar un comentario existente
+  editarComentario: async (req, res) => {
+    try {
+      const comentario = await Comentario.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!comentario) {
+        return res.status(404).json({ message: 'Comentario no encontrado' });
+      }
+      res.json(comentario);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  },
+
+  // Eliminar un comentario
+  eliminarComentario: async (req, res) => {
+    try {
+      const comentarioEliminado = await Comentario.findByIdAndDelete(req.params.id);
+      if (!comentarioEliminado) {
+        return res.status(404).json({ message: 'Comentario no encontrado' });
+      }
+      res.json({ message: 'Comentario eliminado exitosamente' });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
 };
 
-const editarComentario = async (req, res) => {
-    try {
-        const { id, comentarioId } = req.params;
-        const { texto } = req.body;
-
-        const comentario = await Comentario.findOneAndUpdate(
-            { _id: comentarioId, publicacionId: id },
-            { texto },
-            { new: true }
-        );
-
-        if (!comentario) {
-            return res.status(404).json({ message: 'Comentario no encontrado' });
-        }
-
-        res.status(200).json({ message: 'Comentario editado con éxito', comentario });
-    } catch (error) {
-        res.status(500).json({ message: 'Error al editar comentario', error: error.message });
-    }
-};
-
-const eliminarComentario = async (req, res) => {
-    try {
-        const { id, comentarioId } = req.params;
-
-        const comentario = await Comentario.findOneAndDelete({ _id: comentarioId, publicacionId: id });
-
-        if (!comentario) {
-            return res.status(404).json({ message: 'Comentario no encontrado' });
-        }
-
-        res.status(200).json({ message: 'Comentario eliminado con éxito', comentario });
-    } catch (error) {
-        res.status(500).json({ message: 'Error al eliminar comentario', error: error.message });
-    }
-};
-
-module.exports = { crearComentario, editarComentario, eliminarComentario };
+module.exports = ComentariosController;

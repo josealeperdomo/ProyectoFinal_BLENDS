@@ -3,7 +3,7 @@ const Publicacion = require('../models/publicacion');
 const PublicacionesController = {
   mostrarPublicaciones: async (req, res) => {
     try {
-      const publicaciones = await Publicacion.find().populate('usuario_publicacion').sort({createdAt: -1});
+      const publicaciones = await Publicacion.find()
       res.json(publicaciones);
     } catch (error) {
       res.status(500).json({ message: error.message });

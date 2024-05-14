@@ -9,7 +9,7 @@ const {
 } = require('../controllers/publicaciones');
 
 // Ruta para mostrar todas las publicaciones
-router.get('/', mostrarPublicaciones);
+router.get('/all', mostrarPublicaciones);
 
 // Ruta para mostrar una publicación específica
 router.get('/:id', mostrarPublicacion);

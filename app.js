@@ -7,6 +7,8 @@ const app = express()
 const { dbConnect } = require('./backend/config/mongo')
 const path = require('path')
 
+
+
 dbConnect()
 
 const storage = multer.diskStorage({
@@ -35,7 +37,11 @@ app.use(multer({
 app.use(express.json())
 app.use('/public', express.static(`${__dirname}/storage/imgs`))
 console.log(__dirname)
-app.use('/api/', require("./backend/app/routes"))
+app.use('/comentarios', require("./backend/app/routes/comentario"))
+app.use('/publicaciones', require("./backend/app/routes/publicaciones"))
+app.use('/users', require("./backend/app/routes/users"))
+app.use('/login', require("./backend/app/routes/login"))
+
 
 
 

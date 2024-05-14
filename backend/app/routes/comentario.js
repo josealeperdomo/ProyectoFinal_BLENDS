@@ -1,14 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const { crearComentario, editarComentario, eliminarComentario } = require('../controllers/comentario');
+const {
+  mostrarComentariosDePublicacion,
+  crearComentario,
+  editarComentario,
+  eliminarComentario
+} = require('../controllers/comentario');
 
-// Ruta para crear un comentario en una publicación específica
-router.post('/publicaciones/:id/comentarios', crearComentario);
 
-// Ruta para editar un comentario en una publicación específica
-router.put('/publicaciones/:id/comentarios/:comentarioId', editarComentario);
+router.get('/publicaciones/:id', mostrarComentariosDePublicacion);
 
-// Ruta para eliminar un comentario en una publicación específica
-router.delete('/publicaciones/:id/comentarios/:comentarioId', eliminarComentario);
+
+router.post('/publicaciones', crearComentario);
+
+router.put('/:id', editarComentario);
+
+router.delete('/:id', eliminarComentario);
 
 module.exports = router;
+
+
