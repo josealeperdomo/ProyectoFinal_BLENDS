@@ -41,6 +41,7 @@ app.use('/comentarios', require("./backend/app/routes/comentario"))
 app.use('/publicaciones', require("./backend/app/routes/publicaciones"))
 app.use('/users', require("./backend/app/routes/users"))
 app.use('/login', require("./backend/app/routes/login"))
+app.use('/likes', require("./backend/app/routes/likes"))
 
 
 
