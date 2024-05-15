@@ -11,14 +11,6 @@ const LikeSchema = new mongoose.Schema({
         ref: 'Publicacion',
         required: true
     },
-    fecha_creacion: {
-        type: Date,
-        default: Date.now
-    },
-    fecha_modificacion: {
-        type: Date,
-        default: Date.now
-    }
 }, {
     timestamps: true,
     versionKey: false

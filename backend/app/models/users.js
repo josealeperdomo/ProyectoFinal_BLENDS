@@ -35,6 +35,7 @@ const UserSchema = new mongoose.Schema({
     },
     biografia:{
         type: String,
+        default: "¡Hola soy nuevo en Blends!",
         maxLength: 255
     }
     ,
@@ -74,4 +75,4 @@ UserSchema.statics.comparePassword = async(password, hashPassword)=>{
     return await bcrypt.compare(password, hashPassword)
 }
 
-module.exports = mongoose.model('users', UserSchema)
+module.exports = mongoose.model('User', UserSchema);
