@@ -1,5 +1,8 @@
-const userModel = require('../models/users');
-const bcrypt = require('bcrypt');
+const userModel = require('../models/users')
+const bcrypt = require('bcrypt')
+const multer = require('multer')
+const path = require('path')
+const uuid = require('uuid')
 
 const getUsers = async (req, res) => {
     try {
