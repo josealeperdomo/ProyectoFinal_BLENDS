@@ -68,17 +68,30 @@ const createUser = async (req, res) => {
         console.log(error)
     }
 };
+let generatedFileName
 
-const cambiarImagen = async (req, res) => {
+const storage = multer.diskStorage({
+    destination: 'storage/imgs',
+    filename: (req, file, cb) => {
+        generatedFileName = uuid.v4() + path.extname(file.originalname);
+        cb(null, generatedFileName);
+    }
+});
+
+const cambiarImagen = async(req, res) => {
     try {
+        storage
         const { id } = req.params;
-        const { imagen_perfil } = req.file;
-        const user = await userModel.findByIdAndUpdate(id, {
-            imagen_perfil: userModel.setImg(imagen_perfil)
-        });
+        const user = await userModel.findById(id);
+        if (!user) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+        await user.setImg(generatedFileName);
+        await user.save();
         res.status(200).json({ user });
     } catch (error) {
-        res.status(400).json({ message: 'Error al cambiar imagen de usuario' });
+        console.log(error);
+        res.status(500).json({ message: 'Error al cambiar la imagen del usuario' });
     }
 };
 
