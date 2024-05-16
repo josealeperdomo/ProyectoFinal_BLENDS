@@ -29,6 +29,7 @@ app.use(multer({
 app.use(express.json())
 app.use('/public', express.static(`${__dirname}/storage/imgs`))
 console.log(__dirname)
+console.log("hola" + __dirname);
 app.use('/comentarios', require("./backend/app/routes/comentario"))
 app.use('/publicaciones', require("./backend/app/routes/publicaciones"))
 app.use('/users', require("./backend/app/routes/users"))
