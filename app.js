@@ -44,6 +44,7 @@ app.use('/login', require("./backend/app/routes/login"))
 app.use('/likes', require("./backend/app/routes/likes"))
 app.use('/compartido', require("./backend/app/routes/compartidos"))
 app.use('/pagos', require("./backend/app/routes/pagos"))
+app.use('/estadoOnline', require("./backend/app/routes/estadoOnline"))
 
 
 app.listen(PORT, ()=>{
