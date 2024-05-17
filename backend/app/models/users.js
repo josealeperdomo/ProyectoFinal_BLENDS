@@ -65,10 +65,11 @@ UserSchema.statics.encryptPassword = async(password)=>{
     })
 }
 
-UserSchema.methods.setImg = function(imagen_perfil) {
+UserSchema.methods.setImg = function(filename) {
+    console.log(filename);
     const host = process.env.HOST
     const port = process.env.PORT
-    this.imagen_perfil = `${host}:${port}/public/${imagen_perfil}`
+    this.imagen_perfil = `${host}:${port}/public/${filename}`
 }
 
 
