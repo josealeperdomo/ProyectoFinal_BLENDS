@@ -54,12 +54,12 @@ const createUser = async (req, res) => {
             return res.status(400).json({"Message":"Contraseña inválida"})
         }
         const newUser = {
-            nombre: nombre || userModel.schema.obj.nombre.default,
-            apellido: apellido || userModel.schema.obj.apellido.default,
+            nombre,
+            apellido,
             usuario,
             email,
             password: await userModel.encryptPassword(password),
-            rol: rol || userModel.schema.obj.rol.default
+            rol
         };
         const user = await userModel.create(newUser);
         res.status(200).json({"Message":"Usuario Creado", "user": user})
