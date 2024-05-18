@@ -37,6 +37,7 @@ app.use('/login', require("./backend/app/routes/login"))
 app.use('/likes', require("./backend/app/routes/likes"))
 app.use('/compartido', require("./backend/app/routes/compartidos"))
 app.use('/pagos', require("./backend/app/routes/pagos"))
+
 app.use('/amistad', require("./backend/app/routes/Amistad"))
 
 
