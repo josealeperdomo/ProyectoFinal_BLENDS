@@ -7,6 +7,7 @@ import openEyesImage from '../img/openeyes.png';
 import closeEyesImage from '../img/closeeyes.png';
 import mail from '../assets/mail.svg';
 import password from '../assets/password.svg';
+import { Link } from 'react-router-dom';
 
 
 export function Login(){
@@ -23,14 +24,16 @@ export function Login(){
                     <div className="login_superior">
                         <img className="login_logo" src={Logo} alt="Blends" />
                         <div className="login_superior_buttons">
+                        <Link to="/register">
                             <button className="login_superior_button1">Registrate</button>
+                        </Link>
                             <button className="login_superior_button2">Premium</button>
                         </div>
                     </div>
                     <div className="login-centro">
                         <div className="login-centro-section2">
                             <h1>Inicio de sesión</h1>
-                            <p>¿Eres nuevo? <a href="#">Crea tu cuenta</a></p>
+                            <p>¿Eres nuevo? <a href="/register">Crea tu cuenta</a></p>
                             <form action="">
                                 <div className="img-form">
                                     <input type="email" placeholder="Email" />

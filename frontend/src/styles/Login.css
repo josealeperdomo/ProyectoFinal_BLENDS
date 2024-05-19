@@ -67,7 +67,8 @@
 .login-centro-section2{
     background-color: #ffffff;
     display: flex;
-    height: 400px;
+    justify-content: center;
+    height: 450px;
     flex-direction: column;
     gap: 30px;
     width: 400px;
