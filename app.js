@@ -7,11 +7,13 @@ const app = express()
 const { dbConnect } = require('./backend/config/mongo')
 const path = require('path')
 const {storage} = require('./backend/app/controllers/users')
+const cookieParser = require('cookie-parser')
 
 dbConnect()
 
 const PORT = process.env.PORT || 3000
 app.use(cors())
+app.use(cookieParser())
 app.use(multer({
     storage,
     dest: 'storage/imgs',
