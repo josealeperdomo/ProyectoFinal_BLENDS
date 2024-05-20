@@ -46,6 +46,32 @@ a{
     text-decoration: none;
     font-weight: bold
 }
+li{
+    list-style: none
+}
 a:hover{
     color: #009580;
+}
+input:focus {
+    outline: 0px;
+}
+.login-centro-section1-img{
+    width: 100px;
+}
+.row_title {
+    padding: 10px;
+    border-bottom: 1px solid #e6ecf5;
+    letter-spacing: 1px;
+}
+.row {
+    width: 100%;
+    margin: 0px auto;
+    display: block;
+    background-color: white;
+    color: #515365;
+    margin-bottom: 20px;
+    border: 1px solid #e6ecf5;
+}
+.shadow {
+    box-shadow: 3px 4px 5px rgba(209, 209, 209, 0.5);
 }

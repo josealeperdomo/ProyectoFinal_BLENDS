@@ -1,0 +1,60 @@
+
+.seccion-principal{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: background-color 0.3s ease;
+}
+
+  /*------------------------ SECCION PRINCIPAL CENTRAL---------------*/
+  
+.central-opciones {
+    height: auto;
+    width: 64vw;
+
+  }
+.seccion-general {
+    margin: 30px;
+    width: 95%;
+    height: auto;
+    background-color: #ffffff;
+    transition: background-color 0.3s ease;
+    margin-top: 90px;
+    margin-left: 20vw;
+  }
+  
+
+  @media screen and (max-width: 1406px) {
+    .lateral-derecha{
+      display: none;
+    }
+    .central-opciones{
+      width: 75vw;
+    }
+    .seccion-general{
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 1268px) {
+
+    .central-opciones{
+      width: 100vw;
+      display: flex ;
+      justify-content: center;
+      align-items: center;
+    }
+    .seccion-general{
+      width: 80%;
+      margin:90px 0; 
+    }
+  }
+  
+  @media screen and (max-width: 1268px) {
+    .superior-input{
+      display: none;
+    }
+
+
+
+  }
