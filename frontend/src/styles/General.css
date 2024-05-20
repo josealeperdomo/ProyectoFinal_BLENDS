@@ -1,0 +1,77 @@
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-Regular.ttf') format('truetype'); 
+}
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-BoldItalic.ttf') format('truetype'); 
+}
+
+
+
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+   
+}
+body{
+    background-color: #F4F7F7;
+    font-family: 'Poppins', sans-serif;
+
+
+}
+p{
+    color: #545455;
+}
+h1{
+    font-family: 'Poppins', sans-serif;
+    font-size: 33px;
+    color: #202020;
+    font-weight: 700;
+
+}
+h2{
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    color: #202020;
+    font-weight: 700;
+}
+a{
+    color: #47464A;
+    text-decoration: none;
+    font-weight: bold
+}
+li{
+    list-style: none
+}
+a:hover{
+    color: #009580;
+}
+input:focus {
+    outline: 0px;
+}
+.login-centro-section1-img{
+    width: 100px;
+}
+.row_title {
+    padding: 10px;
+    border-bottom: 1px solid #e6ecf5;
+    letter-spacing: 1px;
+}
+.row {
+    width: 100%;
+    margin: 0px auto;
+    display: block;
+    background-color: white;
+    color: #515365;
+    margin-bottom: 20px;
+    border: 1px solid #e6ecf5;
+}
+.shadow {
+    box-shadow: 3px 4px 5px rgba(209, 209, 209, 0.5);
+}
