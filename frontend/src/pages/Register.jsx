@@ -91,7 +91,7 @@ export function Register(){
                                     <img src={showPassword ? closeEyesImage : openEyesImage} alt="Mostrar contraseña" className="toggle-password" onClick={togglePasswordVisibility} />
 
                                 </div>
-                                <h3>{alerta}</h3>
+                                <p>{alerta}</p>
                                 <button>Registrarse</button>
                             </form>
                             <div className="login-centro-section2-Oc">
