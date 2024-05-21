@@ -234,7 +234,7 @@
   
   .lateral-izquierda-opciones {
     height: 80vh;
-    width: 18vw;
+    width: 20vw;
     background-color: #ffffff;
     transition: background-color 0.3s ease;
     position: fixed;
@@ -266,7 +266,7 @@
   .lateral-derecha-opciones {
     margin: 100px 20px 30px 0;
     height: 100%;
-    width: 16vw;
+    width: 20vw;
     background-color: #ffffff;
     border-radius: 10px;
     padding: 20px;
@@ -286,15 +286,52 @@
 
   .row_title {padding: 10px;border-bottom: 1px solid #e6ecf5;letter-spacing: 1px;}
   .row_title span {padding: 20px;font-size: .775rem;font-weight: 700;}
-  .row_title a {font-size: .675rem;font-weight: 700;color:#FF5E3A;}
+  .row_title a {font-size: .675rem;font-weight: 700;color:#009580;}
   .row_title a:hover {text-decoration: underline;}
   .row_contain {display: flex;align-items:center;width: 90%;margin: 0px auto;padding-bottom: 10px;padding-top: 10px;margin: 0px auto;}
   .row_contain img {height: 40px;width:40px;border-radius: 200px;margin: 0px 10px;}
   .row_contain span {font-size: 11px;margin-left: 10px;width: 70%}
   .row_contain span b {font-size: 12px;color: #515365;cursor: pointer;}
   .row_contain span b:hover {color: #FF5E3A;}
-  .row_contain button {padding: 10px;padding-right:15px;padding-left:15px;background-color: #38A9FF;border:none;color:white;border-radius: 5px;cursor: pointer;margin-left: 10px;}
+  .row_contain button {padding: 10px;padding-right:15px;padding-left:15px;background-color: #4EB7D1;border:none;color:white;border-radius: 5px;cursor: pointer;margin-left: 10px;}
   .row_contain button:hover {background-color: #47bcff;}
   
+  .seccion-Premium{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 60px;
+    width: 100%;
+    gap: 20px;
+    letter-spacing: 1px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+  }
+  .botonPremium{
+    border: none;
+    background-color: #ffffff;
+    padding: 15px 50px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 1px solid #ECEAEE;
+    cursor: pointer;
+  }
+  .diagonal-hover{
+    background: linear-gradient(45deg, #ff6347, #ffd700, #20b2aa, #6495ed);
+    transition: background 0.4s;
 
+  }
+  .diagonal-hover:hover {
+    background-position: 100% 0;
+    color: white;
+
+}
+@keyframes diagonal-color-change {
+  0% {
+      background-position: 0% 0%;
+  }
+  100% {
+      background-position: 100% 0%;
+  }
+}
   
