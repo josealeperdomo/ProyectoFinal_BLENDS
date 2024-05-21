@@ -150,7 +150,7 @@ function NavArriba() {
             <span>CHAT / MESSAGES</span>
              <a href="messages.html"><i className="fa fa-ellipsis-h"></i></a>
         </div>
-        <div class="modal-content">
+        <div className="modal-content">
             <ul>
                 <li>
                     <a href="#">
@@ -204,7 +204,7 @@ function NavArriba() {
             <span>NOTIFICACIONES</span>
              <a href="messages.html"><i className="fa fa-ellipsis-h"></i></a>
         </div>
-        <div class="modal-content">
+        <div className="modal-content">
             <ul>
                 <li>
                     <a href="#">

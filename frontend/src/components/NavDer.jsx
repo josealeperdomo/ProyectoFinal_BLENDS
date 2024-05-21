@@ -41,6 +41,11 @@ function NavDer() {
                     <button>+</button>
                 </div>
             </div>
+            <div className='seccion-Premium'> 
+                <p>Cambiate a Premium</p>
+                <button className='botonPremium diagonal-hover '>Premium</button>
+            </div>
+            
 
             </section>
              
