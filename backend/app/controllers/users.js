@@ -28,12 +28,12 @@ const getUser = async (req, res) => {
 const createUser = async (req, res) => {
     try {
         const {nombre, apellido, usuario, email, password, rol} = req.body
-        reguser = /^[a-zA-Z0-9_-]{3,16}/
-        regemail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-        regpassword = /^.{8,16}$/
+        const reguser = /^[a-zA-Z0-9_-]{3,16}/
+        const regemail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+        const regpassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
         
 
-        if (!nombre || !usuario || !email || !password) {
+        if (!usuario || !email || !password) {
             return res.status(400).json({"Message":"Todos los campos son requeridos"})
         }
         

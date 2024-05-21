@@ -46,7 +46,7 @@ export function Login(){
                                     <img src={showPassword ? closeEyesImage : openEyesImage} alt="Mostrar contraseña" className="toggle-password" onClick={togglePasswordVisibility} />
 
                                 </div>
-                                <button>Iniciar Sesion</button>
+                                <button>Registrarse</button>
                             </form>
                             <div className="login-centro-section2-Oc">
                                 <a href="#">¿Olvidaste tu contraseña?</a>
