@@ -11,14 +11,20 @@ const PublicacionSchema = new mongoose.Schema({
         maxLength: 280,
         required: true
     },
-    imagen: {
-        data: Buffer, // Almacenamiento de la imagen como un flujo de bytes, preguntar como se gestionan las immagenes, descargar la libreria "multer"
-        contentType: String // Tipo de contenido de la imagen (por ejemplo, image/jpeg)
+    imagen_publicacion: {
+        type: String,
+        default: null
     },
     enlace: String,
 }, {
     timestamps: true,
     versionKey: false
 });
+
+PublicacionSchema.methods.setImg = function(imagen_publicacion) {
+    const host = process.env.HOST
+    const port = process.env.PORT
+    this.imagen_publicacion = `${host}:${port}/public/${imagen_publicacion}`
+}
 
 module.exports = mongoose.model('Publicacion', PublicacionSchema);
