@@ -28,12 +28,12 @@ const getUser = async (req, res) => {
 const createUser = async (req, res) => {
     try {
         const {nombre, apellido, usuario, email, password, rol} = req.body
-        const reguser = /^[a-zA-Z0-9_-]{3,16}/
-        const regemail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-        const regpassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+        reguser = /^[a-zA-Z0-9_-]{3,16}/
+        regemail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+        regpassword = /^.{8,16}$/
         
 
-        if (!usuario || !email || !password) {
+        if (!nombre || !usuario || !email || !password) {
             return res.status(400).json({"Message":"Todos los campos son requeridos"})
         }
         
@@ -68,6 +68,8 @@ const createUser = async (req, res) => {
         console.log(error)
     }
 };
+
+
 let generatedFileName
 
 const storage = multer.diskStorage({
@@ -78,21 +80,43 @@ const storage = multer.diskStorage({
     }
 });
 
-const cambiarImagen = async(req, res) => {
-    try {
-        storage
-        const { id } = req.params;
-        const user = await userModel.findById(id);
-        if (!user) {
-            return res.status(404).json({ message: 'Usuario no encontrado' });
+const upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        const fileTypes = /jpeg|jpg|png/;
+        const mimetype = fileTypes.test(file.mimetype);
+        const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
+
+        if (mimetype && extname) {
+            return cb(null, true);
         }
-        await user.setImg(generatedFileName);
-        await user.save();
-        res.status(200).json({ user });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: 'Error al cambiar la imagen del usuario' });
+        cb(new Error('ERROR: El archivo debe ser una imagen valida'));
     }
+}).single('imagen_perfil');
+
+const cambiarImagen = async (req, res) => {
+    upload(req, res, async (err) => {
+        if (err) {
+            return res.status(400).json({ message: err.message });
+        }
+
+        try {
+            const { id } = req.params;
+            const user = await userModel.findById(id);
+
+            if (!user) {
+                return res.status(404).json({ message: 'Usuario no encontrado' });
+            }
+
+            await user.setImg(req.file.filename); // Usar req.file.filename en lugar de generatedFileName
+            await user.save();
+
+            res.status(200).json({ user });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ message: 'Error al cambiar la imagen del usuario' });
+        }
+    });
 };
 
 const updateUser = async (req, res) => {
@@ -132,4 +156,4 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports = { getUsers, getUser, createUser, cambiarImagen, updateUser, deleteUser, storage};
+module.exports = { getUsers, getUser, createUser, cambiarImagen, updateUser, deleteUser };
