@@ -10,6 +10,7 @@ const PublicacionSchema = new mongoose.Schema({
         type: String,
         maxLength: 280,
         required: true
+
     },
     imagen_publicacion: {
         type: String,

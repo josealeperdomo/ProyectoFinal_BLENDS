@@ -28,9 +28,9 @@ const getUser = async (req, res) => {
 const createUser = async (req, res) => {
     try {
         const {nombre, apellido, usuario, email, password, rol} = req.body
-        reguser = /^[a-zA-Z0-9_-]{3,16}/
-        regemail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-        regpassword = /^.{8,16}$/
+        const reguser = /^[a-zA-Z0-9_-]{3,16}/
+        const regemail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+        const regpassword = /^.{8,16}$/
         
 
         if (!nombre || !usuario || !email || !password) {
@@ -108,7 +108,7 @@ const cambiarImagen = async (req, res) => {
                 return res.status(404).json({ message: 'Usuario no encontrado' });
             }
 
-            await user.setImg(req.file.filename); // Usar req.file.filename en lugar de generatedFileName
+            await user.setImg(req.file.filename);
             await user.save();
 
             res.status(200).json({ user });
@@ -140,7 +140,8 @@ const updateUser = async (req, res) => {
         res.status(200).json({ message: 'Usuario actualizado', user });
     } catch (error) {
         res.status(400).json({ message: 'Error al actualizar usuario' });
-    }
+        console.log(error);
+        }
 };
 
 const deleteUser = async (req, res) => {

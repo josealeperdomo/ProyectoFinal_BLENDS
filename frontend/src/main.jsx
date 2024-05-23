@@ -13,8 +13,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        
-        
         <Route element={<PublicRoute/>}>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
