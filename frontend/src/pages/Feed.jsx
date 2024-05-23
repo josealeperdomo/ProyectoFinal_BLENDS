@@ -47,7 +47,12 @@ export function Feed(){
                     'Content-Type': 'multipart/form-data',
                     'authorization': `Bearer ${localStorage.getItem('token')}`
                 }
+                
             });
+            setTexto("")
+            setImagen(null)
+            document.getElementById('textoinput').value = ""
+            location.reload();
         } catch (error) {
             console.error('Error al publicar:', error);
         }
@@ -76,7 +81,7 @@ export function Feed(){
                     <form method="" onSubmit={publicar}>
                         <div className="publish_textarea">
                             <img className="border-radius-image" src={infoUsuario?.imagen_perfil} alt="" />
-                            <input type="text" placeholder="¿Whats up, Jonh?" onChange={(e) => {setTexto(e.target.value)
+                            <input type="text" id="textoinput" placeholder={`¿Whats up, ${infoUsuario?.usuario}?`} onChange={(e) => {setTexto(e.target.value)
                                 console.log(texto)
                             }}/>
                         </div>
