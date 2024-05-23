@@ -43,11 +43,11 @@ const Publicaciones = () => {
                 setPage(prevPage => prevPage + 1);
             }
         };
-
+    
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [page, totalPages, loading]);
-
+    
     const handleMenuToggle = (id) => {
         setActiveMenu(activeMenu === id ? null : id);
     };
