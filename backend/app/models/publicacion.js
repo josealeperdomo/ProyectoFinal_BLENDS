@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 const PublicacionSchema = new mongoose.Schema({
     usuario_publicacion: {
@@ -27,5 +28,7 @@ PublicacionSchema.methods.setImg = function(imagen_publicacion) {
     const port = process.env.PORT
     this.imagen_publicacion = `${host}:${port}/public/${imagen_publicacion}`
 }
+
+PublicacionSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('Publicacion', PublicacionSchema);
