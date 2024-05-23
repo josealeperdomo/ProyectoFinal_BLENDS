@@ -1,5 +1,8 @@
-const userModel = require('../models/users');
-const bcrypt = require('bcrypt');
+const userModel = require('../models/users')
+const bcrypt = require('bcrypt')
+const multer = require('multer')
+const path = require('path')
+const uuid = require('uuid')
 
 const getUsers = async (req, res) => {
     try {
@@ -25,9 +28,9 @@ const getUser = async (req, res) => {
 const createUser = async (req, res) => {
     try {
         const {nombre, apellido, usuario, email, password, rol} = req.body
-        reguser = /^[a-zA-Z0-9_-]{3,16}/
-        regemail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-        regpassword = /^.{8,16}$/
+        const reguser = /^[a-zA-Z0-9_-]{3,16}/
+        const regemail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+        const regpassword = /^.{8,16}$/
         
 
         if (!nombre || !usuario || !email || !password) {
@@ -51,12 +54,12 @@ const createUser = async (req, res) => {
             return res.status(400).json({"Message":"Contraseña inválida"})
         }
         const newUser = {
-            nombre: nombre || userModel.schema.obj.nombre.default,
-            apellido: apellido || userModel.schema.obj.apellido.default,
+            nombre,
+            apellido,
             usuario,
             email,
             password: await userModel.encryptPassword(password),
-            rol: rol || userModel.schema.obj.rol.default
+            rol
         };
         const user = await userModel.create(newUser);
         res.status(200).json({"Message":"Usuario Creado", "user": user})
@@ -66,17 +69,54 @@ const createUser = async (req, res) => {
     }
 };
 
-const cambiarImagen = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { imagen_perfil } = req.file;
-        const user = await userModel.findByIdAndUpdate(id, {
-            imagen_perfil: userModel.setImg(imagen_perfil)
-        });
-        res.status(200).json({ user });
-    } catch (error) {
-        res.status(400).json({ message: 'Error al cambiar imagen de usuario' });
+
+let generatedFileName
+
+const storage = multer.diskStorage({
+    destination: 'storage/imgs',
+    filename: (req, file, cb) => {
+        generatedFileName = uuid.v4() + path.extname(file.originalname);
+        cb(null, generatedFileName);
     }
+});
+
+const upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        const fileTypes = /jpeg|jpg|png/;
+        const mimetype = fileTypes.test(file.mimetype);
+        const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
+
+        if (mimetype && extname) {
+            return cb(null, true);
+        }
+        cb(new Error('ERROR: El archivo debe ser una imagen valida'));
+    }
+}).single('imagen_perfil');
+
+const cambiarImagen = async (req, res) => {
+    upload(req, res, async (err) => {
+        if (err) {
+            return res.status(400).json({ message: err.message });
+        }
+
+        try {
+            const { id } = req.params;
+            const user = await userModel.findById(id);
+
+            if (!user) {
+                return res.status(404).json({ message: 'Usuario no encontrado' });
+            }
+
+            await user.setImg(req.file.filename);
+            await user.save();
+
+            res.status(200).json({ user });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ message: 'Error al cambiar la imagen del usuario' });
+        }
+    });
 };
 
 const updateUser = async (req, res) => {
@@ -100,7 +140,8 @@ const updateUser = async (req, res) => {
         res.status(200).json({ message: 'Usuario actualizado', user });
     } catch (error) {
         res.status(400).json({ message: 'Error al actualizar usuario' });
-    }
+        console.log(error);
+        }
 };
 
 const deleteUser = async (req, res) => {

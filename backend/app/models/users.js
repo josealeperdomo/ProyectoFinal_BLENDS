@@ -6,9 +6,9 @@ const UserSchema = new mongoose.Schema({
         type: String,
         minLength: 3
     },
-    apellido:{
-        type: String,
-        minLength: 3
+    amigos: {
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+        default: []
     },
     usuario:{
         type: String,
@@ -27,7 +27,7 @@ const UserSchema = new mongoose.Schema({
     },
     imagen_perfil:{
         type: String,
-        default: "https://static.vecteezy.com/system/resources/previews/019/879/198/original/user-icon-on-transparent-background-free-png.png"
+        default: "http://localhost:3000/public/img-user.png"
     },
     amigos:{
         type: Object,
@@ -65,11 +65,12 @@ UserSchema.statics.encryptPassword = async(password)=>{
     })
 }
 
-UserSchema.methods.setImg = (filename)=>{
-    host = process.env.HOST
-    port = process.env.PORT
-    this.imagen_perfil = `${host}:${port}/public/${filename}`
+UserSchema.methods.setImg = function(imagen_perfil) {
+    const host = process.env.HOST
+    const port = process.env.PORT
+    this.imagen_perfil = `${host}:${port}/public/${imagen_perfil}`
 }
+
 
 UserSchema.statics.comparePassword = async(password, hashPassword)=>{
     return await bcrypt.compare(password, hashPassword)

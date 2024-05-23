@@ -6,8 +6,9 @@ import persona from "../img/personasimg.png"
 import openEyesImage from '../img/openeyes.png';
 import closeEyesImage from '../img/closeeyes.png';
 import mail from '../assets/mail.svg';
-import password from '../assets/password.svg';
-import { Link } from 'react-router-dom';
+import clave from '../assets/password.svg';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 
 export function Login(){
@@ -16,6 +17,36 @@ export function Login(){
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
+
+    let [alerta, setAlerta] = useState("")
+    const navigate = useNavigate();
+    const logearse = (e)=>{
+        e.preventDefault()
+        setAlerta("")
+        if(!password || !email){
+            setAlerta("Todos los campos deben estar llenos")
+            return 
+        }
+
+        axios.post('http://localhost:3000/login', {
+            email,
+            password
+          })
+          .then(function (response) {
+            console.log(response);
+            setAlerta(response.data.message)
+            const token = response.data.token;
+            localStorage.setItem('token', token)
+            navigate('/home')
+          })
+          .catch(function (error) {
+            console.log(error);
+          });        
+    }
+
+    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("")
+
 
     return(
         <>
@@ -34,19 +65,20 @@ export function Login(){
                         <div className="login-centro-section2">
                             <h1>Inicio de sesión</h1>
                             <p>¿Eres nuevo? <a href="/register">Crea tu cuenta</a></p>
-                            <form action="">
+                            <form action="" onSubmit={logearse}>
                                 <div className="img-form">
-                                    <input type="email" placeholder="Email" />
+                                    <input type="email" placeholder="Email" onChange={(e)=>setEmail(e.target.value)}/>
                                     <img className='mail-password' src={mail} alt="" />
                                 </div>
 
                                 <div className="img-form">
-                                    <input type={showPassword ? "text" : "password"} placeholder="Contraseña" />
-                                    <img className='mail-password' src={password} alt="" />
+                                    <input type={showPassword ? "text" : "password"} placeholder="Contraseña" onChange={(e)=>setPassword(e.target.value)}/>
+                                    <img className='mail-password' src={clave} alt="" />
                                     <img src={showPassword ? closeEyesImage : openEyesImage} alt="Mostrar contraseña" className="toggle-password" onClick={togglePasswordVisibility} />
 
                                 </div>
-                                <button>Iniciar Sesion</button>
+                                <button>Iniciar sesion</button>
+                                <p>{alerta}</p>
                             </form>
                             <div className="login-centro-section2-Oc">
                                 <a href="#">¿Olvidaste tu contraseña?</a>
