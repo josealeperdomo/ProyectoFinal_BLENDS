@@ -33,7 +33,7 @@ const createUser = async (req, res) => {
         const regpassword = /^.{8,16}$/
         
 
-        if (!nombre || !usuario || !email || !password) {
+        if ( !usuario || !email || !password) {
             return res.status(400).json({"Message":"Todos los campos son requeridos"})
         }
         
