@@ -27,7 +27,7 @@ const UserSchema = new mongoose.Schema({
     },
     imagen_perfil:{
         type: String,
-        default: "https://static.vecteezy.com/system/resources/previews/019/879/198/original/user-icon-on-transparent-background-free-png.png"
+        default: "http://localhost:3000/public/img-user.png"
     },
     amigos:{
         type: Object,

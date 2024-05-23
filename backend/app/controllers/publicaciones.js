@@ -31,7 +31,7 @@ const upload = multer({
 const PublicacionesController = {
   mostrarPublicaciones: async (req, res) => {
     try {
-      const publicaciones = await Publicacion.find()
+      const publicaciones = await Publicacion.find().populate('usuario_publicacion', 'usuario imagen_perfil').sort({ createdAt: -1 });
       res.json(publicaciones);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -57,7 +57,8 @@ const PublicacionesController = {
       }
 
       try {
-          const { usuario_publicacion, texto, enlace } = req.body;
+          const usuario_publicacion = req.body.usuario_publicacion
+          const texto = req.body.texto;
 
           // Verifica si el usuario existe
           const usuario = await User.findById(usuario_publicacion);
@@ -68,8 +69,7 @@ const PublicacionesController = {
           // Crea la nueva publicación
           const nuevaPublicacion = new Publicacion({
               usuario_publicacion,
-              texto,
-              enlace
+              texto
           });
 
           // Establece la imagen si se ha subido una
