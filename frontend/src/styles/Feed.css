@@ -61,6 +61,7 @@
     }
   }
 
+
   @media screen and (max-width: 1268px) {
 
     .central-opciones{
@@ -84,10 +85,6 @@
       display: none;
     }
 
-
-
-
-
   }
   @media screen and (max-width: 655px) {
     .publish{
@@ -100,6 +97,10 @@
       display: none;
 
     }
+    .config-form{
+    width: 90vw !important;
+  
+  }
 
 
 
@@ -252,6 +253,9 @@
 /* FRIENDS PAGE */
 .amigos{
   width: 70vw;
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
 }
 .friend {width: 100%;}
 .friend_title {padding: 20px;border-bottom: 1px solid #e6ecf5;letter-spacing: 1px;display: flex;align-items:center;}
@@ -264,7 +268,7 @@
 .delete-friend {background-color: #ff5e3a;}
 
 /* SETTINGS PAGE */
-.settings {width: 100%;border-bottom: 5px solid #ff5e3a;}
+.settings {width: 100%;border-bottom: 5px solid #4EB7D1;}
 .settings_title {padding: 20px;border-bottom: 1px solid #e6ecf5;letter-spacing: 1px;display: flex;align-items:center;}
 .settings_title h3 {font-size: .875rem;}
 .settings_content {width: 100%;}
@@ -290,6 +294,21 @@
 
 #settings-select {color: #515365;}
 
+/* Personal Information Page */
+.settings_content form {width: 100%;padding-bottom: 50px}
+.pi-input {border: 1px solid #e6ecf5;display: inline-block;margin: 10px;border-radius: 5px;text-align: left}
+.pi-input span {padding: 10px;font-size: 9px;padding-bottom: 0px;font-weight: 700}
+.pi-input input {width: 90%;border:none;padding: 10px;padding-top: 0px;color: #515365;font-size: .875rem;}
+.pi-input select {width: 90%;border:none;padding: 5px;padding-top: 0px;color: #515365;font-size: .775rem;}
+.pi-input-lg {width: 42%;}
+.pi-input-md {width: 26.3%;}
+.pi-input-md input {width: 80%;padding: 5px;padding-top: 0px;color: #515365;font-size: .875rem;}
+.pi-input-lgg {width: 90%;}
+
+
+.settings_content form button {border:none;color:white;cursor: pointer;border-radius: 3px;font-size: 18px;font-weight: 700;width: 90%;height: 50px;background-color: #009580;margin-top: 20px}
+.settings_content form button:hover {background-color: #17bda7;}
+
 .lateral-derecha-opcios {
   margin: 100px 20px 30px 0;
   width: 20vw;
@@ -301,12 +320,17 @@
   right: 0;
 }
 
-.nombrecito{
-
-}
 .seccion-unica{
   display: flex;
   margin-top: 80px;
   flex-direction: row;
   flex-wrap: wrap;
+}
+.config-menu{
+  width: 250px;
+
+}
+.config-form{
+  width: 80%;
+
 }
