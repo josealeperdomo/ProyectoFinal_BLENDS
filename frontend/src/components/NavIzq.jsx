@@ -41,9 +41,9 @@ function NavIzq() {
                 </div>
                 <div className="rowmenu">
                     <div className='rowmenu-ul'>
-                        <li ><a href="index.html"><i className="fa fa-globe"></i>Nuevas publicaciones</a></li>
-                        <li><a href="index.html"><i className="fa fa-user"></i>Mi perfil</a></li>
-                        <li><a href="index.html"><i className="fa fa-users"></i>Mis amigos</a></li>
+                        <li ><a href="/home"><i className="fa fa-globe" ></i>Nuevas publicaciones</a></li>
+                        <li><a href="/perfil"><i className="fa fa-user"></i>Mi perfil</a></li>
+                        <li><a href="/amigos"><i className="fa fa-users"></i>Mis amigos</a></li>
                         <li><a href="index.html"><i className="fa fa-comments-o"></i>Mis chats</a></li>
                         <li><a href="index.html"><i className="fa fa-money"></i>Comprar premiun</a></li>
 
