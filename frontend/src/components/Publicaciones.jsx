@@ -47,7 +47,7 @@ const Publicaciones = () => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [page, totalPages, loading]);
-    
+
     const handleMenuToggle = (id) => {
         setActiveMenu(activeMenu === id ? null : id);
     };
@@ -83,7 +83,7 @@ const Publicaciones = () => {
                         <div className="feed_title">
                             <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
                             <span>
-                                <b>{publicacion.usuario_publicacion.usuario}</b> hizo una <a href="#">Publicacion</a>
+                                <b>{publicacion.usuario_publicacion.usuario}</b> hizo una <a href={`/publicacion/`}>Publicacion</a>
                                 <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
                             </span>
                             <div className="menu-container">
