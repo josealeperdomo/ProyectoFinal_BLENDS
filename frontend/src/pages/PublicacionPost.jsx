@@ -29,7 +29,7 @@ export function PublicacionPost() {
 
         const fetchComentarios = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/comentarios?publicacionId=${id}`);
+                const response = await axios.get(`http://localhost:3000/comentarios/publicaciones/${id}`);
                 setComentarios(response.data);
             } catch (err) {
                 console.error('Error al obtener los comentarios:', err);
