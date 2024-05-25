@@ -8,7 +8,7 @@ const ComentarioSchema = new mongoose.Schema({
     },
     usuario_comentario: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Usuario',
+        ref: 'User',
         required: true
     },
     texto: {

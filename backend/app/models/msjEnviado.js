@@ -8,7 +8,7 @@ const MensajeEnviadoSchema = new mongoose.Schema({
     },
     id_usuario_destinatario: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Usuario',
+        ref: 'User',
         required: true
     },
     contenido: {
