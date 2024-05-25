@@ -27,7 +27,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         
         <Route element={<PrivateRoute/>}>
           <Route path="/home" element={<Feed />} />
-            <Route path="/Publicacion" element={<PublicacionPost />} />
+            <Route path="/publicacion/:id" element={<PublicacionPost />} />
             <Route path="/perfil" element={<PerfilUser />} />
             <Route path="/amigos" element={<Amigos />} />
             <Route path="/configuracion" element={<ConfigUser />}/>
