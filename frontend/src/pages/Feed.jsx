@@ -1,4 +1,4 @@
-import "../styles/General.css";
+"../styles/General.css";
 import "../styles/Feed.css"
 import NavArriba from "../components/NavArriba"; 
 import NavIzq from "../components/NavIzq";
@@ -81,7 +81,7 @@ export function Feed(){
                     <form method="" onSubmit={publicar}>
                         <div className="publish_textarea">
                             <img className="border-radius-image" src={infoUsuario?.imagen_perfil} alt="" />
-                            <input type="text" id="textoinput" style={{ display: 'block', width: '100%', padding: '10px', fontSize: '16px', lineHeight: '1.5', border: '1px solid #ccc', borderRadius: '5px', resize: 'vertical', overflow: 'auto' }} placeholder={`¿Whats up, ${infoUsuario?.usuario}?`} onChange={(e) => {setTexto(e.target.value)
+                            <textarea type="text" id="textoinput" style={{ display: 'block', width: '100%', padding: '10px', fontSize: '16px', lineHeight: '1.5', border: '1px solid #ccc', borderRadius: '5px', resize: 'vertical', overflow: 'auto' }} placeholder={`¿Whats up, ${infoUsuario?.usuario}?`} onChange={(e) => {setTexto(e.target.value)
                                 console.log(texto)
                             }}/>
                         </div>
