@@ -20,6 +20,7 @@ function NavArriba() {
   const [isVisibleUsuario, setIsVisibleUsuario] = useState(false);
   const [isVisibleBuscador, setIsVisibleBuscador] = useState(false);
 
+
   const toggleDropdown = (setState, state) => {
     if (state) {
       setState(false); // Cerramos el menú si ya está abierto
@@ -35,6 +36,12 @@ function NavArriba() {
     }
   };
 
+  const cerrarSesion = () => {
+    // Eliminar token
+    localStorage.removeItem("token");
+    // Redirigir a la página de inicio de sesión
+    window.location.href = "/";
+};
   return (
     <>
       <section className="superior shadow">
@@ -417,13 +424,13 @@ function NavArriba() {
                     </a>
                   </li>
                   <li>
-                    <a href="login.html">
+                    <a href="#" onClick={cerrarSesion}>
                       <i className="fa fa-power-off" aria-hidden="true"></i>
                       <div className="modal-content-info">
                         <span>
-                          <b>Cerrar sesion</b>
+                          <b>Cerrar sesión</b>
                         </span>
-                        <span>Cierra tu sesion</span>
+                        <span>Cierra tu sesión</span>
                       </div>
                     </a>
                   </li>
