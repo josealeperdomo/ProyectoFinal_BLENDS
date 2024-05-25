@@ -1,10 +1,11 @@
 const Comentario = require('../models/comentario');
+const User = require('../models/users')
 
 const ComentariosController = {
   // Mostrar todos los comentarios de una publicación
   mostrarComentariosDePublicacion: async (req, res) => {
     try {
-      const comentarios = await Comentario.find({ id_Publicacion: req.params.id }).populate('usuario_comentario');
+      const comentarios = await Comentario.find({ id_Publicacion: req.params.id }).populate('usuario_comentario', 'nombre imagen_perfil');  
       res.json(comentarios);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -18,7 +19,7 @@ const ComentariosController = {
         id_Publicacion: req.body.id_Publicacion,
         usuario_comentario: req.body.usuario_comentario,
         texto: req.body.texto,
-        enlace: req.body.enlace
+        //enlace: req.body.enlace
       });
       const comentarioGuardado = await nuevoComentario.save();
       res.status(201).json(comentarioGuardado);

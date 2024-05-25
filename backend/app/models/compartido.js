@@ -8,7 +8,7 @@ const CompartidoSchema = new mongoose.Schema({
     },
     id_usuario: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Usuario',
+        ref: 'User',
         required: true
     },
     fecha_creacion: {
