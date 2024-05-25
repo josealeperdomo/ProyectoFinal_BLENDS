@@ -14,6 +14,14 @@ export function PublicacionPost() {
     const [comentarios, setComentarios] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [nuevoComentario, setNuevoComentario] = useState("");
+    const [comentarioError, setComentarioError] = useState(null);
+
+    const token = localStorage.getItem('token');
+    const payloadBase64 = token.split('.')[1];
+    const payloadJson = atob(payloadBase64);
+    const payload = JSON.parse(payloadJson);
+    const [userId, setUserId] = useState(payload.id);
 
     useEffect(() => {
         const fetchPublicacion = async () => {
@@ -39,6 +47,30 @@ export function PublicacionPost() {
         fetchPublicacion();
         fetchComentarios();
     }, [id]);
+
+    const handleComentarioChange = (e) => {
+        setNuevoComentario(e.target.value);
+    };
+
+    const handleComentarioSubmit = async () => {
+        if (!nuevoComentario.trim()) {
+            setComentarioError("El comentario no puede estar vacío");
+            return;
+        }
+        try {
+            const response = await axios.post('http://localhost:3000/comentarios/publicaciones', {
+                id_Publicacion: id,
+                usuario_comentario: userId,
+                texto: nuevoComentario
+            });
+            setComentarios([...comentarios, response.data]);
+            setNuevoComentario("");
+            setComentarioError(null);
+        } catch (error) {
+            console.error('Error al agregar el comentario:', error);
+            setComentarioError('Error al agregar el comentario');
+        }
+    };
 
     if (loading) {
         return <div>Loading...</div>;
@@ -113,7 +145,7 @@ export function PublicacionPost() {
                                     {comentarios.map((comentario) => (
                                         <li key={comentario._id}>
                                             <div className="feedcomments-user">
-                                                <img src="images/user-6.jpg" alt="" />
+                                                <img src={comentario.usuario_comentario.imagen_perfil} alt="" />
                                                 <span>
                                                     <b>{comentario.usuario_comentario.nombre}</b>
                                                     <p>{new Date(comentario.fecha_creacion).toLocaleString()}</p>
@@ -135,8 +167,13 @@ export function PublicacionPost() {
                             </div>
                             <div className="textarea-comentarios">
                                 <img src="images/user.jpg" alt="" />
-                                <textarea placeholder="Comentar"></textarea>
-                                <p className="fa fa-send"></p>
+                                <textarea 
+                                    placeholder="Comentar"
+                                    value={nuevoComentario}
+                                    onChange={handleComentarioChange}
+                                ></textarea>
+                                <p className="fa fa-send" onClick={handleComentarioSubmit}></p>
+                                {comentarioError && <p className="error-message">{comentarioError}</p>}
                             </div>
                         </div>
                     </div>
