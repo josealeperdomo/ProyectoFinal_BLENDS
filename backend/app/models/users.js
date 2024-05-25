@@ -6,6 +6,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         minLength: 3
     },
+    apellido: {
+        type: String,
+        minLength: 3
+    },
     amigos: {
         type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
         default: []

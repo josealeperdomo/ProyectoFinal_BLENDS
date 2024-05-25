@@ -12,7 +12,7 @@ export function PublicacionPost() {
   const [publicacion, setPublicacion] = useState(null);
   const [comentario, setComentario] = useState('');
   const [comentarios, setComentarios] = useState([]);
-  const [likes, setLikes] = useState(0); 
+  const [likes, setLikes] = useState(0);
   const [error, setError] = useState(null);
 
   const fetchComentarios = async () => {
@@ -61,7 +61,6 @@ export function PublicacionPost() {
         }
       });
 
-  
       fetchComentarios();
 
       setComentario('');
@@ -78,34 +77,34 @@ export function PublicacionPost() {
         console.error('Usuario no autenticado');
         return;
       }
-  
+
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
       const id_usuario = decodedToken.id;
-  
+
       const response = await axios.get(`http://localhost:3000/likes/publicaciones/${id}/usuario/${id_usuario}/like`);
       const liked = response.data.liked;
-  
+
       if (liked) {
         // Si el usuario ya dio like, quitar el like
         await quitarLike(id);
-        setLikes(likes - 1);
+        setLikes(likes => likes - 1);
       } else {
         // Si el usuario no ha dado like, dar el like
         await darLike(id);
-        setLikes(likes + 1);
+        setLikes(likes => likes + 1);
       }
     } catch (error) {
       console.error('Error al manejar el like:', error);
       setError('Error al manejar el like. Por favor, inténtalo de nuevo.');
     }
   };
-  
+
   const darLike = async () => {
     try {
       const token = localStorage.getItem('token');
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
       const id_usuario = decodedToken.id;
-  
+
       await axios.post(`http://localhost:3000/likes/publicaciones/${id}/like`, {
         id_usuario: id_usuario
       }, {
@@ -117,13 +116,13 @@ export function PublicacionPost() {
       throw new Error('Error al dar like: ' + error.message);
     }
   };
-  
+
   const quitarLike = async (id) => {
     try {
       const token = localStorage.getItem('token');
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
       const id_usuario = decodedToken.id;
-  
+
       await axios.delete(`http://localhost:3000/likes/publicaciones/${id}/unlike/${id_usuario}`, {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -135,8 +134,6 @@ export function PublicacionPost() {
       throw new Error('Error al quitar like: ' + error.message);
     }
   };
-  
-  
 
   if (!publicacion) {
     return <div>Cargando...</div>;
@@ -237,6 +234,12 @@ export function PublicacionPost() {
     </div>
   );
 }
+
+
+
+                   
+
+
 
 
 
