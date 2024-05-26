@@ -20,7 +20,7 @@ const login = async (req, res) => {
         const token = jwt.sign({
             id: userFind._id,
         }, process.env.SECRET_KEY, {
-            expiresIn: '1h' // Tiempo de expiración del token
+            expiresIn: '365h' // Tiempo de expiración del token
         });
 
         // Adjuntar el token en el encabezado de autorización

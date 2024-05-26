@@ -6,12 +6,22 @@ import axios from 'axios';
 
 function NavIzq() {
 
-    const token = localStorage.getItem('token');
-    const payloadBase64 = token.split('.')[1];
-    const payloadJson = atob(payloadBase64);
-    const payload = JSON.parse(payloadJson);
-
-    const [userId, setUserId] = useState(payload.id);
+    const getTokenPayload = () => {
+        const token = localStorage.getItem('token');
+        if (!token) return null;
+    
+        try {
+            const payloadBase64 = token.split('.')[1];
+            const payloadJson = atob(payloadBase64);
+            return JSON.parse(payloadJson);
+        } catch (error) {
+            console.error('Error parsing token payload:', error);
+            return null;
+        }
+    };
+    
+    const payload = getTokenPayload();
+    const userId = payload ? payload.id : null;
     const [infoUsuario, setInfoUsuario] = useState(null);
 
     useEffect(() => {
@@ -44,7 +54,7 @@ function NavIzq() {
                         <li ><a href="/home"><i className="fa fa-globe" ></i>Nuevas publicaciones</a></li>
                         <li><a href="/perfil"><i className="fa fa-user"></i>Mi perfil</a></li>
                         <li><a href="/amigos"><i className="fa fa-users"></i>Mis amigos</a></li>
-                        <li><a href="index.html"><i className="fa fa-comments-o"></i>Mis chats</a></li>
+                        <li><a href="/chats"><i className="fa fa-comments-o"></i>Mis chats</a></li>
                         <li><a href="index.html"><i className="fa fa-money"></i>Comprar premiun</a></li>
 
                     </div>

@@ -8,10 +8,10 @@ const ConversacionSchema = new mongoose.Schema(
 				ref: "User",
 			},
 		],
-		mensajes: [
+		messages: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
-				ref: "Message",
+				ref: "Mensaje",
 				default: [],
 			},
 		],
