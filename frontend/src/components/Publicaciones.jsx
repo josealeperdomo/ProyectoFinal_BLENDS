@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/Feed.css';
+import { useSocketContext } from '../routes/SocketContext';
 
 const Publicaciones = () => {
     const [publicaciones, setPublicaciones] = useState([]);
@@ -68,13 +69,14 @@ const Publicaciones = () => {
     if (error) {
         return <div>{error}</div>;
     }
-
+    const {onlineUsers} = useSocketContext()
     return (
         <div>
             {publicaciones.map((publicacion) => (
                 <div className="row border-radius" key={publicacion._id}>
                     <div className="feed">
                         <div className="feed_title">
+                            <div className={onlineUsers.includes(publicacion.usuario_publicacion._id) ? "circleGreen":"circleGray"}></div>
                             <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
                             <span>
                                 <b>{publicacion.usuario_publicacion.usuario}</b> hizo una <a href={`/publicacion/${publicacion._id}`}>Publicacion</a>
