@@ -11,6 +11,7 @@ import buscar from "../assets/buscar.svg";
 import menu from "../assets/menu.svg";
 import like from "../assets/like.svg";
 import share from "../assets/share.svg";
+import { useNavigate } from "react-router-dom";
 
 function NavArriba() {
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
@@ -34,6 +35,12 @@ function NavArriba() {
       setState(true); // Abrimos el menú
     }
   };
+
+  const navigate = useNavigate()
+  const cerrarSesion = ()=>{
+    localStorage.removeItem('token');  
+    navigate("/")
+  }
 
   return (
     <>
@@ -417,11 +424,11 @@ function NavArriba() {
                     </a>
                   </li>
                   <li>
-                    <a href="login.html">
+                    <a onClick={cerrarSesion}>
                       <i className="fa fa-power-off" aria-hidden="true"></i>
                       <div className="modal-content-info">
                         <span>
-                          <b>Cerrar sesion</b>
+                          <b >Cerrar sesion</b>
                         </span>
                         <span>Cierra tu sesion</span>
                       </div>

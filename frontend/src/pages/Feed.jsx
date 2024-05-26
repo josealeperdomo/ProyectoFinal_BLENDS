@@ -1,4 +1,4 @@
-"../styles/General.css";
+import "../styles/General.css";
 import "../styles/Feed.css"
 import NavArriba from "../components/NavArriba"; 
 import NavIzq from "../components/NavIzq";
@@ -10,14 +10,24 @@ import { useState, useEffect } from "react";
 
 export function Feed(){
 
-    const token = localStorage.getItem('token');
-    const payloadBase64 = token.split('.')[1];
-    const payloadJson = atob(payloadBase64);
-    const payload = JSON.parse(payloadJson);
-
+    const getTokenPayload = () => {
+        const token = localStorage.getItem('token');
+        if (!token) return null;
+    
+        try {
+            const payloadBase64 = token.split('.')[1];
+            const payloadJson = atob(payloadBase64);
+            return JSON.parse(payloadJson);
+        } catch (error) {
+            console.error('Error parsing token payload:', error);
+            return null;
+        }
+    };
+    
+    const payload = getTokenPayload();
+    const userId = payload ? payload.id : null;
     const [texto, setTexto] = useState('');
     const [imagen, setImagen] = useState(null);
-    const [userId, setUserId] = useState(payload.id);
     const [infoUsuario, setInfoUsuario] = useState(null);
 
     useEffect(() => {

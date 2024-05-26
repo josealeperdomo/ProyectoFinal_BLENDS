@@ -25,6 +25,29 @@ const getUser = async (req, res) => {
     }
 };
 
+const getAmigos = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const usuario = await userModel.findById(userId).populate('amigos', 'nombre usuario email imagen_perfil biografia');
+
+        if (!usuario) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
+        const amigos = usuario.amigos;
+
+        if (amigos.length === 0) {
+            return res.status(200).json({ message: 'El usuario no tiene amigos' });
+        }
+
+        res.status(200).json(amigos);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener amigos', error: error.message });
+    }
+}
+
+
+
 const createUser = async (req, res) => {
     try {
         const {nombre, apellido, usuario, email, password, rol} = req.body
@@ -157,4 +180,4 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports = { getUsers, getUser, createUser, cambiarImagen, updateUser, deleteUser };
+module.exports = { getUsers, getUser, getAmigos, createUser, cambiarImagen, updateUser, deleteUser };

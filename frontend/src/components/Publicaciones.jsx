@@ -4,26 +4,33 @@ import '../styles/Feed.css';
 
 const Publicaciones = () => {
     const [publicaciones, setPublicaciones] = useState([]);
-    const [page, setPage] = useState(1);
-    const [limit] = useState(10); // Puedes cambiar el límite según tus necesidades
-    const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [activeMenu, setActiveMenu] = useState(null);
 
-    const token = localStorage.getItem('token');
-    const payloadBase64 = token.split('.')[1];
-    const payloadJson = atob(payloadBase64);
-    const payload = JSON.parse(payloadJson);
-    const [userId, setUserId] = useState(payload.id);
+    const getTokenPayload = () => {
+        const token = localStorage.getItem('token');
+        if (!token) return null;
+    
+        try {
+            const payloadBase64 = token.split('.')[1];
+            const payloadJson = atob(payloadBase64);
+            return JSON.parse(payloadJson);
+        } catch (error) {
+            console.error('Error parsing token payload:', error);
+            return null;
+        }
+    };
+    
+    const payload = getTokenPayload();
+    const userId = payload ? payload.id : null;
 
     useEffect(() => {
         const fetchPublicaciones = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:3000/publicaciones/all?page=${page}&limit=${limit}`);
-                setPublicaciones(prevPublicaciones => [...prevPublicaciones, ...response.data.docs]);
-                setTotalPages(response.data.totalPages);
+                const response = await axios.get('http://localhost:3000/publicaciones/all');
+                setPublicaciones(response.data);
             } catch (err) {
                 setError('Error al obtener las publicaciones');
             } finally {
@@ -32,21 +39,7 @@ const Publicaciones = () => {
         };
 
         fetchPublicaciones();
-    }, [page, limit]);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || loading) {
-                return;
-            }
-            if (page < totalPages) {
-                setPage(prevPage => prevPage + 1);
-            }
-        };
-    
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [page, totalPages, loading]);
+    }, []);
 
     const handleMenuToggle = (id) => {
         setActiveMenu(activeMenu === id ? null : id);
@@ -55,7 +48,8 @@ const Publicaciones = () => {
     const handleDelete = async (id) => {
         try {
             await axios.delete(`http://localhost:3000/publicaciones/${id}`);
-            location.reload()
+            // Actualizar la lista de publicaciones después de eliminar una
+            setPublicaciones(publicaciones.filter(publicacion => publicacion._id !== id));
         } catch (err) {
             console.error('Error al eliminar la publicación:', err);
         }
@@ -103,7 +97,7 @@ const Publicaciones = () => {
                             </div>
                         </div>
                         <div className="feed_content">
-                            <div className="feed_content_image">
+                            <div className="feed_content_text">
                                 <p>{publicacion.texto}</p>
                             </div>
                             {publicacion.imagen_publicacion && (

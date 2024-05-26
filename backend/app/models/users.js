@@ -29,10 +29,9 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: "http://localhost:3000/public/img-user.png"
     },
-    amigos:{
-        type: Object,
-        default: {}
-    },
+    amigos:
+        [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+    ,
     biografia:{
         type: String,
         default: "¡Hola soy nuevo en Blends!",

@@ -12,11 +12,16 @@ import { ConfigUser } from './pages/ConfigUser.jsx';
 import { CambioContrasena } from './pages/CambioContrasena.jsx';
 import { PrivateRoute } from './routes/PrivateRoutes.jsx';
 import { PublicRoute } from './routes/PublicRoutes.jsx';
+import { Chats } from './pages/Chats.jsx';
+import { SocketContextProvider } from './routes/SocketContext.jsx';
+import { AuthContextProvider } from './routes/AuthContext.jsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
+      <AuthContextProvider>
+      <SocketContextProvider>
       <Routes>
 
         <Route element={<PublicRoute/>}>
@@ -32,8 +37,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="/amigos" element={<Amigos />} />
             <Route path="/configuracion" element={<ConfigUser />}/>
             <Route path="/cambioContrasena" element={<CambioContrasena />} />
+            <Route path='/chats' element={<Chats/>}/>
         </Route>
       </Routes>
+      </SocketContextProvider>
+      </AuthContextProvider>
     </BrowserRouter>
   </React.StrictMode>,
 )

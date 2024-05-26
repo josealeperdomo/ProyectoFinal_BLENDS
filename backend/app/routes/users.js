@@ -6,11 +6,13 @@ const {
     cambiarImagen,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    getAmigos
 } = require('../controllers/users');
 
 router.get('/', getUsers);
 router.get('/:id', getUser);
+router.get('/amigos/:id', getAmigos)
 router.post('/', createUser);
 router.put('/:id', updateUser);
 router.put('/cambiarimagen/:id', cambiarImagen);
