@@ -370,3 +370,18 @@
   width: 80%;
 
 }
+
+.circleGreen {
+  width: 10px;
+  height: 10px;
+  background-color: green;
+  border: 2px solid green;
+  border-radius: 50%;
+}
+.circleGray{    
+  width: 10px;
+  height: 10px;
+  background-color: gray;
+  border: 2px solid gray;
+  border-radius: 50%;
+}
