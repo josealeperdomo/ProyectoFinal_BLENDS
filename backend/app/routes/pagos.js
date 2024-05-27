@@ -9,7 +9,7 @@ const {
 
 // Rutas para insertar, aceptar y rechazar pagos
 router.get('/', verPagos);
-router.post('/pagos', insertarPago);
+router.post('/insertar', insertarPago);
 router.patch('/pagos/:id/aceptar', aceptarPago);
 router.delete('/pagos/:id/rechazar', rechazarPago);
 
