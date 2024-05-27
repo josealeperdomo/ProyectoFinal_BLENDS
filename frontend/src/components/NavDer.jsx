@@ -41,10 +41,15 @@ function NavDer() {
                     <button>+</button>
                 </div>
             </div>
-            <div className='seccion-Premium'> 
-                <p>Cambiate a Premium</p>
+            <a href="/PagoPremium">
+
+          
+            <div href="/PagoPremium" className='seccion-Premium'> 
+            <p>Cambiate a premium</p>
+                
                 <button className='botonPremium diagonal-hover '>Premium</button>
             </div>
+            </a>
             
 
             </section>

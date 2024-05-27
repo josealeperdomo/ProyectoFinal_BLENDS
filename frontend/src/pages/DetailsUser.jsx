@@ -52,10 +52,14 @@ export function DetailsUser() {
                                 <span>Contraseña</span>
                                 <input type="password" placeholder="Contraseña" />
                             </div>
+                            <div className="buton-details">
+                              
+                              <button className="userdetailBoton">Guardar cambios</button>
+                              <button className="userdetailBotonred">Eliminar cuenta</button>
+
+                            </div>
                             
 
-                            <button className="userdetailBoton">Guardar cambios</button>
-                            <button>Cambiar contraseña</button>
                         </form>
                     </div>
                 </div></center>

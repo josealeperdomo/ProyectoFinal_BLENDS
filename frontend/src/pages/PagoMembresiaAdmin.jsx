@@ -29,12 +29,10 @@ export function PagoMembresiaAdmin() {
                   <div className="menusetting_contain">
                     <ul>
                       <li>
-                        <a href="/UsuariosBlendsAdmin" >
-                          Usuarios de blends
-                        </a>
+                        <a href="/UsuariosBlendsAdmin">Usuarios de blends</a>
                       </li>
                       <li>
-                      <a href="/PagoMembresiaAdmin" id="settings-select" >
+                        <a href="/PagoMembresiaAdmin" id="settings-select">
                           Pagos de Membresia (Premium)
                         </a>
                       </li>
@@ -42,42 +40,53 @@ export function PagoMembresiaAdmin() {
                   </div>
                 </div>
                 <div className=" row amigos admins-space">
-              <div className="friend">
+                  <div className="friend">
                     <div className="friend_title">
-                        <img src="images/user-7.jpg" alt="" />
-                        <span><b>Pedro Espinoza</b><p>4 Friends in Common</p></span>
-                        <button className="add-friend">Agregar</button>
+                      <img src="images/user-7.jpg" alt="" />
+                      <span>
+                        <b>Pedro Espinoza</b>
+                      </span>
+                      <button className="add-friend">Agregar</button>
+                      <button className="add-friend userdetailBotonred2">Rechazar</button>
                     </div>
-                    <div className="friend_title">
-                        <img src="images/user-2.jpg" alt="" />
-                        <span><b>Maria Martinez</b><p>2 Friends in Common</p></span>
-                        <button className="add-friend">Agregar</button>
+                    <div className="datos_pago">
+                      <p><b>Metodo:</b>Pagomovil</p>
+                      <p><b>Monto:</b>15$</p>
+                      <p><b>Banco:</b>Mercantil</p>
+                      <p><b>Fecha:</b>31/05/2024</p>
+                      <p><b>Numero de ref:</b>0155254766255</p>
+                      
                     </div>
-                    <div className="friend_title">
-                        <img src="images/user-3.jpg" alt="" />
-                        <span><b>Andres Pineda</b><p>1 Friends in Common</p></span>
-                        <button className="add-friend">Agregar</button>
-                    </div>
-                    <div className="friend_title">
-                        <img src="images/user-6.jpg" alt="" />
-                        <span><b>Laura Hernandez</b><p>4 Friends in Common</p></span>
-                        <button className="delete-friend">Eliminar</button>
-                    </div>
-                    <div className="friend_title">
-                        <img src="images/user-4.jpg" alt="" />
-                        <span><b>Tony Stevens</b><p>Mutual Friend: Sarah Hetfield</p></span>
-                        <button className="delete-friend">Eliminar</button>
-                    </div>
+                  </div>
 
 
 
+
+
+                  <div className="friend">
+                    <div className="friend_title">
+                      <img src="images/user-7.jpg" alt="" />
+                      <span>
+                        <b>Pedro Espinoza</b>
+                      </span>
+                      <button className="add-friend">Agregar</button>
+                      <button className="add-friend userdetailBotonred2">Rechazar</button>
+                    </div>
+                    <div className="datos_pago">
+                      <p><b>Metodo:</b>Pagomovil</p>
+                      <p><b>Monto:</b>15$</p>
+                      <p><b>Banco:</b>Mercantil</p>
+                      <p><b>Fecha:</b>31/05/2024</p>
+                      <p><b>Numero de ref:</b>0155254766255</p>
+                      
+                    </div>
+                  </div>
                 </div>
-              </div>
 
+
+                
               </div>
             </div>
-              
-            
           </section>
           {/*------------------------ SECCION LATERAL DERECHA---------------*/}
         </section>

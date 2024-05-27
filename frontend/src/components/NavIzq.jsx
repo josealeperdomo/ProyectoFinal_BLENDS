@@ -55,7 +55,7 @@ function NavIzq() {
                         <li><a href="/perfil"><i className="fa fa-user"></i>Mi perfil</a></li>
                         <li><a href="/amigos"><i className="fa fa-users"></i>Mis amigos</a></li>
                         <li><a href="/chats"><i className="fa fa-comments-o"></i>Mis chats</a></li>
-                        <li><a href="index.html"><i className="fa fa-money"></i>Comprar premiun</a></li>
+                        <li><a href="/PagoPremium"><i className="fa fa-money"></i>Comprar premiun</a></li>
 
                     </div>
                 
