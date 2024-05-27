@@ -71,6 +71,8 @@ export function Feed(){
     return(
         <>
             <div className="home">
+        {/*------------------------ SECCION LATERAL DERECHA---------------*/}
+          <div className="lateral-derecha"> <NavDer /> </div>
         {/*------------------------ SECCION SUPERIOR---------------*/}
         <NavArriba />
 
@@ -204,8 +206,7 @@ export function Feed(){
 
             </div>
           </section>
-          {/*------------------------ SECCION LATERAL DERECHA---------------*/}
-          <div className="lateral-derecha"> <NavDer /> </div>
+
           
         </section>
       </div>

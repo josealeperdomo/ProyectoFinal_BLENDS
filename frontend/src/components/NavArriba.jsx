@@ -416,13 +416,13 @@ function NavArriba() {
                     </a>
                   </li>
                   <li>
-                    <a href="#">
+                    <a href="/UsuariosBlendsAdmin">
                       <i className="fa fa-star-o" aria-hidden="true"></i>
                       <div className="modal-content-info">
                         <span>
-                          <b>Create a page</b>
+                          <b>Administracion Admin</b>
                         </span>
-                        <span>Create your page</span>
+                        <span>sitio para admins</span>
                       </div>
                     </a>
                   </li>

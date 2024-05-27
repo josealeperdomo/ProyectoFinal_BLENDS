@@ -14,6 +14,11 @@ import { PublicRoute } from './routes/PublicRoutes.jsx';
 import { Chats } from './pages/Chats.jsx';
 import { SocketContextProvider } from './routes/SocketContext.jsx';
 import { AuthContextProvider } from './routes/AuthContext.jsx';
+import { UsuariosBlendsAdmin } from './pages/UsuariosBlendsAdmin.jsx';
+import { PagoMembresiaAdmin } from './pages/PagoMembresiaAdmin.jsx';
+import { DetailsUser } from './pages/DetailsUser.jsx';
+import { PagoPremium } from './pages/PagoPremium.jsx';
+import { PagoEnviado } from './pages/PagoEnviado.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -36,6 +41,16 @@ root.render(
             <Route path="/configuracion" element={<ConfigUser />}/>
             <Route path="/cambioContrasena" element={<CambioContrasena />} />
             <Route path='/chats' element={<Chats/>}/>
+            <Route path='/UsuariosBlendsAdmin' element={<UsuariosBlendsAdmin/>}/>
+            <Route path='/PagoMembresiaAdmin' element={<PagoMembresiaAdmin/>}/>
+            <Route path='/Detailsuser' element={<DetailsUser/>}/>
+            <Route path='/PagoPremium' element={<PagoPremium/>}/>
+            <Route path='/PagoEnviado' element={<PagoEnviado/>}/>
+
+
+   
+
+
         </Route>
       </Routes>
       </SocketContextProvider>
