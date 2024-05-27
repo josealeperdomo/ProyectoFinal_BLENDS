@@ -25,11 +25,13 @@ const PagosController = {
 },
   // Función para insertar un nuevo pago
   insertarPago: async (req, res) => {
-    console.log("hoal");
     try {
       const nuevoPago = new Pago({
         usuario: req.body.usuario,
         monto: req.body.monto,
+        fecha_pago: req.body.fecha_pago,
+        banco: req.body.banco,
+        descripcion: req.body.descripcion,
         metodo_pago: req.body.metodo_pago
       });
       const pagoGuardado = await nuevoPago.save();

@@ -16,9 +16,15 @@ const PagoSchema = new mongoose.Schema({
     },
     metodo_pago: {
         type: String,
-        enum: ['transferencia', 'pagomovil'],
+        enum: ['transferencia', 'pagomovil', "Pago Movil", "Transferencia"],
         required: true
     },
+    banco: {
+        type: String,
+        enum: ['Bancamiga', 'Mercantil', 'Banesco'],
+        required: true
+    }
+    ,
     estado_pago: {
         type: String,
         enum: ['pendiente', 'completado', 'cancelado'],
