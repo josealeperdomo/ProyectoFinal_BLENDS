@@ -1,7 +1,6 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import { BrowserRouter, Route, Routes, Outlet } from 'react-router-dom';
+import React from 'react';
+import ReactDOM from 'react-dom/client'; 
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Login } from './pages/Login.jsx';
 import { Register } from './pages/Register.jsx';
 import { Feed } from './pages/Feed.jsx';
@@ -16,21 +15,20 @@ import { Chats } from './pages/Chats.jsx';
 import { SocketContextProvider } from './routes/SocketContext.jsx';
 import { AuthContextProvider } from './routes/AuthContext.jsx';
 
+const root = ReactDOM.createRoot(document.getElementById('root'));
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+root.render( 
   <React.StrictMode>
     <BrowserRouter>
       <AuthContextProvider>
       <SocketContextProvider>
       <Routes>
-
-        <Route element={<PublicRoute/>}>
+        <Route element={<PublicRoute />}>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>
-          
         
-        <Route element={<PrivateRoute/>}>
+        <Route element={<PrivateRoute />}>
           <Route path="/home" element={<Feed />} />
             <Route path="/publicacion/:id" element={<PublicacionPost />} />
             <Route path="/perfil" element={<PerfilUser />} />
@@ -43,5 +41,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       </SocketContextProvider>
       </AuthContextProvider>
     </BrowserRouter>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);
+

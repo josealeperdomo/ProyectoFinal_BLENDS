@@ -15,12 +15,20 @@ const ComentariosController = {
   // Crear un nuevo comentario para una publicación
   crearComentario: async (req, res) => {
     try {
+      const { id_Publicacion, usuario_comentario, texto, enlace } = req.body;
+
+      if (!id_Publicacion || !usuario_comentario || !texto) {
+        return res.status(400).json({ message: 'Faltan datos requeridos' });
+      }
+
       const nuevoComentario = new Comentario({
-        id_Publicacion: req.body.id_Publicacion,
-        usuario_comentario: req.body.usuario_comentario,
-        texto: req.body.texto,
-        //enlace: req.body.enlace
+        id_Publicacion,
+        usuario_comentario,
+        texto,
+        enlace
+
       });
+
       const comentarioGuardado = await nuevoComentario.save();
       res.status(201).json(comentarioGuardado);
     } catch (error) {
