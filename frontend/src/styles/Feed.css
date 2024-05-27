@@ -151,6 +151,42 @@
 .feedcomments-foot p a i{padding-right: 5px;}
 .feedcomments-foot p a{color: #888da8;}
 .feedcomments-foot p a:hover {color: #009580;}
+.menu-container {
+  position: relative;
+  display: inline-block;
+  margin-left: auto; /* Añade esto para alinear el contenedor a la derecha */
+}
+
+.menu-button {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.menu-dropdown {
+  position: absolute;
+  right: 0; /* Alinea el menú a la derecha */
+  top: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.menu-dropdown button {
+  background: none;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.menu-dropdown button:hover {
+  background: #f0f0f0;
+}
+
 
 .salir-post{
   display: flex;
