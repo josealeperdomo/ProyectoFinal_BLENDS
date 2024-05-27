@@ -1,0 +1,126 @@
+.center {
+    margin-top: 100px;
+    margin-left: 30%;
+    max-width: 500px;
+    background-color: aliceblue;
+    position: absolute;
+    display: flex;
+    gap: 20px;
+}
+
+.sidebar{
+    display: flex;
+    flex-direction: column;
+}
+
+.contenedor{
+    display: flex;
+    flex-direction: column;
+}
+
+.circleGreen {
+    width: 10px;
+    height: 10px;
+    background-color: green;
+    border: 2px solid green;
+    border-radius: 50%;
+}
+.circleGray{    
+    width: 10px;
+    height: 10px;
+    background-color: gray;
+    border: 2px solid gray;
+    border-radius: 50%;
+}
+
+.avatar{
+    width: 50px;
+}
+
+.amigo-info{
+    display: flex;
+    align-items: center;
+    max-width: 250px;
+}
+
+.amigo-info:hover{
+    cursor: pointer;
+    background-color: bisque;
+}
+
+.amigo-infoSelected{
+    display: flex;
+    align-items: center;
+    max-width: 250px;
+    background-color: bisque;
+}
+
+.amigos-seccion{
+    max-height: 500px;
+    overflow: auto;
+}
+
+.amigos-seccion::-webkit-scrollbar {
+    width: 12px; /* Ancho de la barra de desplazamiento */
+}
+
+.amigos-seccion::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color del fondo de la pista */
+}
+
+.amigos-seccion::-webkit-scrollbar-thumb {
+    background: #888; /* Color del "pulgón" de la barra de desplazamiento */
+    border-radius: 6px; /* Radio de borde del "pulgón" */
+}
+
+.amigos-seccion::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Cambio de color al pasar el mouse sobre la barra de desplazamiento */
+}
+
+.mensajes-container{
+    max-height: 500px;
+    overflow: auto;
+}
+
+.mensajes-container::-webkit-scrollbar {
+    width: 12px; /* Ancho de la barra de desplazamiento */
+}
+
+.mensajes-container::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color del fondo de la pista */
+}
+
+.mensajes-container::-webkit-scrollbar-thumb {
+    background: #888; /* Color del "pulgón" de la barra de desplazamiento */
+    border-radius: 6px; /* Radio de borde del "pulgón" */
+}
+
+.mensajes-container::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Cambio de color al pasar el mouse sobre la barra de desplazamiento */
+}
+
+
+.contenido-msj{
+    display: flex;
+    flex-direction: column;
+}
+
+.mensaje {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.mensaje-usuario {
+    font-weight: bold;
+}
+
+.mensaje-contenido {
+    margin: 5px 0;
+}
+
+.mensaje-fecha {
+    font-size: 0.8em;
+    color: gray;
+    display: block;
+    margin-top: 5px;
+}

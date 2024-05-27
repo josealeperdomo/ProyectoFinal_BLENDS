@@ -11,6 +11,7 @@ import buscar from "../assets/buscar.svg";
 import menu from "../assets/menu.svg";
 import like from "../assets/like.svg";
 import share from "../assets/share.svg";
+import { useNavigate } from "react-router-dom";
 
 function NavArriba() {
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
@@ -36,12 +37,14 @@ function NavArriba() {
     }
   };
 
+
   const cerrarSesion = () => {
     // Eliminar token
     localStorage.removeItem("token");
     // Redirigir a la página de inicio de sesión
     window.location.href = "/";
 };
+
   return (
     <>
       <section className="superior shadow">
@@ -429,6 +432,7 @@ function NavArriba() {
                       <div className="modal-content-info">
                         <span>
                           <b>Cerrar sesión</b>
+
                         </span>
                         <span>Cierra tu sesión</span>
                       </div>

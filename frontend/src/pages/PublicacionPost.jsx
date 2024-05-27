@@ -6,6 +6,7 @@ import '../styles/Feed.css';
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
 import NavDer from "../components/NavDer";
+import { useSocketContext } from '../routes/SocketContext';
 
 export function PublicacionPost() {
   const { id } = useParams();
@@ -139,6 +140,7 @@ export function PublicacionPost() {
     return <div>Cargando...</div>;
   }
 
+  const {onlineUsers} = useSocketContext()
   return (
     <div className="home">
       <div className="lateral-derecha">
@@ -158,6 +160,7 @@ export function PublicacionPost() {
             <div className="row border-radius">
               <div className="feed">
                 <div className="feed_title">
+                  <div className={onlineUsers.includes(publicacion.usuario_publicacion._id) ? "circleGreen":"circleGray"}></div>
                   <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
                   <span>
                     <b>{publicacion.usuario_publicacion.usuario}</b> hizo una{" "}
@@ -233,7 +236,7 @@ export function PublicacionPost() {
       </section>
     </div>
   );
-}
+
 
 
 

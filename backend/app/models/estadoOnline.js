@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const EstadoEnLineaSchema = new mongoose.Schema({
     id_usuario: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Usuario',
+        ref: 'User',
         required: true
     },
     estado: {

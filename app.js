@@ -1,22 +1,16 @@
 require('dotenv').config()
 const express = require('express')
 const cors = require("cors")
-const multer = require('multer')
-const uuid = require('uuid')
-const app = express()
+const { app, server } = require("./backend/app/socket/socket")
 const { dbConnect } = require('./backend/config/mongo')
-const path = require('path')
-const {storage} = require('./backend/app/controllers/users')
-const cookieParser = require('cookie-parser')
 
 dbConnect()
 
 const PORT = process.env.PORT || 3000
-app.use(cors())
-app.use(cookieParser())
 
 
 app.use(express.json())
+app.use(cors())
 app.use('/public', express.static(`${__dirname}/storage/imgs`))
 console.log(__dirname)
 console.log("hola" + __dirname);
@@ -28,10 +22,11 @@ app.use('/likes', require("./backend/app/routes/likes"))
 app.use('/compartido', require("./backend/app/routes/compartidos"))
 app.use('/pagos', require("./backend/app/routes/pagos"))
 app.use('/estadoOnline', require("./backend/app/routes/estadoOnline"))
-app.use('/amistad', require("./backend/app/routes/Amistad"))
+app.use('/amistad', require("./backend/app/routes/amistad"))
+app.use('/mensajes', require('./backend/app/routes/mensajes'))
 
 
 
-app.listen(PORT, ()=>{
+server.listen(PORT, ()=>{
     console.log('La API esta lista');
 })

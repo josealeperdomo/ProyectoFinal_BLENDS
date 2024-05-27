@@ -31,21 +31,14 @@ const upload = multer({
 const PublicacionesController = {
   mostrarPublicaciones: async (req, res) => {
     try {
-      const { page = 1, limit = 10 } = req.query;
-      const options = {
-        page: parseInt(page, 10),
-        limit: parseInt(limit, 10),
-        populate: 'usuario_publicacion',
-        sort: { createdAt: -1 }
-      };
-
-      const publicaciones = await Publicacion.paginate({}, options);
-      res.json(publicaciones);
+        const publicaciones = await Publicacion.find()
+            .populate('usuario_publicacion')
+            .sort({ createdAt: -1 });
+        res.json(publicaciones);
     } catch (error) {
-      res.status(500).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
-  },
-
+},
   mostrarPublicacion: async (req, res) => {
     try {
       const publicacion = await Publicacion.findById(req.params.id).populate('usuario_publicacion');
