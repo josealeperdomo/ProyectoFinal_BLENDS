@@ -27,9 +27,19 @@ const CompartidoController = {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
+  },
+
+  obtenerCompartidos: async (req, res) => {
+    try {
+      const compartidos = await Compartido.find();
+      res.json(compartidos);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
   }
 };
 
 module.exports = CompartidoController;
+
 
 
