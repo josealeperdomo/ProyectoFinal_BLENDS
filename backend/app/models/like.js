@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const LikeSchema = new mongoose.Schema({
     id_usuario: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Usuario',
+        ref: 'User',
         required: true
     },
     id_publicacion: {
