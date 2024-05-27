@@ -15,6 +15,7 @@ export function PublicacionPost() {
   const [comentarios, setComentarios] = useState([]);
   const [likes, setLikes] = useState(0);
   const [error, setError] = useState(null);
+  const { onlineUsers } = useSocketContext(); // useContext hook siempre debe estar en la parte superior
 
   const fetchComentarios = async () => {
     try {
@@ -52,7 +53,7 @@ export function PublicacionPost() {
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
       const usuario_comentario = decodedToken.id;
 
-      const response = await axios.post(`http://localhost:3000/comentarios/publicaciones`, {
+      await axios.post(`http://localhost:3000/comentarios/publicaciones`, {
         id_Publicacion: id,
         usuario_comentario,
         texto: comentario,
@@ -128,7 +129,6 @@ export function PublicacionPost() {
         headers: {
           'Authorization': `Bearer ${token}`
         }
-
       });
       console.log('Like quitado');
     } catch (error) {
@@ -140,7 +140,6 @@ export function PublicacionPost() {
     return <div>Cargando...</div>;
   }
 
-  const {onlineUsers} = useSocketContext()
   return (
     <div className="home">
       <div className="lateral-derecha">
@@ -218,7 +217,7 @@ export function PublicacionPost() {
                 </ul>
               </div>
               <div className="textarea-comentarios">
-                <img src="images/user.jpg" alt="Imagen de usuario"/>
+                <img src="" alt="Imagen de usuario"/>
                 <form onSubmit={handleSubmitComentario}>
                   <input
                     type="text"
@@ -236,16 +235,4 @@ export function PublicacionPost() {
       </section>
     </div>
   );
-
-
-
-
-                   
-
-
-
-
-
-
-
-
+}

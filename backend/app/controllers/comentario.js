@@ -5,7 +5,7 @@ const ComentariosController = {
   // Mostrar todos los comentarios de una publicación
   mostrarComentariosDePublicacion: async (req, res) => {
     try {
-      const comentarios = await Comentario.find({ id_Publicacion: req.params.id }).populate('usuario_comentario', 'nombre imagen_perfil');  
+      const comentarios = await Comentario.find({ id_Publicacion: req.params.id }).populate('usuario_comentario', 'usuario imagen_perfil');  
       res.json(comentarios);
     } catch (error) {
       res.status(500).json({ message: error.message });
