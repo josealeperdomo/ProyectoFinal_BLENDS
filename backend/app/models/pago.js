@@ -25,6 +25,11 @@ const PagoSchema = new mongoose.Schema({
         required: true
     }
     ,
+    numero_ref: {
+        type: String,
+        required: true
+    }
+    ,
     estado_pago: {
         type: String,
         enum: ['pendiente', 'completado', 'cancelado'],

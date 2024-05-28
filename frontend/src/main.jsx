@@ -10,6 +10,7 @@ import { Amigos } from './pages/Amigos.jsx';
 import { ConfigUser } from './pages/ConfigUser.jsx';
 import { CambioContrasena } from './pages/CambioContrasena.jsx';
 import { PrivateRoute } from './routes/PrivateRoutes.jsx';
+import { AdminsRoutes } from './routes/AdminsRoutes.jsx';
 import { PublicRoute } from './routes/PublicRoutes.jsx';
 import { Chats } from './pages/Chats.jsx';
 import { SocketContextProvider } from './routes/SocketContext.jsx';
@@ -41,16 +42,15 @@ root.render(
             <Route path="/configuracion" element={<ConfigUser />}/>
             <Route path="/cambioContrasena" element={<CambioContrasena />} />
             <Route path='/chats' element={<Chats/>}/>
-            <Route path='/UsuariosBlendsAdmin' element={<UsuariosBlendsAdmin/>}/>
-            <Route path='/PagoMembresiaAdmin' element={<PagoMembresiaAdmin/>}/>
-            <Route path='/Detailsuser' element={<DetailsUser/>}/>
             <Route path='/PagoPremium' element={<PagoPremium/>}/>
             <Route path='/PagoEnviado' element={<PagoEnviado/>}/>
 
+        </Route>
 
-   
-
-
+        <Route element={<AdminsRoutes/>}>
+          <Route path='/UsuariosBlendsAdmin' element={<UsuariosBlendsAdmin/>}/>
+          <Route path='/PagoMembresiaAdmin' element={<PagoMembresiaAdmin/>}/>
+          <Route path='/Detailsuser' element={<DetailsUser/>}/>
         </Route>
       </Routes>
       </SocketContextProvider>

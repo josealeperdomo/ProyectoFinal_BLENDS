@@ -17,8 +17,8 @@ let transporter = nodemailer.createTransport({
 const PagosController = {
   verPagos: async (req, res) => {
     try {
-        const pagos = await Pago.find();
-        res.status(200).json(pagos);
+      const pagos = await Pago.find().populate('usuario', 'usuario imagen_perfil');        
+      res.status(200).json(pagos);
     } catch (error) {
         res.status(500).json({ message: 'Error al obtener usuarios' });
     }
@@ -30,6 +30,7 @@ const PagosController = {
         usuario: req.body.usuario,
         monto: req.body.monto,
         fecha_pago: req.body.fecha_pago,
+        numero_ref: req.body.numero_ref,
         banco: req.body.banco,
         descripcion: req.body.descripcion,
         metodo_pago: req.body.metodo_pago

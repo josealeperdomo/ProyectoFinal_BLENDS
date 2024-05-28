@@ -1,11 +1,43 @@
-import "../styles/General.css";
-import "../styles/Feed.css";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
-import NavDer from "../components/NavDer";
-import fotoejemplo from "../img/photo-1.jpg";
-import { Link } from "react-router-dom";
+
 export function PagoMembresiaAdmin() {
+  const [pagos, setPagos] = useState([]);
+
+  const obtenerPagos = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/pagos');
+      const pagosPendientes = response.data.filter(pago => pago.estado_pago === 'pendiente');
+      setPagos(pagosPendientes);
+    } catch (error) {
+      console.error('Error al obtener los pagos:', error);
+    }
+  };
+
+  useEffect(() => {
+    obtenerPagos();
+  }, []);
+
+  const aceptarPago = async (id) => {
+    try {
+      await axios.patch(`http://localhost:3000/pagos/pagos/${id}/aceptar`);
+      obtenerPagos();
+    } catch (error) {
+      console.error('Error al aceptar el pago:', error);
+    }
+  };
+
+  const rechazarPago = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/pagos/pagos/${id}/rechazar`);
+      obtenerPagos();
+    } catch (error) {
+      console.error('Error al rechazar el pago:', error);
+    }
+  };
+
   return (
     <>
       <div className="home">
@@ -40,51 +72,24 @@ export function PagoMembresiaAdmin() {
                   </div>
                 </div>
                 <div className=" row amigos admins-space">
-                  <div className="friend">
-                    <div className="friend_title">
-                      <img src="images/user-7.jpg" alt="" />
-                      <span>
-                        <b>Pedro Espinoza</b>
-                      </span>
-                      <button className="add-friend">Agregar</button>
-                      <button className="add-friend userdetailBotonred2">Rechazar</button>
+                  {pagos.map(pago => (
+                    <div className="friend" key={pago._id}>
+                      <div className="friend_title">
+                        <img src={pago.usuario.imagen_perfil} alt="" />
+                        <span><b>{pago.usuario.usuario}</b></span>
+                        <button className="add-friend" onClick={() => aceptarPago(pago._id)}>Aceptar</button>
+                        <button className="add-friend userdetailBotonred2" onClick={() => rechazarPago(pago._id)}>Rechazar</button>
+                      </div>
+                      <div className="datos_pago">
+                        <p><b>Método:</b> {pago.metodo_pago}</p>
+                        <p><b>Monto:</b> {pago.monto}</p>
+                        <p><b>Banco:</b> {pago.banco}</p>
+                        <p><b>Fecha:</b> {pago.fecha_pago}</p>
+                        <p><b>Número de ref:</b> {pago.numero_ref}</p>
+                      </div>
                     </div>
-                    <div className="datos_pago">
-                      <p><b>Metodo:</b>Pagomovil</p>
-                      <p><b>Monto:</b>15$</p>
-                      <p><b>Banco:</b>Mercantil</p>
-                      <p><b>Fecha:</b>31/05/2024</p>
-                      <p><b>Numero de ref:</b>0155254766255</p>
-                      
-                    </div>
-                  </div>
-
-
-
-
-
-                  <div className="friend">
-                    <div className="friend_title">
-                      <img src="images/user-7.jpg" alt="" />
-                      <span>
-                        <b>Pedro Espinoza</b>
-                      </span>
-                      <button className="add-friend">Agregar</button>
-                      <button className="add-friend userdetailBotonred2">Rechazar</button>
-                    </div>
-                    <div className="datos_pago">
-                      <p><b>Metodo:</b>Pagomovil</p>
-                      <p><b>Monto:</b>15$</p>
-                      <p><b>Banco:</b>Mercantil</p>
-                      <p><b>Fecha:</b>31/05/2024</p>
-                      <p><b>Numero de ref:</b>0155254766255</p>
-                      
-                    </div>
-                  </div>
+                  ))}
                 </div>
-
-
-                
               </div>
             </div>
           </section>

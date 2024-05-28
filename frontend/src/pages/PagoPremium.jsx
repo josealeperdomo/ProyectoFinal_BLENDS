@@ -5,6 +5,7 @@ import "../styles/Feed.css";
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
 import NavDer from "../components/NavDer";
+import { useNavigate } from "react-router-dom";
 
 export function PagoPremium() {
   const [metodoPago, setMetodoPago] = useState('Pago Movil');
@@ -34,11 +35,12 @@ export function PagoPremium() {
         fecha_pago: fechaPago,
         banco,
         descripcion,
+        numero_ref: numeroRef,
         metodo_pago: metodoPago
       });
 
       if (response.status === 201) {
-        setMensaje('Pago registrado exitosamente.');
+        navigate('/PagoEnviado')
       } else {
         setMensaje('Error al registrar el pago.');
       }
@@ -47,6 +49,8 @@ export function PagoPremium() {
       setMensaje('Error al enviar el pago. Por favor, inténtalo de nuevo.');
     }
   };
+
+  const navigate = useNavigate()
 
   return (
     <div className="home">
