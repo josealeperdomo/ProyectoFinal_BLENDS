@@ -1,11 +1,33 @@
-import "../styles/General.css";
-import "../styles/Feed.css";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
-import NavDer from "../components/NavDer";
-import fotoejemplo from "../img/photo-1.jpg";
-import { Link } from "react-router-dom";
+
 export function UsuariosBlendsAdmin() {
+  const [usuarios, setUsuarios] = useState([]);
+  const [busqueda, setBusqueda] = useState('');
+
+  useEffect(() => {
+    const obtenerUsuarios = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/users');
+        setUsuarios(response.data);
+      } catch (error) {
+        console.error('Error al obtener usuarios:', error);
+      }
+    };
+
+    obtenerUsuarios();
+  }, []);
+
+  const handleBusquedaChange = (e) => {
+    setBusqueda(e.target.value);
+  };
+
+  const usuariosFiltrados = usuarios.filter(usuario =>
+    usuario.usuario.toLowerCase().includes(busqueda.toLowerCase())
+  );
+
   return (
     <>
       <div className="home">
@@ -34,28 +56,32 @@ export function UsuariosBlendsAdmin() {
                         </a>
                       </li>
                       <li>
-                        <a href="/pagoMembresiaadmin" >
+                        <a href="/pagoMembresiaadmin">
                           Pagos de Membresia (Premium)
                         </a>
                       </li>
                     </ul>
                   </div>
                 </div>
-                <div className=" row amigos admins-space">
-              <div className="friend">
-                    <div className="friend_title">
-                        <img src="images/user-7.jpg" alt="" />
-                        <span><b>Pedro Espinoza</b></span>
-                        <a href="/Detailsuser" className="add-friend" >Ver detalles</a>
-
+                <div className="row amigos admins-space">
+                  <div className="buscador">
+                    <input
+                      type="text"
+                      placeholder="Buscar usuario por nombre"
+                      value={busqueda}
+                      onChange={handleBusquedaChange}
+                    />
+                  </div>
+                  {usuariosFiltrados.map(usuario => (
+                    <div className="friend" key={usuario._id}>
+                      <div className="friend_title">
+                        <img src={usuario.imagen_perfil} alt="" />
+                        <span><b>{usuario.usuario}</b></span>
+                        <a href="/Detailsuser" className="add-friend">Ver detalles</a>
+                      </div>
                     </div>
-                    
-
-
-
+                  ))}
                 </div>
-              </div>
-
               </div>
             </div>
           </section>
