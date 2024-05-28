@@ -9,7 +9,6 @@ export function PagoMembresiaAdmin() {
   const obtenerPagos = async () => {
     try {
       const response = await axios.get('http://localhost:3000/pagos');
-      // Filtrar solo los pagos con estado 'pendiente'
       const pagosPendientes = response.data.filter(pago => pago.estado_pago === 'pendiente');
       setPagos(pagosPendientes);
     } catch (error) {
@@ -24,7 +23,6 @@ export function PagoMembresiaAdmin() {
   const aceptarPago = async (id) => {
     try {
       await axios.patch(`http://localhost:3000/pagos/pagos/${id}/aceptar`);
-      // Actualizar la lista de pagos después de aceptar el pago
       obtenerPagos();
     } catch (error) {
       console.error('Error al aceptar el pago:', error);
@@ -34,7 +32,6 @@ export function PagoMembresiaAdmin() {
   const rechazarPago = async (id) => {
     try {
       await axios.delete(`http://localhost:3000/pagos/pagos/${id}/rechazar`);
-      // Actualizar la lista de pagos después de rechazar el pago
       obtenerPagos();
     } catch (error) {
       console.error('Error al rechazar el pago:', error);
