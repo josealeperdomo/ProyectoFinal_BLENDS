@@ -19,17 +19,17 @@
 }
 
 .circleGreen {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     background-color: green;
-    border: 2px solid green;
+    border: 2px solid rgb(255, 255, 255);
     border-radius: 50%;
 }
 .circleGray{    
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     background-color: gray;
-    border: 2px solid gray;
+    border: 2px solid rgb(255, 255, 255);
     border-radius: 50%;
 }
 

@@ -220,6 +220,8 @@
         width: 100vw;
         height: 100vh;
         background-color: white;
+        z-index: 5;
+
 
     }
   }
@@ -241,6 +243,7 @@
     position: fixed;
     margin-top: 90px;
     padding: 20px;
+  
   }
 
   .rowmenu-ul{

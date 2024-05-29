@@ -1,6 +1,6 @@
 import "../styles/General.css";
-import "../styles/Chats.css"
-import '../styles/Feed.css';
+import "../styles/Chats.css";
+import "../styles/Feed.css";
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
 import NavDer from "../components/NavDer";
@@ -8,8 +8,9 @@ import { SidebarChat } from "../components/SidebarChat";
 import { useState, useEffect } from "react";
 import { Messages } from "../components/Messages";
 import axios from "axios";
+import menu from "../assets/menu.svg";
 
-export function Chats(){
+export function Chats() {
     const getTokenPayload = () => {
         const token = localStorage.getItem('token');
         if (!token) return null;
@@ -23,10 +24,11 @@ export function Chats(){
             return null;
         }
     };
-    
+
     const payload = getTokenPayload();
     const userId = payload ? payload.id : null;
     const [infoUsuario, setInfoUsuario] = useState(null);
+    const [menuVisible, setMenuVisible] = useState(false);
 
     useEffect(() => {
         const obtenerUsuarioPorId = async (usuarioid) => {
@@ -40,30 +42,38 @@ export function Chats(){
 
         obtenerUsuarioPorId(userId);
     }, [userId]);
-    return(
+
+    const toggleMenu = () => {
+        setMenuVisible(!menuVisible);
+    };
+
+    return (
         <>
             <div className="home">
-        {/*------------------------ SECCION SUPERIOR---------------*/}
-        <NavArriba />
+                <section className="seccion-principal">
+                    {/*------------------------ SECCION LATERAL IZQUIERDA-------------------*/}
+                    <div className="lateral-izquierda"><NavIzq /></div>
 
-        <section className="seccion-principal">
+                    {/*------------------------ SECCION CENTRO API------------------------*/}
+                </section>
+                <section className=" seccion-central-chat seccion-general row">
+                    <Messages />
+                </section>
+                {/*------------------------ SECCION LATERAL DERECHA---------------*/}
+                <div className="lateral-derecha">
+                    <div className="lateral-chats"><SidebarChat /></div>
+                </div>
 
-          {/*------------------------ SECCION LATERAL IZQUIERDA-------------------*/}
-          <div className="lateral-izquierda"><NavIzq /></div>
-          
-          {/*------------------------ SECCION CENTRO API------------------------*/}
+                <div className="menu-chat row" onClick={toggleMenu}>
+                    <img src={menu} alt="Menu" />
+                </div>
 
-
-        </section>
-          <section className="center">
-                <SidebarChat/>
-                <Messages/>
-            </section>
-          {/*------------------------ SECCION LATERAL DERECHA---------------*/}
-          <div className="lateral-derecha"> <NavDer /> </div>
-          
-        
-      </div>
+                <div className={`menu-chat-seccion ${menuVisible ? 'visible' : ''}`}>
+                    <SidebarChat />
+                </div>
+            </div>
+{/*------------------------ SECCION SUPERIOR---------------*/}
+                <NavArriba />
         </>
-    )
+    );
 }

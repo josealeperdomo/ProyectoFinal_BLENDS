@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/Feed.css';
 import { useSocketContext } from '../routes/SocketContext';
+import menuPubli from '../assets/menucopubli.svg';
 
 const Publicaciones = () => {
     const [publicaciones, setPublicaciones] = useState([]);
@@ -76,14 +77,16 @@ const Publicaciones = () => {
                 <div className="row border-radius" key={publicacion._id}>
                     <div className="feed">
                         <div className="feed_title">
-                            <div className={onlineUsers.includes(publicacion.usuario_publicacion._id) ? "circleGreen":"circleGray"}></div>
-                            <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
+                            <div className='imagen-online'> 
+                                <div className={onlineUsers.includes(publicacion.usuario_publicacion._id) ? "circleGreen":"circleGray"}></div>
+                                <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
+                            </div>
                             <span>
                                 <b>{publicacion.usuario_publicacion.usuario}</b> hizo una <a href={`/publicacion/${publicacion._id}`}>Publicacion</a>
                                 <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
                             </span>
                             <div className="menu-container">
-                                <button className="menu-button" onClick={() => handleMenuToggle(publicacion._id)}>...</button>
+                                <button className="menu-button" onClick={() => handleMenuToggle(publicacion._id)}> <img src={menuPubli} alt="Menu" /></button>
                                 {activeMenu === publicacion._id && (
                                     <div className="menu-dropdown">
                                         {userId !== publicacion.usuario_publicacion._id ? (
@@ -99,7 +102,7 @@ const Publicaciones = () => {
                             </div>
                         </div>
                         <div className="feed_content">
-                            <div className="feed_content_text">
+                            <div className="feed_content_image">
                                 <p>{publicacion.texto}</p>
                             </div>
                             {publicacion.imagen_publicacion && (

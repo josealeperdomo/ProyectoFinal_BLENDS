@@ -6,6 +6,7 @@ import "../styles/index.css";
 import "../styles/Chats.css";
 import useConversation from '../zustand/useConversation';
 import { useSocketContext } from '../routes/SocketContext';
+import buscar from "../assets/buscar.svg";
 
 
 
@@ -71,9 +72,9 @@ export function SidebarChat() {
     return (
         <div className='sidebar'>
             <div className=''>
-                <form onSubmit={handleSearch} action="">
-                    <input type="text" placeholder="Buscar" value={search} onChange={e=>setSearch(e.target.value)}/>
-                    <button>Buscar</button>
+                <form className='form-buscar-chat' onSubmit={handleSearch} action="">
+                    <input className='input-buscar-chat'type="text" placeholder="Buscar" value={search} onChange={e=>setSearch(e.target.value)}/>
+                    <button><img src={buscar} alt="" /></button>
                 </form>
             </div>
             <div>
