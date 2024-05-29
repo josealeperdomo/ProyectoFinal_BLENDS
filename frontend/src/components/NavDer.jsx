@@ -6,10 +6,27 @@ import "../styles/Components.css";
 function NavDer() {
     const [usuariosAleatorios, setUsuariosAleatorios] = useState([]);
 
+    const getTokenPayload = () => {
+        const token = localStorage.getItem('token');
+        if (!token) return null;
+
+        try {
+            const payloadBase64 = token.split('.')[1];
+            const payloadJson = atob(payloadBase64);
+            return JSON.parse(payloadJson);
+        } catch (error) {
+            console.error('Error parsing token payload:', error);
+            return null;
+        }
+    };
+
+    const payload = getTokenPayload();
+    const userId = payload ? payload.id : null;
+
     useEffect(() => {
         const obtenerUsuariosAleatorios = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/users/users/sugeridos'); // Cambia la URL según la ruta de tu API
+                const response = await axios.get('http://localhost:3000/users/users/sugeridos');
                 setUsuariosAleatorios(response.data);
                 console.log(usuariosAleatorios);
             } catch (error) {
@@ -19,6 +36,22 @@ function NavDer() {
 
         obtenerUsuariosAleatorios();
     }, []); // El segundo argumento vacío asegura que useEffect solo se ejecute una vez (cuando el componente se monta)
+
+    const handleEnviarSolicitud = async (idReceptor) => {
+        if (idReceptor == userId) return alert("no puedes enviarte una solicitud a ti mismo")
+        try {
+            const response = await axios.post('http://localhost:3000/amistad/enviarSolicitud', {
+                id_emisor: userId,
+                id_receptor: idReceptor
+            });
+            if (response.status === 200) {
+                alert('Solicitud de amistad enviada correctamente');
+            }
+        } catch (error) {
+            console.error('Error al enviar la solicitud de amistad:', error);
+            alert(error.response?.data?.message || 'Error al enviar la solicitud de amistad');
+        }
+    };
 
     return (
         <>
@@ -31,16 +64,16 @@ function NavDer() {
                         <div className="row_contain" key={usuario.id}>
                             <img src={usuario.imagen_perfil} alt="" />
                             <div className='info-navder'> 
-                                <span><b>{usuario.usuario}</b></span>
+                                <span><b><a href={`/perfil/${usuario.usuario}`}>{usuario.usuario}</a></b></span>
                             </div>
-                            <button>+</button>
+                            <button onClick={() => handleEnviarSolicitud(usuario._id)}>+</button>
                         </div>
                     ))}
                 </div>
                 <a href="/PagoPremium">
-                    <div href="/PagoPremium" className='seccion-Premium'> 
+                    <div className='seccion-Premium'> 
                         <p>Cambiate a premium</p>
-                        <button className='botonPremium diagonal-hover '>Premium</button>
+                        <button className='botonPremium diagonal-hover'>Premium</button>
                     </div>
                 </a>
             </section>
