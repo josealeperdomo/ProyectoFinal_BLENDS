@@ -220,7 +220,7 @@ const aceptarSolicitud = async (id_emisor, id_receptor) => {
               </div>
               <div className="modal-content">
                 <ul>
-                {solicitudes.length === 0 ? <h1>No tienes solicitudes</h1> : solicitudes.map((solicitud) => (
+                {solicitudes.length === 0 ? <ul><li>No tienes solicitudes</li></ul> : solicitudes.map((solicitud) => (
                     <li key={solicitud._id}>
                       <a href="#">
                         <img src={solicitud.usuarioEmisor.imagen_perfil} alt={solicitud.nombre} />
@@ -411,7 +411,7 @@ const aceptarSolicitud = async (id_emisor, id_receptor) => {
             }
           >
             <div className="superior-button">
-              <img className="img-user" src={user} alt="Tu usuario" />
+              <img className="img-user" src={user.imagen_perfil} alt="Tu usuario" />
               <img className="img-arrow" src={arrow} alt="" />
             </div>
           </div>
@@ -433,7 +433,7 @@ const aceptarSolicitud = async (id_emisor, id_receptor) => {
               <div className="modal-content">
                 <ul>
                   <li>
-                    <a href={`/configuracion/${user.usuario}`}>
+                    <a href={`/configuracion`}>
                       <i className="fa fa-tasks" aria-hidden="true"></i>
                       <div className="modal-content-info">
                         <span>

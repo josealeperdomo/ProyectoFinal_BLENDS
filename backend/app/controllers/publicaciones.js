@@ -111,7 +111,19 @@ const PublicacionesController = {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
+  },
+  obtenerPublicacionesPorUsuarioId: async (req, res) => {
+    try {
+      const { userId } = req.params;
+  
+      const publicaciones = await Publicacion.find({ usuario_publicacion: userId }).populate("usuario_publicacion", "usuario imagen_perfil")
+  
+      res.status(200).json(publicaciones);
+    } catch (error) {
+      console.error('Error al obtener las publicaciones por ID de usuario:', error);
+      res.status(500).json({ message: 'Error al obtener las publicaciones por ID de usuario' });
+    }
   }
-};
+}
 
 module.exports = PublicacionesController;
