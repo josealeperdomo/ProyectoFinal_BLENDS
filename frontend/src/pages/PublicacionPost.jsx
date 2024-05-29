@@ -14,8 +14,9 @@ export function PublicacionPost() {
   const [comentario, setComentario] = useState('');
   const [comentarios, setComentarios] = useState([]);
   const [likes, setLikes] = useState(0);
+  const [userLiked, setUserLiked] = useState(false);
   const [error, setError] = useState(null);
-  const { onlineUsers } = useSocketContext(); // useContext hook siempre debe estar en la parte superior
+  const { onlineUsers } = useSocketContext();
 
   const fetchComentarios = async () => {
     try {
@@ -26,12 +27,39 @@ export function PublicacionPost() {
     }
   };
 
+  const getTokenPayload = () => {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+
+    try {
+      const payloadBase64 = token.split('.')[1];
+      const payloadJson = atob(payloadBase64);
+      return JSON.parse(payloadJson);
+    } catch (error) {
+      console.error('Error parsing token payload:', error);
+      return null;
+    }
+  };
+
+  const payload = getTokenPayload();
+  const userId = payload ? payload.id : null;
+
+  const verificarLike = async (publicacionId) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/likes/publicaciones/${publicacionId}/usuario/${userId}/like`);
+      setUserLiked(response.data.liked);
+    } catch (error) {
+      console.error('Error al verificar el like:', error);
+    }
+  };
+
   useEffect(() => {
     const fetchPublicacion = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/publicaciones/${id}`);
         setPublicacion(response.data);
-        setLikes(response.data.likes);
+        setLikes(response.data.cantidad_likes);
+        verificarLike(id);
       } catch (error) {
         console.error('Error al obtener los detalles de la publicación:', error);
       }
@@ -74,26 +102,19 @@ export function PublicacionPost() {
 
   const handleLike = async () => {
     try {
-      const token = localStorage.getItem('token');
-      if (!token) {
+      if (!userId) {
         console.error('Usuario no autenticado');
         return;
       }
 
-      const decodedToken = JSON.parse(atob(token.split('.')[1]));
-      const id_usuario = decodedToken.id;
-
-      const response = await axios.get(`http://localhost:3000/likes/publicaciones/${id}/usuario/${id_usuario}/like`);
-      const liked = response.data.liked;
-
-      if (liked) {
-        // Si el usuario ya dio like, quitar el like
+      if (userLiked) {
         await quitarLike(id);
         setLikes(likes => likes - 1);
+        setUserLiked(false);
       } else {
-        // Si el usuario no ha dado like, dar el like
         await darLike(id);
         setLikes(likes => likes + 1);
+        setUserLiked(true);
       }
     } catch (error) {
       console.error('Error al manejar el like:', error);
@@ -103,15 +124,11 @@ export function PublicacionPost() {
 
   const darLike = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const decodedToken = JSON.parse(atob(token.split('.')[1]));
-      const id_usuario = decodedToken.id;
-
       await axios.post(`http://localhost:3000/likes/publicaciones/${id}/like`, {
-        id_usuario: id_usuario
+        id_usuario: userId
       }, {
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
     } catch (error) {
@@ -121,13 +138,9 @@ export function PublicacionPost() {
 
   const quitarLike = async (id) => {
     try {
-      const token = localStorage.getItem('token');
-      const decodedToken = JSON.parse(atob(token.split('.')[1]));
-      const id_usuario = decodedToken.id;
-
-      await axios.delete(`http://localhost:3000/likes/publicaciones/${id}/unlike/${id_usuario}`, {
+      await axios.delete(`http://localhost:3000/likes/publicaciones/${id}/unlike/${userId}`, {
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
       console.log('Like quitado');
@@ -177,8 +190,8 @@ export function PublicacionPost() {
                 </div>
                 <div className="feed_footer">
                   <ul className="feed_footer_left">
-                    <li className="hover-orange selected-orange">
-                      <i className="fa fa-heart" onClick={handleLike}></i> {likes} Likes
+                    <li className="hover-orange selected-orange" onClick={handleLike}>
+                      <i className={`fa ${userLiked ? 'fa-heart' : 'fa-heart-o'}`}></i> {likes} Likes
                     </li>
                     <li>
                       <span>
