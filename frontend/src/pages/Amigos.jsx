@@ -89,7 +89,7 @@ export function Amigos() {
                     <div className="friend" key={amigo._id}>
                       <div className="friend_title">
                         <img src={amigo.imagen_perfil} alt={amigo.usuario} />
-                        <span><b>{amigo.usuario}</b></span>
+                        <span><b><a href={`/perfil/${amigo.usuario}`}>{amigo.usuario}</a></b></span>
                         <button className="delete-friend" onClick={() => handleEliminarAmigo(amigo._id)}>Eliminar</button>
                       </div>
                     </div>
