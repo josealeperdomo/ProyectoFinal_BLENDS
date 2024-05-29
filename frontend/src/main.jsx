@@ -50,7 +50,7 @@ root.render(
         <Route element={<AdminsRoutes/>}>
           <Route path='/UsuariosBlendsAdmin' element={<UsuariosBlendsAdmin/>}/>
           <Route path='/PagoMembresiaAdmin' element={<PagoMembresiaAdmin/>}/>
-          <Route path='/Detailsuser' element={<DetailsUser/>}/>
+          <Route path='/Detailsuser/:id' element={<DetailsUser/>}/>
         </Route>
       </Routes>
       </SocketContextProvider>

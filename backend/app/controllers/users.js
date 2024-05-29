@@ -145,7 +145,7 @@ const cambiarImagen = async (req, res) => {
 const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nombre, apellido, usuario, email, password, rol } = req.body;
+        const { nombre, apellido, usuario, email, password, rol, biografia } = req.body;
 
         const user = await userModel.findByIdAndUpdate(id, {
             nombre,
@@ -153,7 +153,8 @@ const updateUser = async (req, res) => {
             usuario,
             email,
             password: await userModel.encryptPassword(password),
-            rol
+            rol,
+            biografia
         }, { new: true });
 
         if (!user) {
@@ -166,6 +167,38 @@ const updateUser = async (req, res) => {
         console.log(error);
         }
 };
+
+    const cambiarContrasena = async (req, res) => {
+    const idUsuario = req.params.id;
+    const { anteriorContrasena, nuevaContrasena } = req.body;
+  
+    try {
+      // Buscar el usuario por su ID
+      const usuario = await userModel.findById(idUsuario);
+      if (!usuario) {
+        return res.status(404).json({ error: 'Usuario no encontrado' });
+      }
+  
+      // Verificar si la contraseña anterior coincide
+      console.log(anteriorContrasena);
+      const contrasenaCoincide = await userModel.comparePassword(anteriorContrasena, usuario.password);
+      if (!contrasenaCoincide) {
+        return res.status(400).json({ error: 'La contraseña anterior es incorrecta' });
+      }
+  
+      // Encriptar la nueva contraseña
+      const nuevaContrasenaEncriptada = await userModel.encryptPassword(nuevaContrasena);
+  
+      // Actualizar la contraseña del usuario
+      usuario.password = nuevaContrasenaEncriptada;
+      await usuario.save();
+  
+      return res.status(200).json({ mensaje: 'Contraseña cambiada exitosamente' });
+    } catch (error) {
+      console.error('Error al cambiar la contraseña:', error);
+      return res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  }
 
 const deleteUser = async (req, res) => {
     try {
@@ -180,4 +213,4 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports = { getUsers, getUser, getAmigos, createUser, cambiarImagen, updateUser, deleteUser };
+module.exports = { getUsers, getUser, getAmigos, createUser, cambiarImagen, updateUser, deleteUser, cambiarContrasena };

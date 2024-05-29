@@ -1,11 +1,69 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 import "../styles/General.css";
 import "../styles/Feed.css";
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
-import NavDer from "../components/NavDer";
-import fotoejemplo from "../img/photo-1.jpg";
-import { Link } from "react-router-dom";
+
 export function ConfigUser() {
+  const [user, setUser] = useState({
+    nombre: '',
+    apellido: '',
+    email: '',
+    usuario: '',
+    biografia: ''
+  });
+  const [userId, setUserId] = useState(null);
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.error('Usuario no autenticado');
+    return;
+  }
+
+  const decodedToken = JSON.parse(atob(token.split('.')[1]));
+  const id_usuario = decodedToken.id;
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const obtenerIdUsuario = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/users/${id_usuario}`);
+        const userFound = response.data
+
+        if (userFound) {
+          setUserId(userFound._id);
+          setUser(userFound);
+        } else {
+          console.error('Usuario no encontrado');
+        }
+      } catch (error) {
+        console.error('Error al obtener los usuarios:', error);
+      }
+    };
+
+    obtenerIdUsuario();
+  }, [id_usuario]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (userId) {
+        await axios.put(`http://localhost:3000/users/${userId}`, user);
+        alert('Usuario actualizado correctamente');
+      } else {
+        console.error('ID de usuario no encontrado');
+      }
+    } catch (error) {
+      console.error('Error al actualizar el usuario:', error);
+    }
+  };
+
   return (
     <>
       <div className="home">
@@ -29,12 +87,12 @@ export function ConfigUser() {
                   <div className="menusetting_contain">
                     <ul>
                       <li>
-                        <a href="/configuracion" id="settings-select">
+                        <a href={`/configuracion`} id="settings-select">
                           Informacion Personal
                         </a>
                       </li>
                       <li>
-                        <a href="/cambiocontrasena" >
+                        <a href={`/cambiocontrasena`}>
                           Cambio de contraseña
                         </a>
                       </li>
@@ -46,36 +104,61 @@ export function ConfigUser() {
                     <center>
                       <div className="settings shadow">
                         <div className="settings_title">
-                          <h3>informacion Personal </h3>
+                          <h3>Informacion Personal</h3>
                         </div>
                         <div className="settings_content">
-                          <form>
+                          <form onSubmit={handleSubmit}>
                             <div className="pi-input pi-input-lg">
                               <span>Nombre</span>
-                              <input type="text" value="Jonh" />
+                              <input
+                                type="text"
+                                name="nombre"
+                                value={user.nombre}
+                                onChange={handleInputChange}
+                                placeholder="Nombre"
+                              />
                             </div>
                             <div className="pi-input pi-input-lg">
                               <span>Apellido</span>
-                              <input type="text" value="Hamstrong" />
+                              <input
+                                type="text"
+                                name="apellido"
+                                value={user.apellido}
+                                onChange={handleInputChange}
+                                placeholder="Apellido"
+                              />
                             </div>
                             <div className="pi-input pi-input-lg">
-                              <span>Correo electonico</span>
-                              <input type="text" value="Jonh@yourmail.com" />
+                              <span>Correo electrónico</span>
+                              <input
+                                type="email"
+                                name="email"
+                                value={user.email}
+                                onChange={handleInputChange}
+                                placeholder="Correo electrónico"
+                              />
                             </div>
                             <div className="pi-input pi-input-lg">
                               <span>Nombre de usuario</span>
-                              <input type="text" value="Jhon" />
+                              <input
+                                type="text"
+                                name="usuario"
+                                value={user.usuario}
+                                onChange={handleInputChange}
+                                placeholder="Nombre de usuario"
+                              />
                             </div>
                             <div className="pi-input pi-input-lg">
-                              <span>Descripcion sobre ti</span>
-                              <input type="text" value="Hola! Soy nuevo en Blends" />
+                              <span>Descripción sobre ti</span>
+                              <input
+                                type="text"
+                                name="biografia"
+                                value={user.biografia}
+                                onChange={handleInputChange}
+                                placeholder="Descripción sobre ti"
+                              />
                             </div>
-                            <div className="pi-input pi-input-lg">
-                              <span>Imagen de perfil</span>
-                              <input type="text" />
-                            </div>
-
-                            <button>Salvar Cambios</button>
+                            <button type="submit">Salvar Cambios</button>
                           </form>
                         </div>
                       </div>
