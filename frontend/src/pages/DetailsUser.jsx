@@ -1,11 +1,59 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 import "../styles/General.css";
 import "../styles/Feed.css";
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
-import NavDer from "../components/NavDer";
-import fotoejemplo from "../img/photo-1.jpg";
-import { Link } from "react-router-dom";
+
 export function DetailsUser() {
+  const navigate = useNavigate()
+  const { id } = useParams(); // Obtiene el id de los parámetros de la ruta
+  const [user, setUser] = useState({
+    nombre: '',
+    apellido: '',
+    email: '',
+    password: ''
+  });
+
+  useEffect(() => {
+    const obtenerUsuario = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/users/${id}`);
+        setUser(response.data);
+      } catch (error) {
+        console.error('Error al obtener los detalles del usuario:', error);
+      }
+    };
+
+    obtenerUsuario();
+  }, [id]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(`http://localhost:3000/users/${id}`, user);
+      alert('Usuario actualizado correctamente');
+    } catch (error) {
+      console.error('Error al actualizar el usuario:', error);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:3000/users/${id}`);
+      alert('Usuario eliminado correctamente');
+      navigate('/UsuariosBlendsAdmin')
+    } catch (error) {
+      console.error('Error al eliminar el usuario:', error);
+    }
+  };
+
   return (
     <>
       <div className="home">
@@ -22,55 +70,72 @@ export function DetailsUser() {
           <section className="central-opciones">
             <div className="seccion-general">
               <div className="row amigos ">
-              <a className="row salir-post" href="javascript:history.back()" >
-                  <div className="fa fa-arrow-left ">  
+                <a className="row salir-post" href="javascript:history.back()">
+                  <div className="fa fa-arrow-left ">
                   </div>
                   <h3>Ir a Usuarios</h3>
-              </a>
-                
-              <div className="config-form">
-                <div class="row border-radius">
-                <center><div class="settings shadow">
-                    <div class="settings_title">
-                        <h3>Datos del usuario</h3>
-                    </div>
-                    <div class="settings_content">
-                        <form>
-                            <div class="pi-input pi-input-lg">
-                                <span>Nombre</span>
-                                <input type="text" value="Nombre" />
+                </a>
+
+                <div className="config-form">
+                  <div className="row border-radius">
+                    <center>
+                      <div className="settings shadow">
+                        <div className="settings_title">
+                          <h3>Datos del usuario</h3>
+                        </div>
+                        <div className="settings_content">
+                          <form onSubmit={handleSubmit}>
+                            <div className="pi-input pi-input-lg">
+                              <span>Nombre</span>
+                              <input
+                                type="text"
+                                name="nombre"
+                                value={user.nombre}
+                                onChange={handleInputChange}
+                                placeholder="Nombre"
+                              />
                             </div>
-                            <div class="pi-input pi-input-lg">
-                                <span>Apellido</span>
-                                <input type="text" value="Apellido" />
+                            <div className="pi-input pi-input-lg">
+                              <span>Apellido</span>
+                              <input
+                                type="text"
+                                name="apellido"
+                                value={user.apellido}
+                                onChange={handleInputChange}
+                                placeholder="Apellido"
+                              />
                             </div>
-                            <div class="pi-input pi-input-lg">
-                                <span>Correo</span>
-                                <input type="password" placeholder="Correo" />
+                            <div className="pi-input pi-input-lg">
+                              <span>Correo</span>
+                              <input
+                                type="email"
+                                name="email"
+                                value={user.email}
+                                onChange={handleInputChange}
+                                placeholder="Correo"
+                              />
                             </div>
-                            <div class="pi-input pi-input-lg">
-                                <span>Contraseña</span>
-                                <input type="password" placeholder="Contraseña" />
+                            <div className="pi-input pi-input-lg">
+                              <span>Contraseña</span>
+                              <input
+                                type="password"
+                                name="password"
+                                onChange={handleInputChange}
+                                placeholder="Contraseña"
+                              />
                             </div>
                             <div className="buton-details">
-                              
-                              <button className="userdetailBoton">Guardar cambios</button>
-                              <button className="userdetailBotonred">Eliminar cuenta</button>
-
+                              <button type="submit" className="userdetailBoton">Guardar cambios</button>
+                              <button type="button" onClick={handleDelete} className="userdetailBotonred">Eliminar cuenta</button>
                             </div>
-                            
-
-                        </form>
-                    </div>
-                </div></center>
-            </div>
-                 
-                  
+                          </form>
+                        </div>
+                      </div>
+                    </center>
+                  </div>
                 </div>
               </div>
             </div>
-              
-            
           </section>
           {/*------------------------ SECCION LATERAL DERECHA---------------*/}
         </section>

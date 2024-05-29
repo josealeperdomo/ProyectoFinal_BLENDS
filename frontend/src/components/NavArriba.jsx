@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/General.css";
 import "../styles/Components.css";
 import Logo from "../img/LogoBlends.png";
@@ -12,8 +12,35 @@ import menu from "../assets/menu.svg";
 import like from "../assets/like.svg";
 import share from "../assets/share.svg";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 
 function NavArriba() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.error('Usuario no autenticado');
+    return;
+  }
+
+  const decodedToken = JSON.parse(atob(token.split('.')[1]));
+  const id_usuario = decodedToken.id;
+  const [user, setUser] = useState({
+    usuario: ''
+  });
+  
+  useEffect(() => {
+    const obtenerUsuario = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/users/${id_usuario}`);
+        setUser(response.data);
+      } catch (error) {
+        console.error('Error al obtener los detalles del usuario:', error);
+      }
+    };
+
+    obtenerUsuario();
+  }, [id_usuario]);
+
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
   const [isVisibleNotificaciones, setIsVisibleNotificaciones] = useState(false);
   const [isVisibleAmigos, setIsVisibleAmigos] = useState(false);
@@ -44,6 +71,47 @@ function NavArriba() {
     // Redirigir a la página de inicio de sesión
     window.location.href = "/";
 };
+
+const [solicitudes, setSolicitudes] = useState([]);
+const [loading, setLoading] = useState(true);
+const [error, setError] = useState(null);
+
+useEffect(() => {
+  const obtenerSolicitudes = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/amistad/${id_usuario}`);
+      setSolicitudes(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error al obtener las solicitudes:', error);
+      setError('Error al cargar las solicitudes');
+      setLoading(false);
+    }
+  };
+
+  obtenerSolicitudes();
+}, []);
+
+const rechazarSolicitud = async (id_emisor, id_receptor) => {
+  try {
+    const response = await axios.delete('http://localhost:3000/amistad/rechazarSolicitud', { id_emisor, id_receptor });
+    console.log(response.data.message);
+    // Aquí podrías actualizar el estado de las solicitudes o hacer alguna otra acción
+  } catch (error) {
+    console.error('Error al rechazar la solicitud:', error);
+  }
+};
+
+const aceptarSolicitud = async (id_emisor, id_receptor) => {
+  try {
+    const response = await axios.patch('http://localhost:3000/amistad/aceptarSolicitud', { id_emisor, id_receptor });
+    console.log(response.data.message);
+    // Aquí podrías actualizar el estado de las solicitudes o hacer alguna otra acción
+  } catch (error) {
+    console.error('Error al aceptar la solicitud:', error);
+  }
+};
+
 
   return (
     <>
@@ -152,60 +220,20 @@ function NavArriba() {
               </div>
               <div className="modal-content">
                 <ul>
-                  <li>
-                    <a href="#">
-                      <img src="images/user-2.jpg" alt="" />
-                      <div className="modal-content-info">
-                        <span>
-                          <b>Tony Stevens</b>
-                        </span>
-                        <span>4 Friends in Common</span>
-                      </div>
-
-                      <button className="modal-content-accept">Accept</button>
-                      <button className="modal-content-decline">Decline</button>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <img src="images/user-6.jpg" alt="" />
-                      <div className="modal-content-info">
-                        <span>
-                          <b>Tamara Romanoff</b>
-                        </span>
-                        <span>4 Friends in Common</span>
-                      </div>
-                      <button className="modal-content-accept">Accept</button>
-                      <button className="modal-content-decline">Decline</button>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <img src="images/user-4.jpg" alt="" />
-                      <div className="modal-content-info">
-                        <span>
-                          <b>Nicholas Grissom</b>
-                        </span>
-                        <span>4 Friends in Common</span>
-                      </div>
-                      <button className="modal-content-accept">Accept</button>
-                      <button className="modal-content-decline">Decline</button>
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href="#">
-                      <img src="images/user-4.jpg" alt="" />
-                      <div className="modal-content-info">
-                        <span>
-                          <b>Nicholas Grissom</b>
-                        </span>
-                        <span>4 Friends in Common</span>
-                      </div>
-                      <button className="modal-content-accept">Accept</button>
-                      <button className="modal-content-decline">Decline</button>
-                    </a>
-                  </li>
+                {solicitudes.length === 0 ? <h1>No tienes solicitudes</h1> : solicitudes.map((solicitud) => (
+                    <li key={solicitud._id}>
+                      <a href="#">
+                        <img src={solicitud.usuarioEmisor.imagen_perfil} alt={solicitud.nombre} />
+                        <div className="modal-content-info">
+                          <span>
+                            <b>{solicitud.usuarioEmisor.usuario}</b>
+                          </span>
+                        </div>
+                        <button className="modal-content-accept" onClick={() => aceptarSolicitud(solicitud.usuarioEmisor._id, solicitud.usuarioReceptor)}>Accept</button>
+                        <button className="modal-content-decline" onClick={() => rechazarSolicitud(solicitud.usuarioEmisor._id, solicitud.usuarioReceptor)}>Decline</button>
+                      </a>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -405,7 +433,7 @@ function NavArriba() {
               <div className="modal-content">
                 <ul>
                   <li>
-                    <a href="/configuracion">
+                    <a href={`/configuracion/${user.usuario}`}>
                       <i className="fa fa-tasks" aria-hidden="true"></i>
                       <div className="modal-content-info">
                         <span>

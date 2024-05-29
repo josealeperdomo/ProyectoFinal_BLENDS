@@ -7,7 +7,8 @@ const {
     createUser,
     updateUser,
     deleteUser,
-    getAmigos
+    getAmigos,
+    cambiarContrasena
 } = require('../controllers/users');
 
 router.get('/', getUsers);
@@ -17,5 +18,6 @@ router.post('/', createUser);
 router.put('/:id', updateUser);
 router.put('/cambiarimagen/:id', cambiarImagen);
 router.delete('/:id', deleteUser);
+router.put('/:id/contrasena', cambiarContrasena);
 
 module.exports = router;
