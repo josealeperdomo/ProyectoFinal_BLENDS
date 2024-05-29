@@ -200,6 +200,19 @@ const updateUser = async (req, res) => {
     }
   }
 
+    const mostrarUsuariosRandoms = async (req, res) => {
+    try {
+        const usuariosRandoms = await userModel.aggregate([
+            { $sample: { size: 3 } } // $sample para obtener una muestra aleatoria de documentos
+        ]);
+        res.status(200).json(usuariosRandoms);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Error al obtener usuarios aleatorios' });
+        
+    }
+}
+
 const deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
@@ -213,4 +226,23 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports = { getUsers, getUser, getAmigos, createUser, cambiarImagen, updateUser, deleteUser, cambiarContrasena };
+const obtenerUsuarioPorUser = async (req, res) => {
+    try {
+      let { user } = req.params; // Obtener el parámetro 'user' de la consulta
+      user = user.toLowerCase(); // Convertir el nombre de usuario a minúsculas
+  
+      // Buscar el usuario por su nombre de usuario en la base de datos (insensible a mayúsculas y minúsculas)
+      const usuario = await userModel.findOne({ usuario: { $regex: new RegExp(user, 'i') } });
+  
+      if (!usuario) {
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+      }
+  
+      res.status(200).json(usuario);
+    } catch (error) {
+      console.error('Error al obtener el usuario por user:', error);
+      res.status(500).json({ message: 'Error al obtener el usuario por user' });
+    }
+  };
+
+module.exports = { getUsers, getUser, getAmigos, createUser, cambiarImagen, updateUser, deleteUser, cambiarContrasena, mostrarUsuariosRandoms, obtenerUsuarioPorUser};

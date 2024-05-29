@@ -29,6 +29,7 @@ root.render(
       <AuthContextProvider>
       <SocketContextProvider>
       <Routes>
+        <Route path='/*' element={<>ERROR 404</>}/>
         <Route element={<PublicRoute />}>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -37,7 +38,7 @@ root.render(
         <Route element={<PrivateRoute />}>
           <Route path="/home" element={<Feed />} />
             <Route path="/publicacion/:id" element={<PublicacionPost />} />
-            <Route path="/perfil" element={<PerfilUser />} />
+            <Route path="/perfil/:user" element={<PerfilUser />} />
             <Route path="/amigos" element={<Amigos />} />
             <Route path="/configuracion" element={<ConfigUser />}/>
             <Route path="/cambioContrasena" element={<CambioContrasena />} />
