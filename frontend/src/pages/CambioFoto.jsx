@@ -5,8 +5,10 @@ import "../styles/General.css";
 import "../styles/Feed.css";
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
+import camera from "../assets/camera.svg"
+import fotoprede from "../img/fotopredeterminada.png"
 
-export function ConfigUser() {
+export function CambioFoto() {
   const [user, setUser] = useState({
     nombre: '',
     apellido: '',
@@ -87,7 +89,7 @@ export function ConfigUser() {
                   <div className="menusetting_contain">
                     <ul>
                       <li>
-                        <a href={`/configuracion`} id="settings-select">
+                        <a href={`/configuracion`} >
                           Informacion Personal
                         </a>
                       </li>
@@ -97,7 +99,7 @@ export function ConfigUser() {
                         </a>
                       </li>
                       <li>
-                        <a href={`/cambiofoto`}>
+                        <a href={`/cambiofoto`} id="settings-select">
                           Cambiar foto de perfil
                         </a>
                       </li>
@@ -111,68 +113,18 @@ export function ConfigUser() {
                 </div>
                 <div className="config-form">
                   <div className="row border-radius">
-                    <center>
-                      <div className="settings shadow">
-                        <div className="settings_title">
-                          <h3>Informacion Personal</h3>
-                        </div>
-                        <div className="settings_content">
-                          <form onSubmit={handleSubmit}>
-                            <div className="pi-input pi-input-lg">
-                              <span>Nombre</span>
-                              <input
-                                type="text"
-                                name="nombre"
-                                value={user.nombre}
-                                onChange={handleInputChange}
-                                placeholder="Nombre"
-                              />
-                            </div>
-                            <div className="pi-input pi-input-lg">
-                              <span>Apellido</span>
-                              <input
-                                type="text"
-                                name="apellido"
-                                value={user.apellido}
-                                onChange={handleInputChange}
-                                placeholder="Apellido"
-                              />
-                            </div>
-                            <div className="pi-input pi-input-lg">
-                              <span>Correo electrónico</span>
-                              <input
-                                type="email"
-                                name="email"
-                                value={user.email}
-                                onChange={handleInputChange}
-                                placeholder="Correo electrónico"
-                              />
-                            </div>
-                            <div className="pi-input pi-input-lg">
-                              <span>Nombre de usuario</span>
-                              <input
-                                type="text"
-                                name="usuario"
-                                value={user.usuario}
-                                onChange={handleInputChange}
-                                placeholder="Nombre de usuario"
-                              />
-                            </div>
-                            <div className="pi-input pi-input-lg">
-                              <span>Descripción sobre ti</span>
-                              <input
-                                type="text"
-                                name="biografia"
-                                value={user.biografia}
-                                onChange={handleInputChange}
-                                placeholder="Descripción sobre ti"
-                              />
-                            </div>
-                            <button type="submit">Salvar Cambios</button>
-                          </form>
-                        </div>
-                      </div>
-                    </center>
+                    <div className='cambiarfoto-div'>
+                      <img src={camera} alt="" />
+                      <a href="">Subir foto</a>
+                    </div>
+                    <div className='fotopredeterminada'>
+                      <img src={fotoprede} alt="" />
+                    </div>
+                    
+                    
+                  <button className='botonconfig' type="submit">Salvar Cambios</button>
+
+
                   </div>
                 </div>
               </div>

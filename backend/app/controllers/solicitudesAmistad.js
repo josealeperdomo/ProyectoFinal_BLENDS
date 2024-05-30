@@ -2,16 +2,9 @@ const Solicitud = require('../models/solicitudesAmistad');
 const User = require('../models/users');
 
 const SolicitudControllers = {
-    mostrarsolicitudes: async(req,res)=>{
+    mostrarsolicitudes: async (req, res) => {
         try {
-            const solicitudes = await Solicitud.find({ usuariorEmisor: req.params.id })
-            .populate({
-                path: 'usuarioReceptor',
-                select: 'usuario'
-            });
-            if (solicitudes.length === 0) {
-                return res.status(404).json({ message: 'Solicitudes no encontradas' });
-            }
+            const solicitudes = await Solicitud.find({ usuarioReceptor: req.params.id }).populate('usuarioEmisor', 'usuario imagen_perfil')
             res.status(200).json(solicitudes);
         } catch (error) {
             res.status(500).json({ message: 'Error al obtener solicitud' });
@@ -19,7 +12,7 @@ const SolicitudControllers = {
     },
     mostrarAmigos: async(req,res)=>{
         try {
-            const usuario = await User.findById(req.params.id).populate('amigos', 'nombre');
+            const usuario = await User.findById(req.params.id)
             if (!usuario) {
                 return res.status(404).json({ message: 'Usuario no encontrado' });
             }
@@ -40,7 +33,7 @@ const SolicitudControllers = {
     enviarSolicitud: async (req, res) => {
         try {
             const { id_emisor, id_receptor } = req.body;
-            const solicitudExistente = await Solicitud.findOne({ usuariorEmisor: id_emisor, usuarioReceptor: id_receptor });
+            const solicitudExistente = await Solicitud.findOne({ usuarioEmisor: id_emisor, usuarioReceptor: id_receptor });
             if (solicitudExistente) {
                 return res.status(400).json({ message: 'El usuario ya ha enviado una solicitud' });
             }
@@ -49,7 +42,7 @@ const SolicitudControllers = {
                 return res.status(400).json({ message: 'Estos usuarios ya son amigos' });
             }
             const nuevaSolicitud = await Solicitud.create({
-                usuariorEmisor: id_emisor,
+                usuarioEmisor: id_emisor,
                 usuarioReceptor: id_receptor
             });
             res.status(200).json({ message: 'Solicitud creada correctamente', solicitud: nuevaSolicitud });
@@ -62,7 +55,7 @@ const SolicitudControllers = {
     cancelarSolicitud: async(req,res)=>{
         try {
             const { id_emisor, id_receptor } = req.body
-            const solicitudExistente = await Solicitud.findOneAndDelete({ usuariorEmisor: id_emisor, usuarioReceptor: id_receptor });
+            const solicitudExistente = await Solicitud.findOneAndDelete({ usuarioEmisor: id_emisor, usuarioReceptor: id_receptor });
             if(!solicitudExistente){
                 return res.status(400).json({ message: 'No existe una solicitud para eliminar' });
             }
@@ -75,7 +68,7 @@ const SolicitudControllers = {
     aceptarSolicitud: async(req,res)=>{
         try {
             const { id_emisor, id_receptor } = req.body
-            const solicitudExistente = await Solicitud.findOneAndDelete({ usuariorEmisor: id_emisor, usuarioReceptor: id_receptor });
+            const solicitudExistente = await Solicitud.findOneAndDelete({ usuarioEmisor: id_emisor, usuarioReceptor: id_receptor });
             if(!solicitudExistente){
                 return res.status(400).json({ message: 'No existe una solicitud para eliminar' });
             }
@@ -96,7 +89,7 @@ const SolicitudControllers = {
    rechazarSolicitud: async(req,res)=>{
         try {
             const { id_emisor, id_receptor } = req.body
-            const solicitudExistente = await Solicitud.findOneAndDelete({ usuariorEmisor: id_emisor, usuarioReceptor: id_receptor });
+            const solicitudExistente = await Solicitud.findOneAndDelete({ usuarioEmisor: id_emisor, usuarioReceptor: id_receptor });
             if(!solicitudExistente){
                 return res.status(400).json({ message: 'No existe una solicitud para rechazar' });
             }

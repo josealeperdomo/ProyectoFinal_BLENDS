@@ -99,7 +99,7 @@ const PagosController = {
             </tr>
             <tr>
               <td style="padding: 8px; border-bottom: 1px solid #eee;">Servicio Premium</td>
-              <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: right;">$86.87</td>
+              <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: right;">$50</td>
             </tr>
             <tr>
               <td colspan="2" style="padding-top: 20px; text-align: center;">

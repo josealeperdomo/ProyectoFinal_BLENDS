@@ -82,7 +82,7 @@ const Publicaciones = () => {
                                 <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
                             </div>
                             <span>
-                                <b>{publicacion.usuario_publicacion.usuario}</b> hizo una <a href={`/publicacion/${publicacion._id}`}>Publicacion</a>
+                                <b><a href={`/perfil/${publicacion.usuario_publicacion.usuario}`}>{publicacion.usuario_publicacion.usuario}</a></b> hizo una <a href={`/publicacion/${publicacion._id}`}>Publicacion</a>
                                 <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
                             </span>
                             <div className="menu-container">

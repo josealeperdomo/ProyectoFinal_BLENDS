@@ -512,3 +512,50 @@ margin-right: 10px;
   background-color: #fff;
 
 }
+/*cambio de foto*/
+.botonconfig{
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 18px;
+    font-weight: 700;
+    width: 90%;
+    height: 50px;
+    background-color: #009580;
+    margin-top: 20px;
+
+}
+.cambiarfoto-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e3e6e5;
+  width: 250px;
+  height: 50px;
+  gap: 15px;
+  margin-top:50px ;
+  cursor: pointer;
+  border: 1px solid #c5c7c7 ;
+}
+.cambiarfoto-div:hover{
+  background-color: #dcdddd;
+}
+.fotopredeterminada{
+  margin-top: 20px;
+  width: 100px;
+  border: 1px solid #c5c7c7 ;
+
+}
+
+.botonconfig-red{
+  background-color: #950000;
+  margin-bottom: 50px;
+
+}
+.eliminarcuenta{
+  font-size: 30px;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  text-align: center;
+}

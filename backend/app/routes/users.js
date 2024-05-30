@@ -7,15 +7,21 @@ const {
     createUser,
     updateUser,
     deleteUser,
-    getAmigos
+    getAmigos,
+    cambiarContrasena,
+    mostrarUsuariosRandoms,
+    obtenerUsuarioPorUser
 } = require('../controllers/users');
 
 router.get('/', getUsers);
 router.get('/:id', getUser);
+router.get('/user/:user', obtenerUsuarioPorUser)
 router.get('/amigos/:id', getAmigos)
 router.post('/', createUser);
 router.put('/:id', updateUser);
 router.put('/cambiarimagen/:id', cambiarImagen);
 router.delete('/:id', deleteUser);
+router.put('/:id/contrasena', cambiarContrasena);
+router.get('/users/sugeridos', mostrarUsuariosRandoms)
 
 module.exports = router;

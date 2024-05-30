@@ -5,7 +5,8 @@ const {
   mostrarPublicacion,
   crearPublicacion,
   editarPublicacion,
-  eliminarPublicacion
+  eliminarPublicacion,
+  obtenerPublicacionesPorUsuarioId
 } = require('../controllers/publicaciones');
 
 // Ruta para mostrar todas las publicaciones
@@ -22,5 +23,7 @@ router.put('/:id', editarPublicacion);
 
 // Ruta para eliminar una publicación
 router.delete('/:id', eliminarPublicacion);
+
+router.get('/user/:userId', obtenerPublicacionesPorUsuarioId)
 
 module.exports = router;

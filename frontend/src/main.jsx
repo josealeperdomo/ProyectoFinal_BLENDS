@@ -20,6 +20,8 @@ import { PagoMembresiaAdmin } from './pages/PagoMembresiaAdmin.jsx';
 import { DetailsUser } from './pages/DetailsUser.jsx';
 import { PagoPremium } from './pages/PagoPremium.jsx';
 import { PagoEnviado } from './pages/PagoEnviado.jsx';
+import { CambioFoto } from './pages/CambioFoto.jsx';
+import { EliminarCuenta } from './pages/EliminarCuenta.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -29,6 +31,7 @@ root.render(
       <AuthContextProvider>
       <SocketContextProvider>
       <Routes>
+        <Route path='/*' element={<>ERROR 404</>}/>
         <Route element={<PublicRoute />}>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -37,20 +40,22 @@ root.render(
         <Route element={<PrivateRoute />}>
           <Route path="/home" element={<Feed />} />
             <Route path="/publicacion/:id" element={<PublicacionPost />} />
-            <Route path="/perfil" element={<PerfilUser />} />
+            <Route path="/perfil/:user" element={<PerfilUser />} />
             <Route path="/amigos" element={<Amigos />} />
             <Route path="/configuracion" element={<ConfigUser />}/>
             <Route path="/cambioContrasena" element={<CambioContrasena />} />
             <Route path='/chats' element={<Chats/>}/>
             <Route path='/PagoPremium' element={<PagoPremium/>}/>
             <Route path='/PagoEnviado' element={<PagoEnviado/>}/>
+            <Route path='/cambiofoto' element={<CambioFoto/>}/>
+            <Route path='/eliminarCuenta' element={<EliminarCuenta/>}/>
 
         </Route>
 
         <Route element={<AdminsRoutes/>}>
           <Route path='/UsuariosBlendsAdmin' element={<UsuariosBlendsAdmin/>}/>
           <Route path='/PagoMembresiaAdmin' element={<PagoMembresiaAdmin/>}/>
-          <Route path='/Detailsuser' element={<DetailsUser/>}/>
+          <Route path='/Detailsuser/:id' element={<DetailsUser/>}/>
         </Route>
       </Routes>
       </SocketContextProvider>

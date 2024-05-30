@@ -1,63 +1,104 @@
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import "../styles/General.css";
 import "../styles/Feed.css";
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
-import NavDer from "../components/NavDer";
-import fotoejemplo from "../img/photo-1.jpg";
-import { Link } from 'react-router-dom';
+
 export function Amigos() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.error('Usuario no autenticado');
+    return;
+  }
+
+  const decodedToken = JSON.parse(atob(token.split('.')[1]));
+  const id = decodedToken.id;  
+  const [amigos, setAmigos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const obtenerAmigos = async () => {
+      try {
+        // Realizar una solicitud al servidor para obtener los amigos del usuario utilizando el ID
+        const response = await axios.get(`http://localhost:3000/users/amigos/${id}`);
+        if (Array.isArray(response.data)) {
+          setAmigos(response.data);
+        } else {
+          setAmigos([]);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error('Error al obtener la lista de amigos:', error);
+        setError('Error al cargar la lista de amigos');
+        setLoading(false);
+      }
+    };
+
+    obtenerAmigos();
+  }, [id]);
+
+  const handleEliminarAmigo = async (idAmigo) => {
+    try {
+      // Realizar una solicitud DELETE al servidor para eliminar el amigo
+      await axios.patch('http://localhost:3000/amistad/eliminarAmigo', {
+    
+          id_emisor: id,
+          id_receptor: idAmigo
+        
+      });
+
+      // Actualizar la lista de amigos eliminando al amigo eliminado
+      setAmigos(prevAmigos => prevAmigos.filter(amigo => amigo._id !== idAmigo));
+    } catch (error) {
+      console.error('Error al eliminar el amigo:', error);
+      // Manejar el error, como mostrar un mensaje al usuario
+    }
+  };
+
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <>
       <div className="home">
-
-        {/*------------------------ SECCION SUPERIOR---------------*/}
+        {/* SECCION SUPERIOR */}
         <NavArriba />
 
         <section className="seccion-principal">
-          {/*------------------------ SECCION LATERAL IZQUIERDA-------------------*/}
+          {/* SECCION LATERAL IZQUIERDA */}
           <div className="lateral-izquierda">
             <NavIzq />
           </div>
 
-          {/*------------------------ SECCION CENTRO API------------------------*/}
+          {/* SECCION CENTRO API */}
           <section className="central-opciones">
             <div className="seccion-general">
-
-              <div className="row amigos">
-              <div className="friend">
-                    <div className="friend_title">
-                        <img src="images/user-7.jpg" alt="" />
-                        <span><b>Pedro Espinoza</b><p>4 Friends in Common</p></span>
-                        <button className="add-friend">Agregar</button>
+              {amigos.length === 0 ? (
+                <div>No tienes amigos.</div>
+              ) : (
+                <div className="row amigos">
+                  {amigos.map(amigo => (
+                    <div className="friend" key={amigo._id}>
+                      <div className="friend_title">
+                        <img src={amigo.imagen_perfil} alt={amigo.usuario} />
+                        <span><b>{amigo.usuario}</b></span>
+                        <button className="delete-friend" onClick={() => handleEliminarAmigo(amigo._id)}>Eliminar</button>
+                      </div>
                     </div>
-                    <div className="friend_title">
-                        <img src="images/user-2.jpg" alt="" />
-                        <span><b>Maria Martinez</b><p>2 Friends in Common</p></span>
-                        <button className="add-friend">Agregar</button>
-                    </div>
-                    <div className="friend_title">
-                        <img src="images/user-3.jpg" alt="" />
-                        <span><b>Andres Pineda</b><p>1 Friends in Common</p></span>
-                        <button className="add-friend">Agregar</button>
-                    </div>
-                    <div className="friend_title">
-                        <img src="images/user-6.jpg" alt="" />
-                        <span><b>Laura Hernandez</b><p>4 Friends in Common</p></span>
-                        <button className="delete-friend">Eliminar</button>
-                    </div>
-                    <div className="friend_title">
-                        <img src="images/user-4.jpg" alt="" />
-                        <span><b>Tony Stevens</b><p>Mutual Friend: Sarah Hetfield</p></span>
-                        <button className="delete-friend">Eliminar</button>
-                    </div>
-
+                  ))}
                 </div>
-
-              </div>
-              
+              )}
             </div>
           </section>
-          {/*------------------------ SECCION LATERAL DERECHA---------------*/}
+          {/* SECCION LATERAL DERECHA */}
         </section>
       </div>
     </>

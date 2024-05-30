@@ -162,7 +162,7 @@ export function PublicacionPost() {
                   <div className={onlineUsers.includes(publicacion.usuario_publicacion._id) ? "circleGreen":"circleGray"}></div>
                   <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
                   <span>
-                    <b>{publicacion.usuario_publicacion.usuario}</b> hizo una{" "}
+                    <b><a href={`/perfil/${publicacion.usuario_publicacion.usuario}`}>{publicacion.usuario_publicacion.usuario}</a></b> hizo una{" "}
                     <a href="#">Publicacion</a>
                     <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
                   </span>

@@ -6,7 +6,7 @@ import "../styles/Feed.css";
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
 
-export function ConfigUser() {
+export function EliminarCuenta() {
   const [user, setUser] = useState({
     nombre: '',
     apellido: '',
@@ -87,7 +87,7 @@ export function ConfigUser() {
                   <div className="menusetting_contain">
                     <ul>
                       <li>
-                        <a href={`/configuracion`} id="settings-select">
+                        <a href={`/configuracion`} >
                           Informacion Personal
                         </a>
                       </li>
@@ -102,7 +102,7 @@ export function ConfigUser() {
                         </a>
                       </li>
                       <li>
-                        <a href={`/eliminarcuenta`} >
+                        <a href={`/eliminarcuenta`} id="settings-select">
                           Eliminar cuenta
                         </a>
                       </li>
@@ -111,68 +111,12 @@ export function ConfigUser() {
                 </div>
                 <div className="config-form">
                   <div className="row border-radius">
-                    <center>
-                      <div className="settings shadow">
-                        <div className="settings_title">
-                          <h3>Informacion Personal</h3>
-                        </div>
-                        <div className="settings_content">
-                          <form onSubmit={handleSubmit}>
-                            <div className="pi-input pi-input-lg">
-                              <span>Nombre</span>
-                              <input
-                                type="text"
-                                name="nombre"
-                                value={user.nombre}
-                                onChange={handleInputChange}
-                                placeholder="Nombre"
-                              />
-                            </div>
-                            <div className="pi-input pi-input-lg">
-                              <span>Apellido</span>
-                              <input
-                                type="text"
-                                name="apellido"
-                                value={user.apellido}
-                                onChange={handleInputChange}
-                                placeholder="Apellido"
-                              />
-                            </div>
-                            <div className="pi-input pi-input-lg">
-                              <span>Correo electrónico</span>
-                              <input
-                                type="email"
-                                name="email"
-                                value={user.email}
-                                onChange={handleInputChange}
-                                placeholder="Correo electrónico"
-                              />
-                            </div>
-                            <div className="pi-input pi-input-lg">
-                              <span>Nombre de usuario</span>
-                              <input
-                                type="text"
-                                name="usuario"
-                                value={user.usuario}
-                                onChange={handleInputChange}
-                                placeholder="Nombre de usuario"
-                              />
-                            </div>
-                            <div className="pi-input pi-input-lg">
-                              <span>Descripción sobre ti</span>
-                              <input
-                                type="text"
-                                name="biografia"
-                                value={user.biografia}
-                                onChange={handleInputChange}
-                                placeholder="Descripción sobre ti"
-                              />
-                            </div>
-                            <button type="submit">Salvar Cambios</button>
-                          </form>
-                        </div>
-                      </div>
-                    </center>
+                    <h1 className='eliminarcuenta'>¿Estás seguro de eliminar tu cuenta?</h1>
+                    
+                    
+                  <button className=' botonconfig botonconfig-red' type="submit">Eliminar Cuenta</button>
+
+
                   </div>
                 </div>
               </div>

@@ -81,7 +81,7 @@ export function UsuariosBlendsAdmin() {
                       <div className="friend_title">
                         <img src={usuario.imagen_perfil} alt="" />
                         <span><b>{usuario.usuario}</b></span>
-                        <a href="/Detailsuser" className="add-friend">Ver detalles</a>
+                        <a href={`/Detailsuser/${usuario._id}`} className="add-friend">Ver detalles</a>
                       </div>
                     </div>
                   ))}
