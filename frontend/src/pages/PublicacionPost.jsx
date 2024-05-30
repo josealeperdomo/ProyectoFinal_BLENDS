@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/General.css';
 import '../styles/Feed.css';
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
 import NavDer from "../components/NavDer";
 import { useSocketContext } from '../routes/SocketContext';
+import menuPubli from "../assets/menucopubli.svg";
 
 export function PublicacionPost() {
   const { id } = useParams();
@@ -14,8 +15,26 @@ export function PublicacionPost() {
   const [comentario, setComentario] = useState('');
   const [comentarios, setComentarios] = useState([]);
   const [likes, setLikes] = useState(0);
+  const [userLiked, setUserLiked] = useState(false);
   const [error, setError] = useState(null);
-  const { onlineUsers } = useSocketContext(); // useContext hook siempre debe estar en la parte superior
+  const { onlineUsers } = useSocketContext();
+  const [infoUsuario, setInfoUsuario] = useState(null);
+  const [activeMenu, setActiveMenu] = useState(null);
+    
+  const handleMenuToggle = (id) => {
+      setActiveMenu(activeMenu === id ? null : id);
+  };
+
+  const handleDelete = async (id) => {
+      try {
+          await axios.delete(`http://localhost:3000/publicaciones/${id}`);
+          window.location.replace('/')      
+        } catch (err) {
+          console.error('Error al eliminar la publicación:', err);
+      }
+  };
+
+
 
   const fetchComentarios = async () => {
     try {
@@ -26,12 +45,52 @@ export function PublicacionPost() {
     }
   };
 
+  const getTokenPayload = () => {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+
+    try {
+      const payloadBase64 = token.split('.')[1];
+      const payloadJson = atob(payloadBase64);
+      return JSON.parse(payloadJson);
+    } catch (error) {
+      console.error('Error parsing token payload:', error);
+      return null;
+    }
+  };
+
+  const payload = getTokenPayload();
+  const userId = payload ? payload.id : null;
+
+  useEffect(() => {
+    const obtenerUsuarioPorId = async (usuarioid) => {
+        try {
+            const response = await axios.get(`http://localhost:3000/users/${usuarioid}`);
+            setInfoUsuario(response.data);
+        } catch (error) {
+            console.error('Error al obtener el usuario:', error);
+        }
+    };
+
+    obtenerUsuarioPorId(userId);
+}, [userId]);
+
+  const verificarLike = async (publicacionId) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/likes/publicaciones/${publicacionId}/usuario/${userId}/like`);
+      setUserLiked(response.data.liked);
+    } catch (error) {
+      console.error('Error al verificar el like:', error);
+    }
+  };
+
   useEffect(() => {
     const fetchPublicacion = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/publicaciones/${id}`);
         setPublicacion(response.data);
-        setLikes(response.data.likes);
+        setLikes(response.data.cantidad_likes);
+        verificarLike(id);
       } catch (error) {
         console.error('Error al obtener los detalles de la publicación:', error);
       }
@@ -74,26 +133,19 @@ export function PublicacionPost() {
 
   const handleLike = async () => {
     try {
-      const token = localStorage.getItem('token');
-      if (!token) {
+      if (!userId) {
         console.error('Usuario no autenticado');
         return;
       }
 
-      const decodedToken = JSON.parse(atob(token.split('.')[1]));
-      const id_usuario = decodedToken.id;
-
-      const response = await axios.get(`http://localhost:3000/likes/publicaciones/${id}/usuario/${id_usuario}/like`);
-      const liked = response.data.liked;
-
-      if (liked) {
-        // Si el usuario ya dio like, quitar el like
+      if (userLiked) {
         await quitarLike(id);
         setLikes(likes => likes - 1);
+        setUserLiked(false);
       } else {
-        // Si el usuario no ha dado like, dar el like
         await darLike(id);
         setLikes(likes => likes + 1);
+        setUserLiked(true);
       }
     } catch (error) {
       console.error('Error al manejar el like:', error);
@@ -103,15 +155,11 @@ export function PublicacionPost() {
 
   const darLike = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const decodedToken = JSON.parse(atob(token.split('.')[1]));
-      const id_usuario = decodedToken.id;
-
       await axios.post(`http://localhost:3000/likes/publicaciones/${id}/like`, {
-        id_usuario: id_usuario
+        id_usuario: userId
       }, {
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
     } catch (error) {
@@ -121,13 +169,9 @@ export function PublicacionPost() {
 
   const quitarLike = async (id) => {
     try {
-      const token = localStorage.getItem('token');
-      const decodedToken = JSON.parse(atob(token.split('.')[1]));
-      const id_usuario = decodedToken.id;
-
-      await axios.delete(`http://localhost:3000/likes/publicaciones/${id}/unlike/${id_usuario}`, {
+      await axios.delete(`http://localhost:3000/likes/publicaciones/${id}/unlike/${userId}`, {
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
       console.log('Like quitado');
@@ -135,6 +179,8 @@ export function PublicacionPost() {
       throw new Error('Error al quitar like: ' + error.message);
     }
   };
+
+  
 
   if (!publicacion) {
     return <div>Cargando...</div>;
@@ -159,14 +205,44 @@ export function PublicacionPost() {
             <div className="row border-radius">
               <div className="feed">
                 <div className="feed_title">
-                  <div className={onlineUsers.includes(publicacion.usuario_publicacion._id) ? "circleGreen":"circleGray"}></div>
-                  <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
-                  <span>
-                    <b><a href={`/perfil/${publicacion.usuario_publicacion.usuario}`}>{publicacion.usuario_publicacion.usuario}</a></b> hizo una{" "}
-                    <a href="#">Publicacion</a>
-                    <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
+                  <div className="feed_title2">
+                    <div className='imagen-online'>
+                      <div className={onlineUsers.includes(publicacion.usuario_publicacion._id) ? "circleGreen":"circleGray"}></div>
+                      <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
+                      {publicacion.usuario_publicacion.membresia == 'premium' ? <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/800px-Twitter_Verified_Badge.svg.png" style={{width: "15px", height: "15px" }} alt="" /> : <div></div>}
+
+                    </div>
+                      <span>
+                      <b><a href={`/perfil/${publicacion.usuario_publicacion.usuario}`}>{publicacion.usuario_publicacion.usuario}</a></b> hizo una{" "}
+                      <a href="#">Publicacion</a>
+                      <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
+                    
                   </span>
+                    
+
+                  </div>
+                  
+
+                  <div className="menu-container">
+                                <button className="menu-button" onClick={() => handleMenuToggle(publicacion._id)}>
+                                <img src={menuPubli} alt="Menu" />
+                                </button>
+                                {activeMenu === publicacion._id && (
+                                    <div className="menu-dropdown">
+                                        {userId !== publicacion.usuario_publicacion._id ? (
+                                            <button onClick={() => handleReport(publicacion._id)}>Reportar</button>
+                                        ) : (
+                                            <>
+                                                <button onClick={() => handleEdit(publicacion._id)}>Editar</button>
+                                                <button onClick={() => handleDelete(publicacion._id)}>Eliminar</button>
+                                            </>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
                 </div>
+
+
                 <div className="feed_content">
                   <div className="feed_content_image">
                     <p>{publicacion.texto}</p>
@@ -177,14 +253,10 @@ export function PublicacionPost() {
                 </div>
                 <div className="feed_footer">
                   <ul className="feed_footer_left">
-                    <li className="hover-orange selected-orange">
-                      <i className="fa fa-heart" onClick={handleLike}></i> {likes} Likes
+                    <li className="hover-orange selected-orange" onClick={handleLike}>
+                      <i className={`fa ${userLiked ? 'fa-heart' : 'fa-heart-o'}`}></i> {likes} 
                     </li>
-                    <li>
-                      <span>
-                        <b>Jimmy, Andrea</b> y 47 más les gustó esto
-                      </span>
-                    </li>
+
                   </ul>
                   <ul className="feed_footer_right">
                     <div>
@@ -202,12 +274,19 @@ export function PublicacionPost() {
                 <ul>
                   {comentarios.map(comentario => (
                     <li key={comentario._id}>
-                      <div className="feedcomments-user">
-                        <img src={comentario.usuario_comentario.imagen_perfil} alt="" />
-                        <span>
-                          <b>{comentario.usuario_comentario.usuario}</b>
-                          <p>{new Date(comentario.fecha_creacion).toLocaleString()}</p>
-                        </span>
+                      <div className="feedcomments-user1">
+                        <div className="feedcomments-user">
+                          <img src={comentario.usuario_comentario.imagen_perfil} alt="" />
+                          <span>
+                            <b>{comentario.usuario_comentario.usuario}</b>
+                            <p>{new Date(comentario.fecha_creacion).toLocaleString()}</p>
+                          </span>
+
+                        </div>
+                        <button className="menu-button" >
+                                <img src={menuPubli} alt="Menu" />
+                        </button>
+
                       </div>
                       <div className="feedcomments-comment">
                         <p>{comentario.texto}</p>
@@ -217,9 +296,9 @@ export function PublicacionPost() {
                 </ul>
               </div>
               <div className="textarea-comentarios">
-                <img src="" alt="Imagen de usuario"/>
+                <img src={infoUsuario.imagen_perfil} alt="Imagen de usuario"/>
                 <form onSubmit={handleSubmitComentario}>
-                  <input
+                  <input className='input-comentario'
                     type="text"
                     placeholder="Comentar"
                     value={comentario}

@@ -16,6 +16,10 @@ const PublicacionSchema = new mongoose.Schema({
     imagen_publicacion: {
         type: String,
         default: null
+    }
+    ,cantidad_likes: {
+        type: Number,
+        default: 0
     },
     enlace: String,
 }, {

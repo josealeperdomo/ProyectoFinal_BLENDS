@@ -87,9 +87,11 @@ export function Amigos() {
                 <div className="row amigos">
                   {amigos.map(amigo => (
                     <div className="friend" key={amigo._id}>
+                    
                       <div className="friend_title">
                         <img src={amigo.imagen_perfil} alt={amigo.usuario} />
-                        <span><b>{amigo.usuario}</b></span>
+                        {amigo.membresia == 'premium' ? <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/800px-Twitter_Verified_Badge.svg.png" style={{width: "15px", height: "15px" }} alt="" /> : <div></div>}
+                        <span><b><a href={`/perfil/${amigo.usuario}`}>{amigo.usuario}</a></b></span>
                         <button className="delete-friend" onClick={() => handleEliminarAmigo(amigo._id)}>Eliminar</button>
                       </div>
                     </div>
