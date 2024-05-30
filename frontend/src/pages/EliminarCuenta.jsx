@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "../styles/General.css";
 import "../styles/Feed.css";
@@ -16,20 +16,21 @@ export function EliminarCuenta() {
   });
   const [userId, setUserId] = useState(null);
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
+
   if (!token) {
     console.error('Usuario no autenticado');
-    return;
+    return null;
   }
 
   const decodedToken = JSON.parse(atob(token.split('.')[1]));
   const id_usuario = decodedToken.id;
-  const navigate = useNavigate()
 
   useEffect(() => {
     const obtenerIdUsuario = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/users/${id_usuario}`);
-        const userFound = response.data
+        const userFound = response.data;
 
         if (userFound) {
           setUserId(userFound._id);
@@ -45,22 +46,20 @@ export function EliminarCuenta() {
     obtenerIdUsuario();
   }, [id_usuario]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleDeleteAccount = async () => {
     try {
-      if (userId) {
-        await axios.put(`http://localhost:3000/users/${userId}`, user);
-        alert('Usuario actualizado correctamente');
-      } else {
-        console.error('ID de usuario no encontrado');
-      }
+      await axios.delete(`http://localhost:3000/users/${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      localStorage.removeItem('token');
+      alert('Cuenta eliminada exitosamente');
+      navigate('/');  // Redirigir a la página de inicio de sesión o inicio
     } catch (error) {
-      console.error('Error al actualizar el usuario:', error);
+      console.error('Error al eliminar la cuenta:', error);
+      alert('Hubo un problema al eliminar tu cuenta. Inténtalo nuevamente.');
     }
   };
 
@@ -112,11 +111,9 @@ export function EliminarCuenta() {
                 <div className="config-form">
                   <div className="row border-radius">
                     <h1 className='eliminarcuenta'>¿Estás seguro de eliminar tu cuenta?</h1>
-                    
-                    
-                  <button className=' botonconfig botonconfig-red' type="submit">Eliminar Cuenta</button>
-
-
+                    <button className='botonconfig botonconfig-red' onClick={handleDeleteAccount}>
+                      Eliminar Cuenta
+                    </button>
                   </div>
                 </div>
               </div>

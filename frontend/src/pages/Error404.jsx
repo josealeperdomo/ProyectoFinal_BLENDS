@@ -6,8 +6,7 @@ import "../styles/Feed.css";
 import NavArriba from "../components/NavArriba";
 import notfound from "../img/404.gif"
 
-
-export function Notfound() {
+export function Error404() {
   
 
   return (

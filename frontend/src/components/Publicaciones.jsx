@@ -143,47 +143,47 @@ const Publicaciones = () => {
 
   return (
     <div>
-      {publicaciones.map((publicacion) => (
-        <div className="row border-radius" key={publicacion._id}>
-          <div className="feed">
-            <div className="feed_title">
-              <div className="feed_title2">
-                <div className="imagen-online">
-                  <div
-                    className={
-                      onlineUsers.includes(publicacion.usuario_publicacion._id)
-                        ? "circleGreen"
-                        : "circleGray"
-                    }
-                  ></div>
-                  <img
-                    src={publicacion.usuario_publicacion.imagen_perfil}
-                    alt=""
-                  />
-                  {publicacion.usuario_publicacion.membresia === "premium" ? (
-                    <img className="verified"
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/800px-Twitter_Verified_Badge.svg.png"
-                      style={{ width: "15px", height: "15px" }}
-                      alt=""
-                    />
-                  ) : null}
-                  
-                </div>
-                <span>
+      {publicaciones.map((publicacion) => {
+        const usuario = publicacion.usuario_publicacion;
+        if (!usuario) {
+          return null; // Si el usuario no está definido, omite esta publicación
+        }
+
+        return (
+          <div className="row border-radius" key={publicacion._id}>
+            <div className="feed">
+              <div className="feed_title">
+                <div className="feed_title2">
+                  <div className="imagen-online">
+                    <div
+                      className={
+                        onlineUsers.includes(usuario._id)
+                          ? "circleGreen"
+                          : "circleGray"
+                      }
+                    ></div>
+                    <img src={usuario.imagen_perfil} alt="" />
+                    {usuario.membresia === "premium" ? (
+                      <img
+                        className="verified"
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/800px-Twitter_Verified_Badge.svg.png"
+                        style={{ width: "15px", height: "15px" }}
+                        alt=""
+                      />
+                    ) : null}
+                  </div>
+                  <span>
                     <b>
-                      <a
-                        href={`/perfil/${publicacion.usuario_publicacion.usuario}`}
-                      >
-                        {publicacion.usuario_publicacion.usuario}
+                      <a href={`/perfil/${usuario.usuario}`}>
+                        {usuario.usuario}
                       </a>
                     </b>{" "}
                     hizo una{" "}
                     <a href={`/publicacion/${publicacion._id}`}>Publicacion</a>
                     <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
                   </span>
-               
-              </div>
-              <div className="menu-container">
+                </div>
+                <div className="menu-container">
                   <button
                     className="menu-button"
                     onClick={() => handleMenuToggle(publicacion._id)}
@@ -192,7 +192,7 @@ const Publicaciones = () => {
                   </button>
                   {activeMenu === publicacion._id && (
                     <div className="menu-dropdown">
-                      {userId !== publicacion.usuario_publicacion._id ? (
+                      {userId !== usuario._id ? (
                         <button onClick={() => handleReport(publicacion._id)}>
                           Reportar
                         </button>
@@ -209,53 +209,54 @@ const Publicaciones = () => {
                     </div>
                   )}
                 </div>
-            </div>
-            <div className="feed_content">
-              <div className="feed_content_image">
-                <p>{publicacion.texto}</p>
               </div>
-              {publicacion.imagen_publicacion && (
+              <div className="feed_content">
                 <div className="feed_content_image">
-                  <img
-                    src={publicacion.imagen_publicacion}
-                    alt="Imagen de la publicación"
-                  />
+                  <p>{publicacion.texto}</p>
                 </div>
-              )}
-            </div>
-            <div className="feed_footer">
-              <ul className="feed_footer_left">
-                <li
-                  className="hover-orange selected-orange"
-                  onClick={() =>
-                    userLikes[publicacion._id]
-                      ? handleUnlike(publicacion._id)
-                      : handleLike(publicacion._id)
-                  }
-                >
-                  <i
-                    className={`fa ${
-                      userLikes[publicacion._id] ? "fa-heart" : "fa-heart-o"
-                    }`}
-                  ></i>{" "}
-                  {likes[publicacion._id]}
-                </li>
-                <li></li>
-              </ul>
-              <ul className="feed_footer_right">
-                <div>
-                  <li className="hover-orange selected-orange">
-                    <i className="fa fa-share"></i> 7k
+                {publicacion.imagen_publicacion && (
+                  <div className="feed_content_image">
+                    <img
+                      src={publicacion.imagen_publicacion}
+                      alt="Imagen de la publicación"
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="feed_footer">
+                <ul className="feed_footer_left">
+                  <li
+                    className="hover-orange selected-orange"
+                    onClick={() =>
+                      userLikes[publicacion._id]
+                        ? handleUnlike(publicacion._id)
+                        : handleLike(publicacion._id)
+                    }
+                  >
+                    <i
+                      className={`fa ${
+                        userLikes[publicacion._id] ? "fa-heart" : "fa-heart-o"
+                      }`}
+                    ></i>{" "}
+                    {likes[publicacion._id]}
                   </li>
-                  <li className="hover-orange">
-                    <i className="fa fa-comments-o"></i>comments
-                  </li>
-                </div>
-              </ul>
+                  <li></li>
+                </ul>
+                <ul className="feed_footer_right">
+                  <div>
+                    <li className="hover-orange selected-orange">
+                      <i className="fa fa-share"></i> 7k
+                    </li>
+                    <li className="hover-orange">
+                      <i className="fa fa-comments-o"></i> comments
+                    </li>
+                  </div>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
       {loading && <div>Loading...</div>}
     </div>
   );

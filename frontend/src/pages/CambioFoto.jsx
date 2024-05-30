@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "../styles/General.css";
 import "../styles/Feed.css";
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
-import camera from "../assets/camera.svg"
-import fotoprede from "../img/fotopredeterminada.png"
+import camera from "../assets/camera.svg";
+import fotoprede from "../img/fotopredeterminada.png";
 
 export function CambioFoto() {
   const [user, setUser] = useState({
@@ -14,24 +14,27 @@ export function CambioFoto() {
     apellido: '',
     email: '',
     usuario: '',
-    biografia: ''
+    biografia: '',
+    imagen_perfil: ''
   });
   const [userId, setUserId] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
+
   if (!token) {
     console.error('Usuario no autenticado');
-    return;
+    return null;
   }
 
   const decodedToken = JSON.parse(atob(token.split('.')[1]));
   const id_usuario = decodedToken.id;
-  const navigate = useNavigate()
 
   useEffect(() => {
     const obtenerIdUsuario = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/users/${id_usuario}`);
-        const userFound = response.data
+        const userFound = response.data;
 
         if (userFound) {
           setUserId(userFound._id);
@@ -47,22 +50,38 @@ export function CambioFoto() {
     obtenerIdUsuario();
   }, [id_usuario]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!selectedFile) {
+      console.error('No se ha seleccionado ninguna imagen');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('imagen_perfil', selectedFile);
+
     try {
-      if (userId) {
-        await axios.put(`http://localhost:3000/users/${userId}`, user);
-        alert('Usuario actualizado correctamente');
-      } else {
-        console.error('ID de usuario no encontrado');
-      }
+      const response = await axios.put(`http://localhost:3000/users/cambiarimagen/${userId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      setUser((prevUser) => ({
+        ...prevUser,
+        imagen_perfil: response.data.user.imagen_perfil
+      }));
+
+      alert('Imagen de perfil actualizada exitosamente');
+      navigate('/perfil');
     } catch (error) {
-      console.error('Error al actualizar el usuario:', error);
+      console.error('Error al cambiar la imagen de perfil:', error);
     }
   };
 
@@ -113,18 +132,25 @@ export function CambioFoto() {
                 </div>
                 <div className="config-form">
                   <div className="row border-radius">
-                    <div className='cambiarfoto-div'>
-                      <img src={camera} alt="" />
-                      <a href="">Subir foto</a>
-                    </div>
-                    <div className='fotopredeterminada'>
-                      <img src={fotoprede} alt="" />
-                    </div>
-                    
-                    
-                  <button className='botonconfig' type="submit">Salvar Cambios</button>
-
-
+                    <form onSubmit={handleSubmit}>
+                      <div className='cambiarfoto-div'>
+                        <label htmlFor="file-input">
+                          <img src={camera} alt="Camera icon" />
+                        </label>
+                        <input
+                          id="file-input"
+                          type="file"
+                          accept="image/*"
+                          onChange={handleFileChange}
+                          style={{ display: 'none' }}
+                        />
+                        <a href="">Subir foto</a>
+                      </div>
+                      <div className='fotopredeterminada'>
+                        <img src={user.imagen_perfil} alt="Foto predeterminada" />
+                      </div>
+                      <button className='botonconfig' type="submit">Salvar Cambios</button>
+                    </form>
                   </div>
                 </div>
               </div>

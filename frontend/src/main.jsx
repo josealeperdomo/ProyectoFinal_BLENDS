@@ -22,7 +22,7 @@ import { PagoPremium } from './pages/PagoPremium.jsx';
 import { PagoEnviado } from './pages/PagoEnviado.jsx';
 import { CambioFoto } from './pages/CambioFoto.jsx';
 import { EliminarCuenta } from './pages/EliminarCuenta.jsx';
-import { Notfound } from './pages/Notfound.jsx';
+import { Error404 } from './pages/Error404.jsx'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -32,7 +32,7 @@ root.render(
       <AuthContextProvider>
       <SocketContextProvider>
       <Routes>
-        <Route path='/*' element={<Notfound/>}/>
+        <Route path='/*' element={<Error404/>}/>
         <Route element={<PublicRoute />}>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
