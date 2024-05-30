@@ -7,6 +7,7 @@ import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
 import NavDer from "../components/NavDer";
 import { useSocketContext } from '../routes/SocketContext';
+import menuPubli from "../assets/menucopubli.svg";
 
 export function PublicacionPost() {
   const { id } = useParams();
@@ -204,17 +205,28 @@ export function PublicacionPost() {
             <div className="row border-radius">
               <div className="feed">
                 <div className="feed_title">
-                  <div className={onlineUsers.includes(publicacion.usuario_publicacion._id) ? "circleGreen":"circleGray"}></div>
-                  <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
-                  {publicacion.usuario_publicacion.membresia == 'premium' ? <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/800px-Twitter_Verified_Badge.svg.png" style={{width: "15px", height: "15px" }} alt="" /> : <div></div>}
-                  <span>
-                    <b><a href={`/perfil/${publicacion.usuario_publicacion.usuario}`}>{publicacion.usuario_publicacion.usuario}</a></b> hizo una{" "}
-                    <a href="#">Publicacion</a>
-                    <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
+                  <div className="feed_title2">
+                    <div className='imagen-online'>
+                      <div className={onlineUsers.includes(publicacion.usuario_publicacion._id) ? "circleGreen":"circleGray"}></div>
+                      <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
+                      {publicacion.usuario_publicacion.membresia == 'premium' ? <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/800px-Twitter_Verified_Badge.svg.png" style={{width: "15px", height: "15px" }} alt="" /> : <div></div>}
+
+                    </div>
+                      <span>
+                      <b><a href={`/perfil/${publicacion.usuario_publicacion.usuario}`}>{publicacion.usuario_publicacion.usuario}</a></b> hizo una{" "}
+                      <a href="#">Publicacion</a>
+                      <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
                     
                   </span>
+                    
+
+                  </div>
+                  
+
                   <div className="menu-container">
-                                <button className="menu-button" onClick={() => handleMenuToggle(publicacion._id)}>...</button>
+                                <button className="menu-button" onClick={() => handleMenuToggle(publicacion._id)}>
+                                <img src={menuPubli} alt="Menu" />
+                                </button>
                                 {activeMenu === publicacion._id && (
                                     <div className="menu-dropdown">
                                         {userId !== publicacion.usuario_publicacion._id ? (
@@ -242,13 +254,9 @@ export function PublicacionPost() {
                 <div className="feed_footer">
                   <ul className="feed_footer_left">
                     <li className="hover-orange selected-orange" onClick={handleLike}>
-                      <i className={`fa ${userLiked ? 'fa-heart' : 'fa-heart-o'}`}></i> {likes} Likes
+                      <i className={`fa ${userLiked ? 'fa-heart' : 'fa-heart-o'}`}></i> {likes} 
                     </li>
-                    <li>
-                      <span>
-                        <b>Jimmy, Andrea</b> y 47 más les gustó esto
-                      </span>
-                    </li>
+
                   </ul>
                   <ul className="feed_footer_right">
                     <div>
@@ -266,12 +274,19 @@ export function PublicacionPost() {
                 <ul>
                   {comentarios.map(comentario => (
                     <li key={comentario._id}>
-                      <div className="feedcomments-user">
-                        <img src={comentario.usuario_comentario.imagen_perfil} alt="" />
-                        <span>
-                          <b>{comentario.usuario_comentario.usuario}</b>
-                          <p>{new Date(comentario.fecha_creacion).toLocaleString()}</p>
-                        </span>
+                      <div className="feedcomments-user1">
+                        <div className="feedcomments-user">
+                          <img src={comentario.usuario_comentario.imagen_perfil} alt="" />
+                          <span>
+                            <b>{comentario.usuario_comentario.usuario}</b>
+                            <p>{new Date(comentario.fecha_creacion).toLocaleString()}</p>
+                          </span>
+
+                        </div>
+                        <button className="menu-button" >
+                                <img src={menuPubli} alt="Menu" />
+                        </button>
+
                       </div>
                       <div className="feedcomments-comment">
                         <p>{comentario.texto}</p>
@@ -283,7 +298,7 @@ export function PublicacionPost() {
               <div className="textarea-comentarios">
                 <img src={infoUsuario.imagen_perfil} alt="Imagen de usuario"/>
                 <form onSubmit={handleSubmitComentario}>
-                  <input
+                  <input className='input-comentario'
                     type="text"
                     placeholder="Comentar"
                     value={comentario}

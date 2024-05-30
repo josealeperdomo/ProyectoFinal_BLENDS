@@ -202,16 +202,18 @@ export function PerfilUser() {
                 <div className="row border-radius" key={publicacion._id}>
                     <div className="feed">
                         <div className="feed_title">
-                            <div className={''}></div>
-                            <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
-                            <span>
+                            <div className="feed_title2">
+                              <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
+                              <span>
                                 <b><a href={`/perfil/${publicacion.usuario_publicacion.usuario}`}>{publicacion.usuario_publicacion.usuario}</a></b> hizo una <a href={`/publicacion/${publicacion._id}`}>Publicacion</a>
                                 <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
                             </span>
+                            </div>
+ 
                             
                         </div>
                         <div className="feed_content">
-                            <div className="feed_content_text">
+                            <div className="feed_content_text feed_content_image">
                                 <p>{publicacion.texto}</p>
                             </div>
                             {publicacion.imagen_publicacion && (

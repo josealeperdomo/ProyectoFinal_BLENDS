@@ -16,20 +16,23 @@
 .contenedor{
     display: flex;
     flex-direction: column;
+    width: 100%;
+    padding: 30px;
+
 }
 
 .circleGreen {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     background-color: green;
-    border: 2px solid green;
+    border: 2px solid rgb(255, 255, 255);
     border-radius: 50%;
 }
 .circleGray{    
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     background-color: gray;
-    border: 2px solid gray;
+    border: 2px solid rgb(255, 255, 255);
     border-radius: 50%;
 }
 
@@ -80,6 +83,9 @@
 .mensajes-container{
     max-height: 500px;
     overflow: auto;
+    height: 90vh;
+    border: 2px solid #d5d1d1 ;
+
 }
 
 .mensajes-container::-webkit-scrollbar {
@@ -123,4 +129,27 @@
     color: gray;
     display: block;
     margin-top: 5px;
+}
+.contenedor-input{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;  
+    margin-top: 30px; 
+    gap: 20px;
+}
+.contenedor-input form{
+    display: flex;
+    gap: 20px;
+}
+.contenedor-input input{
+    width: 45vw;
+    border: 1px solid #d5dad8;
+    background-color: #eaebeb;
+    border-radius: 5px;
+    padding: 10px 10px;
+    font-size: 15px;
+
+
+
 }

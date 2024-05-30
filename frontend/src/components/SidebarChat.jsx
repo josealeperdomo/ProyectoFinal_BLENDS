@@ -6,6 +6,7 @@ import "../styles/index.css";
 import "../styles/Chats.css";
 import useConversation from '../zustand/useConversation';
 import { useSocketContext } from '../routes/SocketContext';
+import buscar from "../assets/buscar.svg";
 
 
 
@@ -71,9 +72,9 @@ export function SidebarChat() {
     return (
         <div className='sidebar'>
             <div className=''>
-                <form onSubmit={handleSearch} action="">
-                    <input type="text" placeholder="Buscar" value={search} onChange={e=>setSearch(e.target.value)}/>
-                    <button>Buscar</button>
+                <form className='form-buscar-chat' onSubmit={handleSearch} action="">
+                    <input className='input-buscar-chat'type="text" placeholder="Buscar" value={search} onChange={e=>setSearch(e.target.value)}/>
+                    <button><img src={buscar} alt="" /></button>
                 </form>
             </div>
             <div>
@@ -84,7 +85,7 @@ export function SidebarChat() {
                     <ul className='amigos-seccion'>
                         {amigos.map(amigo => (
                             <li key={amigo._id}>
-                                <div className={`flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer ${selectedConversation?._id === amigo._id ? "bg-sky-500" : ""}`} onClick={() => setSelectedConversation(amigo)}>
+                                <div className={`flex gap-2 items-center hover:bg-zinc-300 rounded p-2 py-1 cursor-pointer ${selectedConversation?._id === amigo._id ? "bg-zinc-200" : ""}`} onClick={() => setSelectedConversation(amigo)}>
                                     <div className={onlineUsers.includes(amigo._id) ? "circleGreen":"circleGray"}></div>
                                     <img className="avatar" src={amigo.imagen_perfil} alt={amigo.usuario} />
                                     <p>{amigo.usuario}</p>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
+import buscar from "../assets/buscar.svg";
 
 export function UsuariosBlendsAdmin() {
   const [usuarios, setUsuarios] = useState([]);
@@ -63,15 +64,18 @@ export function UsuariosBlendsAdmin() {
                     </ul>
                   </div>
                 </div>
+                
                 <div className="row amigos admins-space">
-                  <div className="buscador">
-                    <input
+                <div className="buscador">
+                  <img src={buscar} alt="" />
+                    <input className='input-buscar-admin'
                       type="text"
                       placeholder="Buscar usuario por nombre"
                       value={busqueda}
                       onChange={handleBusquedaChange}
                     />
                   </div>
+
                   {usuariosFiltrados.map(usuario => (
                     <div className="friend" key={usuario._id}>
                       <div className="friend_title">

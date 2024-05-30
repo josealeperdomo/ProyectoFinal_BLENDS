@@ -55,7 +55,7 @@ function NavIzq() {
                     
                     <div className="left_row_profile">
                         <img id="profile_pic" src={infoUsuario?.imagen_perfil} />
-                        {infoUsuario?.membresia == 'premium' ? <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/800px-Twitter_Verified_Badge.svg.png" style={{width: "15px", height: "15px" }} alt="" /> : <div></div>}
+                        {infoUsuario?.membresia == 'premium' ? <img className='verifi2' src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/800px-Twitter_Verified_Badge.svg.png" style={{width: "15px", height: "15px" }} alt="" /> : <div></div>}
                         <span>{infoUsuario?.usuario}<p>{cantidadAmigos} amigo(s)</p></span>
                     </div>
                 </div>

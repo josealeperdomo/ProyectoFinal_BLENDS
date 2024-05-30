@@ -72,6 +72,16 @@ export function CambioContrasena() {
                           Cambio de contraseña
                         </a>
                       </li>
+                      <li>
+                        <a href={`/cambiofoto`}>
+                          Cambiar foto de perfil
+                        </a>
+                      </li>
+                      <li>
+                        <a href={`/eliminarcuenta`}>
+                          Eliminar cuenta
+                        </a>
+                      </li>
                     </ul>
                   </div>
                 </div>

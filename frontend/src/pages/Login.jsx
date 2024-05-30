@@ -84,7 +84,7 @@ export function Login() {
                 </div>
                 <div className="login-centro-section1">
                     <h2>Bienvenidos a Blends, Tu red social</h2>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem doloribus tempora ipsam voluptates asperiores laudantium reiciendis fugit adipisci, molestias, labore at unde consequatur magnam dicta, voluptatum soluta eius odio illo.</p>
+                    <p>Estamos encantados de tenerte aquí en nuestra comunidad. Blends es más que una simple red social; es un lugar donde las ideas, las pasiones y las personas se mezclan para crear algo increíble.</p>
                     <div className="login-centro-section1-div">
                         <img className="login-centro-section1-img" src={persona} alt="" />
                         <p>1k+ Personas se han unido a Blends, ahora es tu turno</p>

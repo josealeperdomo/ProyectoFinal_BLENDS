@@ -117,7 +117,9 @@ export function Messages() {
                                 </div>
                             ))
                         )}
-                        <div>
+                        
+                    </div>
+                    <div className="contenedor-input">
                             <form onSubmit={handleSubmit}>
                                 <input
                                     type="text"
@@ -125,10 +127,9 @@ export function Messages() {
                                     value={message}
                                     onChange={(e) => setMessage(e.target.value)}
                                 />
-                                <button type="submit">Enviar</button>
+                                <button type="submit" className="fa fa-send"></button>
                             </form>
                         </div>
-                    </div>
                 </>
             )}
         </div>
