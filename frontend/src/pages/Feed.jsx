@@ -30,6 +30,7 @@ export function Feed(){
     const [imagen, setImagen] = useState(null);
     const [infoUsuario, setInfoUsuario] = useState(null);
 
+
     useEffect(() => {
         const obtenerUsuarioPorId = async (usuarioid) => {
             try {
@@ -121,11 +122,6 @@ export function Feed(){
             </div>
 
             <Publicaciones/>
-
-           
-
-
-
 
             </div>
           </section>

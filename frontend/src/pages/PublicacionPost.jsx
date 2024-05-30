@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/General.css';
 import '../styles/Feed.css';
 import NavArriba from "../components/NavArriba";
@@ -17,6 +17,23 @@ export function PublicacionPost() {
   const [userLiked, setUserLiked] = useState(false);
   const [error, setError] = useState(null);
   const { onlineUsers } = useSocketContext();
+  const [infoUsuario, setInfoUsuario] = useState(null);
+  const [activeMenu, setActiveMenu] = useState(null);
+    
+  const handleMenuToggle = (id) => {
+      setActiveMenu(activeMenu === id ? null : id);
+  };
+
+  const handleDelete = async (id) => {
+      try {
+          await axios.delete(`http://localhost:3000/publicaciones/${id}`);
+          window.location.replace('/')      
+        } catch (err) {
+          console.error('Error al eliminar la publicación:', err);
+      }
+  };
+
+
 
   const fetchComentarios = async () => {
     try {
@@ -43,6 +60,19 @@ export function PublicacionPost() {
 
   const payload = getTokenPayload();
   const userId = payload ? payload.id : null;
+
+  useEffect(() => {
+    const obtenerUsuarioPorId = async (usuarioid) => {
+        try {
+            const response = await axios.get(`http://localhost:3000/users/${usuarioid}`);
+            setInfoUsuario(response.data);
+        } catch (error) {
+            console.error('Error al obtener el usuario:', error);
+        }
+    };
+
+    obtenerUsuarioPorId(userId);
+}, [userId]);
 
   const verificarLike = async (publicacionId) => {
     try {
@@ -149,6 +179,8 @@ export function PublicacionPost() {
     }
   };
 
+  
+
   if (!publicacion) {
     return <div>Cargando...</div>;
   }
@@ -179,8 +211,26 @@ export function PublicacionPost() {
                     <b><a href={`/perfil/${publicacion.usuario_publicacion.usuario}`}>{publicacion.usuario_publicacion.usuario}</a></b> hizo una{" "}
                     <a href="#">Publicacion</a>
                     <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
+                    
                   </span>
+                  <div className="menu-container">
+                                <button className="menu-button" onClick={() => handleMenuToggle(publicacion._id)}>...</button>
+                                {activeMenu === publicacion._id && (
+                                    <div className="menu-dropdown">
+                                        {userId !== publicacion.usuario_publicacion._id ? (
+                                            <button onClick={() => handleReport(publicacion._id)}>Reportar</button>
+                                        ) : (
+                                            <>
+                                                <button onClick={() => handleEdit(publicacion._id)}>Editar</button>
+                                                <button onClick={() => handleDelete(publicacion._id)}>Eliminar</button>
+                                            </>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
                 </div>
+
+
                 <div className="feed_content">
                   <div className="feed_content_image">
                     <p>{publicacion.texto}</p>
@@ -231,7 +281,7 @@ export function PublicacionPost() {
                 </ul>
               </div>
               <div className="textarea-comentarios">
-                <img src="" alt="Imagen de usuario"/>
+                <img src={infoUsuario.imagen_perfil} alt="Imagen de usuario"/>
                 <form onSubmit={handleSubmitComentario}>
                   <input
                     type="text"
