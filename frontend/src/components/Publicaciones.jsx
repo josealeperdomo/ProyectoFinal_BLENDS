@@ -137,6 +137,7 @@ const Publicaciones = () => {
                         <div className="feed_title">
                             <div className={onlineUsers.includes(publicacion.usuario_publicacion._id) ? "circleGreen" : "circleGray"}></div>
                             <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
+                            {publicacion.usuario_publicacion.membresia == 'premium' ? <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/800px-Twitter_Verified_Badge.svg.png" style={{width: "15px", height: "15px" }} alt="" /> : <div></div>}
                             <span>
                                 <b><a href={`/perfil/${publicacion.usuario_publicacion.usuario}`}>{publicacion.usuario_publicacion.usuario}</a></b> hizo una <a href={`/publicacion/${publicacion._id}`}>Publicacion</a>
                                 <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
