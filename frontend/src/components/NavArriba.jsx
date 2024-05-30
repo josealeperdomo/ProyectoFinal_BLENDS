@@ -91,7 +91,7 @@ function NavArriba() {
     };
 
     obtenerSolicitudes();
-  }, []);
+  }, [solicitudes]);
 
   const rechazarSolicitud = async (id_emisor, id_receptor) => {
     try {
@@ -100,7 +100,7 @@ function NavArriba() {
         { id_emisor, id_receptor }
       );
       console.log(response.data.message);
-      // Aquí podrías actualizar el estado de las solicitudes o hacer alguna otra acción
+      setSolicitudes([])
     } catch (error) {
       console.error("Error al rechazar la solicitud:", error);
     }
@@ -113,7 +113,7 @@ function NavArriba() {
         { id_emisor, id_receptor }
       );
       console.log(response.data.message);
-      // Aquí podrías actualizar el estado de las solicitudes o hacer alguna otra acción
+      setSolicitudes([])
     } catch (error) {
       console.error("Error al aceptar la solicitud:", error);
     }

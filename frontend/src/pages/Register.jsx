@@ -24,9 +24,33 @@ export function Register(){
         setShowPassword(!showPassword);
     };
 
+    const reguser = /^[a-zA-Z0-9_-]{3,16}$/;
+    const regemail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const regpassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
     const registrarse = (e) => {
         e.preventDefault();
         setAlerta("");
+
+        if (!nombre || !apellido || !usuario || !email || !password) {
+            setAlerta("Todos los campos son requeridos");
+            return;
+        }
+
+        if (!reguser.test(usuario)) {
+            setAlerta("El nombre de usuario debe contener solo letras, números y guiones bajos. De 3 a 16 caracteres.");
+            return;
+        }
+
+        if (!regemail.test(email)) {
+            setAlerta("El correo electrónico no tiene un formato válido.");
+            return;
+        }
+
+        if (!regpassword.test(password)) {
+            setAlerta("La contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una minúscula, un número y un carácter especial.");
+            return;
+        }
 
         // Recolectar los datos del formulario
         const data = {
@@ -73,7 +97,6 @@ export function Register(){
                             <div className="img-form">
                                 <input type="text" placeholder="Nombre" onChange={(e)=>setNombre(e.target.value)} />
                                 <img className='mail-password' src={namelname} alt="" />
-
                             </div>
                             <div className="img-form">
                                 <input type="text" placeholder="Apellido" onChange={(e)=>setApellido(e.target.value)} />

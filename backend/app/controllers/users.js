@@ -53,7 +53,7 @@ const createUser = async (req, res) => {
         const {nombre, apellido, usuario, email, password, rol} = req.body
         const reguser = /^[a-zA-Z0-9_-]{3,16}/
         const regemail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-        const regpassword = /^.{8,16}$/
+        const regpassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
         
 
         if ( !usuario || !email || !password) {
@@ -67,14 +67,14 @@ const createUser = async (req, res) => {
         }
         
         if(!reguser.test(usuario)){
-            return res.status(400).json({"Message":"Usuario inválido"})
+            return res.status(400).json({"Message":"El nombre de usuario debe contener solo letras, números y guiones bajos."})
         }
         if(!regemail.test(email)){
             console.log(email)
-            return res.status(400).json({"Message":"Correo inválido"})
+            return res.status(400).json({"Message":"El correo electrónico no tiene un formato válido."})
         }
         if(!regpassword.test(password)){
-            return res.status(400).json({"Message":"Contraseña inválida"})
+            return res.status(400).json({"Message":"La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula, un número y un carácter especial."})
         }
         const newUser = {
             nombre,

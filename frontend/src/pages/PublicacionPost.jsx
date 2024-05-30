@@ -20,21 +20,20 @@ export function PublicacionPost() {
   const { onlineUsers } = useSocketContext();
   const [infoUsuario, setInfoUsuario] = useState(null);
   const [activeMenu, setActiveMenu] = useState(null);
-    
+  const [imagendeperfil, setImagendeperfil] = useState("http://localhost:3000/public/img-user.png");
+
   const handleMenuToggle = (id) => {
-      setActiveMenu(activeMenu === id ? null : id);
+    setActiveMenu(activeMenu === id ? null : id);
   };
 
   const handleDelete = async (id) => {
-      try {
-          await axios.delete(`http://localhost:3000/publicaciones/${id}`);
-          window.location.replace('/')      
-        } catch (err) {
-          console.error('Error al eliminar la publicación:', err);
-      }
+    try {
+      await axios.delete(`http://localhost:3000/publicaciones/${id}`);
+      window.location.replace('/');
+    } catch (err) {
+      console.error('Error al eliminar la publicación:', err);
+    }
   };
-
-
 
   const fetchComentarios = async () => {
     try {
@@ -64,16 +63,17 @@ export function PublicacionPost() {
 
   useEffect(() => {
     const obtenerUsuarioPorId = async (usuarioid) => {
-        try {
-            const response = await axios.get(`http://localhost:3000/users/${usuarioid}`);
-            setInfoUsuario(response.data);
-        } catch (error) {
-            console.error('Error al obtener el usuario:', error);
-        }
+      try {
+        const response = await axios.get(`http://localhost:3000/users/${usuarioid}`);
+        setInfoUsuario(response.data);
+        setImagendeperfil(response.data.imagen_perfil);
+      } catch (error) {
+        console.error('Error al obtener el usuario:', error);
+      }
     };
 
     obtenerUsuarioPorId(userId);
-}, [userId]);
+  }, [userId]);
 
   const verificarLike = async (publicacionId) => {
     try {
@@ -103,7 +103,7 @@ export function PublicacionPost() {
   const handleSubmitComentario = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token'); 
+      const token = localStorage.getItem('token');
       if (!token) {
         console.error('Usuario no autenticado');
         return;
@@ -118,12 +118,11 @@ export function PublicacionPost() {
         texto: comentario,
       }, {
         headers: {
-          'Authorization': `Bearer ${token}` 
+          'Authorization': `Bearer ${token}`
         }
       });
 
       fetchComentarios();
-
       setComentario('');
     } catch (error) {
       console.error('Error al enviar el comentario:', error);
@@ -180,8 +179,6 @@ export function PublicacionPost() {
     }
   };
 
-  
-
   if (!publicacion) {
     return <div>Cargando...</div>;
   }
@@ -207,42 +204,40 @@ export function PublicacionPost() {
                 <div className="feed_title">
                   <div className="feed_title2">
                     <div className='imagen-online'>
-                      <div className={onlineUsers.includes(publicacion.usuario_publicacion._id) ? "circleGreen":"circleGray"}></div>
-                      <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
-                      {publicacion.usuario_publicacion.membresia == 'premium' ? <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/800px-Twitter_Verified_Badge.svg.png" style={{width: "15px", height: "15px" }} alt="" /> : <div></div>}
-
+                      <div className={onlineUsers.includes(publicacion.usuario_publicacion?._id) ? "circleGreen" : "circleGray"}></div>
+                      {publicacion.usuario_publicacion && (
+                        <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
+                      )}
+                      {publicacion.usuario_publicacion?.membresia === 'premium' ? (
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/800px-Twitter_Verified_Badge.svg.png" style={{ width: "15px", height: "15px" }} alt="" />
+                      ) : (
+                        <div></div>
+                      )}
                     </div>
-                      <span>
-                      <b><a href={`/perfil/${publicacion.usuario_publicacion.usuario}`}>{publicacion.usuario_publicacion.usuario}</a></b> hizo una{" "}
+                    <span>
+                      <b><a href={`/perfil/${publicacion.usuario_publicacion?.usuario}`}>{publicacion.usuario_publicacion?.usuario}</a></b> hizo una{" "}
                       <a href="#">Publicacion</a>
                       <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
-                    
-                  </span>
-                    
-
+                    </span>
                   </div>
-                  
-
                   <div className="menu-container">
-                                <button className="menu-button" onClick={() => handleMenuToggle(publicacion._id)}>
-                                <img src={menuPubli} alt="Menu" />
-                                </button>
-                                {activeMenu === publicacion._id && (
-                                    <div className="menu-dropdown">
-                                        {userId !== publicacion.usuario_publicacion._id ? (
-                                            <button onClick={() => handleReport(publicacion._id)}>Reportar</button>
-                                        ) : (
-                                            <>
-                                                <button onClick={() => handleEdit(publicacion._id)}>Editar</button>
-                                                <button onClick={() => handleDelete(publicacion._id)}>Eliminar</button>
-                                            </>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
+                    <button className="menu-button" onClick={() => handleMenuToggle(publicacion._id)}>
+                      <img src={menuPubli} alt="Menu" />
+                    </button>
+                    {activeMenu === publicacion._id && (
+                      <div className="menu-dropdown">
+                        {userId !== publicacion.usuario_publicacion?._id ? (
+                          <button onClick={() => handleReport(publicacion._id)}>Reportar</button>
+                        ) : (
+                          <>
+                            <button onClick={() => handleEdit(publicacion._id)}>Editar</button>
+                            <button onClick={() => handleDelete(publicacion._id)}>Eliminar</button>
+                          </>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </div>
-
-
                 <div className="feed_content">
                   <div className="feed_content_image">
                     <p>{publicacion.texto}</p>
@@ -254,9 +249,8 @@ export function PublicacionPost() {
                 <div className="feed_footer">
                   <ul className="feed_footer_left">
                     <li className="hover-orange selected-orange" onClick={handleLike}>
-                      <i className={`fa ${userLiked ? 'fa-heart' : 'fa-heart-o'}`}></i> {likes} 
+                      <i className={`fa ${userLiked ? 'fa-heart' : 'fa-heart-o'}`}></i> {likes}
                     </li>
-
                   </ul>
                   <ul className="feed_footer_right">
                     <div>
@@ -276,17 +270,19 @@ export function PublicacionPost() {
                     <li key={comentario._id}>
                       <div className="feedcomments-user1">
                         <div className="feedcomments-user">
-                          <img src={comentario.usuario_comentario.imagen_perfil} alt="" />
-                          <span>
-                            <b>{comentario.usuario_comentario.usuario}</b>
-                            <p>{new Date(comentario.fecha_creacion).toLocaleString()}</p>
-                          </span>
-
+                          {comentario.usuario_comentario && (
+                            <>
+                              <img src={comentario.usuario_comentario.imagen_perfil} alt="" />
+                              <span>
+                                <b>{comentario.usuario_comentario.usuario}</b>
+                                <p>{new Date(comentario.fecha_creacion).toLocaleString()}</p>
+                              </span>
+                            </>
+                          )}
                         </div>
-                        <button className="menu-button" >
-                                <img src={menuPubli} alt="Menu" />
+                        <button className="menu-button">
+                          <img src={menuPubli} alt="Menu" />
                         </button>
-
                       </div>
                       <div className="feedcomments-comment">
                         <p>{comentario.texto}</p>
@@ -296,9 +292,10 @@ export function PublicacionPost() {
                 </ul>
               </div>
               <div className="textarea-comentarios">
-                <img src={infoUsuario.imagen_perfil} alt="Imagen de usuario"/>
+                <img src={imagendeperfil} alt="Imagen de usuario" />
                 <form onSubmit={handleSubmitComentario}>
-                  <input className='input-comentario'
+                  <input
+                    className='input-comentario'
                     type="text"
                     placeholder="Comentar"
                     value={comentario}
