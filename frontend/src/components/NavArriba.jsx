@@ -14,27 +14,28 @@ import share from "../assets/share.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
 function NavArriba() {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (!token) {
-    console.error('Usuario no autenticado');
+    console.error("Usuario no autenticado");
     return;
   }
 
-  const decodedToken = JSON.parse(atob(token.split('.')[1]));
+  const decodedToken = JSON.parse(atob(token.split(".")[1]));
   const id_usuario = decodedToken.id;
   const [user, setUser] = useState({
-    usuario: ''
+    usuario: "",
   });
-  
+
   useEffect(() => {
     const obtenerUsuario = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/users/${id_usuario}`);
+        const response = await axios.get(
+          `http://localhost:3000/users/${id_usuario}`
+        );
         setUser(response.data);
       } catch (error) {
-        console.error('Error al obtener los detalles del usuario:', error);
+        console.error("Error al obtener los detalles del usuario:", error);
       }
     };
 
@@ -47,7 +48,6 @@ function NavArriba() {
   const [isVisibleMensajes, setIsVisibleMensajes] = useState(false);
   const [isVisibleUsuario, setIsVisibleUsuario] = useState(false);
   const [isVisibleBuscador, setIsVisibleBuscador] = useState(false);
-
 
   const toggleDropdown = (setState, state) => {
     if (state) {
@@ -64,54 +64,102 @@ function NavArriba() {
     }
   };
 
-
   const cerrarSesion = () => {
     // Eliminar token
     localStorage.removeItem("token");
     // Redirigir a la página de inicio de sesión
     window.location.href = "/";
-};
+  };
 
-const [solicitudes, setSolicitudes] = useState([]);
-const [loading, setLoading] = useState(true);
-const [error, setError] = useState(null);
+  const [solicitudes, setSolicitudes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-useEffect(() => {
-  const obtenerSolicitudes = async () => {
+  useEffect(() => {
+    const obtenerSolicitudes = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/amistad/${id_usuario}`
+        );
+        setSolicitudes(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error al obtener las solicitudes:", error);
+        setError("Error al cargar las solicitudes");
+        setLoading(false);
+      }
+    };
+
+    obtenerSolicitudes();
+  }, []);
+
+  const rechazarSolicitud = async (id_emisor, id_receptor) => {
     try {
-      const response = await axios.get(`http://localhost:3000/amistad/${id_usuario}`);
-      setSolicitudes(response.data);
-      setLoading(false);
+      const response = await axios.delete(
+        "http://localhost:3000/amistad/rechazarSolicitud",
+        { id_emisor, id_receptor }
+      );
+      console.log(response.data.message);
+      // Aquí podrías actualizar el estado de las solicitudes o hacer alguna otra acción
     } catch (error) {
-      console.error('Error al obtener las solicitudes:', error);
-      setError('Error al cargar las solicitudes');
-      setLoading(false);
+      console.error("Error al rechazar la solicitud:", error);
     }
   };
 
-  obtenerSolicitudes();
-}, []);
+  const aceptarSolicitud = async (id_emisor, id_receptor) => {
+    try {
+      const response = await axios.patch(
+        "http://localhost:3000/amistad/aceptarSolicitud",
+        { id_emisor, id_receptor }
+      );
+      console.log(response.data.message);
+      // Aquí podrías actualizar el estado de las solicitudes o hacer alguna otra acción
+    } catch (error) {
+      console.error("Error al aceptar la solicitud:", error);
+    }
+  };
+  const getTokenPayload = () => {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
 
-const rechazarSolicitud = async (id_emisor, id_receptor) => {
-  try {
-    const response = await axios.delete('http://localhost:3000/amistad/rechazarSolicitud', { id_emisor, id_receptor });
-    console.log(response.data.message);
-    // Aquí podrías actualizar el estado de las solicitudes o hacer alguna otra acción
-  } catch (error) {
-    console.error('Error al rechazar la solicitud:', error);
-  }
+    try {
+        const payloadBase64 = token.split('.')[1];
+        const payloadJson = atob(payloadBase64);
+        return JSON.parse(payloadJson);
+    } catch (error) {
+        console.error('Error parsing token payload:', error);
+        return null;
+    }
 };
 
-const aceptarSolicitud = async (id_emisor, id_receptor) => {
-  try {
-    const response = await axios.patch('http://localhost:3000/amistad/aceptarSolicitud', { id_emisor, id_receptor });
-    console.log(response.data.message);
-    // Aquí podrías actualizar el estado de las solicitudes o hacer alguna otra acción
-  } catch (error) {
-    console.error('Error al aceptar la solicitud:', error);
-  }
-};
+const payload = getTokenPayload();
+const userId = payload ? payload.id : null;
+const [infoUsuario, setInfoUsuario] = useState(null);
+const [amigos, setAmigos] = useState([]);
+const [cantidadAmigos, setCantidadAmigos] = useState([]);
 
+
+
+useEffect(() => {
+    const obtenerUsuarioPorId = async (usuarioid) => {
+        try {
+            const response = await axios.get(`http://localhost:3000/users/${usuarioid}`);
+            setInfoUsuario(response.data);
+            const amigosData = response.data.amigos;
+            if (Array.isArray(amigosData)) {
+                setAmigos(amigosData);
+                setCantidadAmigos(amigosData.length);
+            } else {
+                setAmigos([]);
+                console.log('No hay amigos');
+            }
+        } catch (error) {
+            console.error('Error al obtener el usuario:', error);
+        }
+    };
+
+    obtenerUsuarioPorId(userId);
+}, [userId]);
 
   return (
     <>
@@ -141,9 +189,10 @@ const aceptarSolicitud = async (id_emisor, id_receptor) => {
               <div className="left_row">
                 <div className="left_row_profile">
                   <div className="left_row_profile">
-                    <img id="profile_pic" src="images/user.jpg" />
+                    <img id="profile_pic" src={infoUsuario?.imagen_perfil} />
                     <span>
-                      Jonh Hamstrong<p>150k followers / 50 follow</p>
+                      {infoUsuario?.usuario}
+                      <p>{cantidadAmigos} amigo(s)</p>
                     </span>
                   </div>
                 </div>
@@ -155,7 +204,7 @@ const aceptarSolicitud = async (id_emisor, id_receptor) => {
                       </a>
                     </li>
                     <li>
-                      <a href="/perfil">
+                      <a href={`/perfil/${infoUsuario?.usuario}`}>
                         <i className="fa fa-user"></i>Mi perfil
                       </a>
                     </li>
@@ -165,12 +214,12 @@ const aceptarSolicitud = async (id_emisor, id_receptor) => {
                       </a>
                     </li>
                     <li>
-                      <a href="index.html">
+                      <a href="/chats">
                         <i className="fa fa-comments-o"></i>Mis chats
                       </a>
                     </li>
                     <li>
-                      <a href="index.html">
+                      <a href="/PagoPremium">
                         <i className="fa fa-money"></i>Comprar premiun
                       </a>
                     </li>
@@ -220,20 +269,49 @@ const aceptarSolicitud = async (id_emisor, id_receptor) => {
               </div>
               <div className="modal-content">
                 <ul>
-                {solicitudes.length === 0 ? <ul><li>No tienes solicitudes</li></ul> : solicitudes.map((solicitud) => (
-                    <li key={solicitud._id}>
-                      <a href="#">
-                        <img src={solicitud.usuarioEmisor.imagen_perfil} alt={solicitud.nombre} />
-                        <div className="modal-content-info">
-                          <span>
-                            <b>{solicitud.usuarioEmisor.usuario}</b>
-                          </span>
-                        </div>
-                        <button className="modal-content-accept" onClick={() => aceptarSolicitud(solicitud.usuarioEmisor._id, solicitud.usuarioReceptor)}>Accept</button>
-                        <button className="modal-content-decline" onClick={() => rechazarSolicitud(solicitud.usuarioEmisor._id, solicitud.usuarioReceptor)}>Decline</button>
-                      </a>
-                    </li>
-                  ))}
+                  {solicitudes.length === 0 ? (
+                    <ul>
+                      <li>No tienes solicitudes</li>
+                    </ul>
+                  ) : (
+                    solicitudes.map((solicitud) => (
+                      <li key={solicitud._id}>
+                        <a href="#">
+                          <img
+                            src={solicitud.usuarioEmisor.imagen_perfil}
+                            alt={solicitud.nombre}
+                          />
+                          <div className="modal-content-info">
+                            <span>
+                              <b>{solicitud.usuarioEmisor.usuario}</b>
+                            </span>
+                          </div>
+                          <button
+                            className="modal-content-accept"
+                            onClick={() =>
+                              aceptarSolicitud(
+                                solicitud.usuarioEmisor._id,
+                                solicitud.usuarioReceptor
+                              )
+                            }
+                          >
+                            Accept
+                          </button>
+                          <button
+                            className="modal-content-decline"
+                            onClick={() =>
+                              rechazarSolicitud(
+                                solicitud.usuarioEmisor._id,
+                                solicitud.usuarioReceptor
+                              )
+                            }
+                          >
+                            Decline
+                          </button>
+                        </a>
+                      </li>
+                    ))
+                  )}
                 </ul>
               </div>
             </div>
@@ -411,7 +489,11 @@ const aceptarSolicitud = async (id_emisor, id_receptor) => {
             }
           >
             <div className="superior-button">
-              <img className="img-user" src={user.imagen_perfil} alt="Tu usuario" />
+              <img
+                className="img-user"
+                src={user.imagen_perfil}
+                alt="Tu usuario"
+              />
               <img className="img-arrow" src={arrow} alt="" />
             </div>
           </div>
@@ -460,7 +542,6 @@ const aceptarSolicitud = async (id_emisor, id_receptor) => {
                       <div className="modal-content-info">
                         <span>
                           <b>Cerrar sesión</b>
-
                         </span>
                         <span>Cierra tu sesión</span>
                       </div>

@@ -54,8 +54,20 @@
     flex-direction: column;
     gap: 30px;
     width: 400px;
-
 }
+.login-centro-section1 h2{
+    font-family: 'Poppins', sans-serif;
+     font-size: 28px; 
+    color: #202020;
+   font-weight: 700;
+}
+.login-centro-section2 h1{
+    font-family: 'Poppins', sans-serif;
+    font-size: 33px;
+    color: #202020;
+    font-weight: 700;
+}
+
 .login-centro-section1-img{
     width: 100px;
 }
@@ -68,7 +80,7 @@
     background-color: #ffffff;
     display: flex;
     justify-content: center;
-    height: 450px;
+    height: auto;
     flex-direction: column;
     gap: 30px;
     width: 400px;

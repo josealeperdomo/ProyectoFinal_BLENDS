@@ -6,6 +6,7 @@ import openEyesImage from '../img/openeyes.png';
 import closeEyesImage from '../img/closeeyes.png';
 import user from '../assets/user.svg';
 import mail from '../assets/mail.svg';
+import namelname from '../assets/namelname.svg';
 import clave from '../assets/password.svg';
 import axios from 'axios'
 import { Link } from 'react-router-dom';
@@ -71,9 +72,12 @@ export function Register(){
                         <form action="" onSubmit={registrarse}>
                             <div className="img-form">
                                 <input type="text" placeholder="Nombre" onChange={(e)=>setNombre(e.target.value)} />
+                                <img className='mail-password' src={namelname} alt="" />
+
                             </div>
                             <div className="img-form">
                                 <input type="text" placeholder="Apellido" onChange={(e)=>setApellido(e.target.value)} />
+                                <img className='mail-password' src={namelname} alt="" />
                             </div>
                             <div className="img-form">
                                 <input type="text" placeholder="Usuario" onChange={(e)=>setUsuario(e.target.value)} />

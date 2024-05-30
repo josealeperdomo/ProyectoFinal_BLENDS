@@ -77,14 +77,16 @@ const Publicaciones = () => {
                 <div className="row border-radius" key={publicacion._id}>
                     <div className="feed">
                         <div className="feed_title">
-                            <div className='imagen-online'> 
-                                <div className={onlineUsers.includes(publicacion.usuario_publicacion._id) ? "circleGreen":"circleGray"}></div>
-                                <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
+                            <div className='feed_title2'>
+                                <div className='imagen-online'> 
+                                    <div className={onlineUsers.includes(publicacion.usuario_publicacion._id) ? "circleGreen":"circleGray"}></div>
+                                    <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
+                                </div>
+                                <span>
+                                    <b><a href={`/perfil/${publicacion.usuario_publicacion.usuario}`}>{publicacion.usuario_publicacion.usuario}</a></b> hizo una <a href={`/publicacion/${publicacion._id}`}>Publicacion</a>
+                                    <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
+                                </span>
                             </div>
-                            <span>
-                                <b><a href={`/perfil/${publicacion.usuario_publicacion.usuario}`}>{publicacion.usuario_publicacion.usuario}</a></b> hizo una <a href={`/publicacion/${publicacion._id}`}>Publicacion</a>
-                                <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
-                            </span>
                             <div className="menu-container">
                                 <button className="menu-button" onClick={() => handleMenuToggle(publicacion._id)}> <img src={menuPubli} alt="Menu" /></button>
                                 {activeMenu === publicacion._id && (
@@ -114,12 +116,11 @@ const Publicaciones = () => {
                         <div className="feed_footer">
                             <ul className="feed_footer_left">
                                 <li className="hover-orange selected-orange"><i className="fa fa-heart"></i> 22k</li>
-                                <li><span><b>Jimmy, Andrea</b> and 47 more liked this</span></li>
                             </ul>
                             <ul className="feed_footer_right">
                                 <div>
                                     <li className="hover-orange selected-orange"><i className="fa fa-share"></i> 7k</li>
-                                    <li className="hover-orange"><i className="fa fa-comments-o"></i> 860 comments</li>
+                                    <li className="hover-orange"><i className="fa fa-comments-o"></i>comments</li>
                                 </div>
                             </ul>
                         </div>

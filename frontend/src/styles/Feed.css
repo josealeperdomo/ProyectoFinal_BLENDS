@@ -144,7 +144,8 @@ flex-direction: column;
 
 
 .feed {width: 100%;}
-.feed_title {padding: 20px;border-bottom: 1px solid #e6ecf5;letter-spacing: 1px;display: flex;align-items:center;}
+.feed_title {padding: 20px;border-bottom: 1px solid #e6ecf5;letter-spacing: 1px;display: flex;align-items:center;justify-content: space-between;}
+.feed_title2{letter-spacing: 1px;display: flex;align-items:center;justify-content: space-between;}
 .feed_title img {height: 40px;width:40px;border-radius: 200px;margin: 0px 10px;}
 .feed_title span {font-size: .875rem;}
 .feed_title span a {color: #009580;}
@@ -167,7 +168,21 @@ display: flex;
 .feed_footer_right li {cursor: pointer;font-size: 12px;text-align: center;margin-right: 10px;}
 .feed_footer_right li i {font-size: 16px;padding-right: 5px}
 
+.menu-button{
+  width: 25px;
 
+}
+.menu-container{
+  position: relative;
+
+}
+.menu-dropdown{
+  position: absolute;
+  background-color: #ffffff;
+  border: 1px solid #e6ecf5;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 /* FEED PAGE */
 .feedcomments {width: 100%;border-top: 1px solid #009580;}
 .feedcomments li{width: 100%;display: block;border-bottom: 0.3px solid #e6ecf5; padding: 20px}

@@ -73,8 +73,7 @@ export function Feed(){
             <div className="home">
         {/*------------------------ SECCION LATERAL DERECHA---------------*/}
           <div className="lateral-derecha"> <NavDer /> </div>
-        {/*------------------------ SECCION SUPERIOR---------------*/}
-        <NavArriba />
+        
 
         <section className="seccion-principal">
 
@@ -93,7 +92,7 @@ export function Feed(){
                     <form method="" onSubmit={publicar}>
                         <div className="publish_textarea">
                             <img className="border-radius-image" src={infoUsuario?.imagen_perfil} alt="" />
-                            <textarea type="text" id="textoinput" style={{ display: 'block', width: '100%', padding: '10px', fontSize: '16px', lineHeight: '1.5', borderRadius: '5px', outline: 'none', resize: 'none', resize: 'vertical', overflow: 'auto' }} placeholder={`¿Whats up, ${infoUsuario?.usuario}?`} onChange={(e) => {setTexto(e.target.value)
+                            <textarea type="text" id="textoinput" style={{ display: 'block', width: '100%', padding: '10px', fontSize: '16px', lineHeight: '1.5', borderRadius: '5px', outline: 'none', resize: 'none', resize: 'vertical', overflow: 'auto' }} placeholder={`¿Qué estás pensando, ${infoUsuario?.usuario}?`} onChange={(e) => {setTexto(e.target.value)
                                 console.log(texto)
                             }}/>
                         </div>
@@ -205,6 +204,8 @@ export function Feed(){
 
             </div>
           </section>
+          {/*------------------------ SECCION SUPERIOR---------------*/}
+        <NavArriba />
 
           
         </section>
