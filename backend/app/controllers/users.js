@@ -28,7 +28,7 @@ const getUser = async (req, res) => {
 const getAmigos = async (req, res) => {
     try {
         const userId = req.params.id;
-        const usuario = await userModel.findById(userId).populate('amigos', 'nombre usuario email imagen_perfil biografia');
+        const usuario = await userModel.findById(userId).populate('amigos', 'nombre usuario email imagen_perfil biografia membresia');
 
         if (!usuario) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
