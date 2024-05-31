@@ -32,22 +32,6 @@ export function RecuContrasenamail() {
             return;
         }
 
-        // Obtener el token de la URL o del estado de la aplicación
-        const token = ""; // Debes obtener el token de alguna manera
-
-        // Enviar la nueva contraseña al servidor
-        axios.post('http://localhost:3000/users/restablecerContrasena', { token, password })
-            .then(function (response) {
-                setAlerta("Tu contraseña ha sido restaurada");
-            })
-            .catch(function (error) {
-                console.log(error);
-                if (error.response && error.response.data && error.response.data.Message) {
-                    setAlerta(error.response.data.Message);
-                } else {
-                    setAlerta("Error al restablecer la contraseña");
-                }
-            });
     }
 
     return (
