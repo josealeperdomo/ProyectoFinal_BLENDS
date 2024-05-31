@@ -119,7 +119,7 @@ export function Register(){
                             <button>Registrarse</button>
                         </form>
                         <div className="login-centro-section2-Oc">
-                            <a href="#">¿Olvidaste tu contraseña?</a>
+                            <a href="/recuperacontrasena">¿Olvidaste tu contraseña?</a>
                         </div>
                     </div>
                 </div>
