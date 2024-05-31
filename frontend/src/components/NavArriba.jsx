@@ -263,7 +263,7 @@ useEffect(() => {
               </div>
               <div className="modal-title">
                 <span>FRIEND REQUESTS</span>
-                <a href="friends.html">
+                <a href="/amigos">
                   <i className="fa fa-ellipsis-h"></i>
                 </a>
               </div>
@@ -338,7 +338,7 @@ useEffect(() => {
               </div>
               <div className="modal-title">
                 <span>CHAT / MESSAGES</span>
-                <a href="messages.html">
+                <a href="/chats">
                   <i className="fa fa-ellipsis-h"></i>
                 </a>
               </div>
@@ -425,7 +425,7 @@ useEffect(() => {
               </div>
               <div className="modal-title">
                 <span>NOTIFICACIONES</span>
-                <a href="messages.html">
+                <a href="/chats">
                   <i className="fa fa-ellipsis-h"></i>
                 </a>
               </div>
@@ -508,7 +508,7 @@ useEffect(() => {
               </div>
               <div className="modal-title">
                 <span>YOUR ACCOUNT</span>
-                <a href="settings.html">
+                <a href="/configuracion">
                   <i className="fa fa-cogs"></i>
                 </a>
               </div>
