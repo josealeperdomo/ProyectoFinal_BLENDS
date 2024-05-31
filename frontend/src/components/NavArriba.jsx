@@ -525,7 +525,7 @@ useEffect(() => {
                       </div>
                     </a>
                   </li>
-                  <li>
+                  {user.rol === 'admin' ? (<li>
                     <a href="/UsuariosBlendsAdmin">
                       <i className="fa fa-star-o" aria-hidden="true"></i>
                       <div className="modal-content-info">
@@ -535,7 +535,7 @@ useEffect(() => {
                         <span>sitio para admins</span>
                       </div>
                     </a>
-                  </li>
+                  </li>) : <div></div>}
                   <li>
                     <a href="#" onClick={cerrarSesion}>
                       <i className="fa fa-power-off" aria-hidden="true"></i>

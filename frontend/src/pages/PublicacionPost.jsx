@@ -226,11 +226,10 @@ export function PublicacionPost() {
                     </button>
                     {activeMenu === publicacion._id && (
                       <div className="menu-dropdown">
-                        {userId !== publicacion.usuario_publicacion?._id ? (
+                        {userId !== publicacion.usuario_publicacion?._id && "admin" !== infoUsuario.rol? (
                           <button onClick={() => handleReport(publicacion._id)}>Reportar</button>
                         ) : (
                           <>
-                            <button onClick={() => handleEdit(publicacion._id)}>Editar</button>
                             <button onClick={() => handleDelete(publicacion._id)}>Eliminar</button>
                           </>
                         )}

@@ -5,6 +5,7 @@ import "../styles/Components.css";
 
 function NavDer() {
     const [usuariosAleatorios, setUsuariosAleatorios] = useState([]);
+    const [infoUsuario, setInfoUsuario] = useState(null);
 
     const getTokenPayload = () => {
         const token = localStorage.getItem('token');
@@ -28,7 +29,7 @@ function NavDer() {
             try {
                 const response = await axios.get('http://localhost:3000/users/users/sugeridos');
                 setUsuariosAleatorios(response.data);
-                console.log(usuariosAleatorios);
+                console.log(response.data); // Asegúrate de que los datos están correctos
             } catch (error) {
                 console.error('Error al obtener usuarios aleatorios:', error);
             }
@@ -38,7 +39,7 @@ function NavDer() {
     }, []); // El segundo argumento vacío asegura que useEffect solo se ejecute una vez (cuando el componente se monta)
 
     const handleEnviarSolicitud = async (idReceptor) => {
-        if (idReceptor == userId) return alert("no puedes enviarte una solicitud a ti mismo")
+        if (idReceptor === userId) return alert("No puedes enviarte una solicitud a ti mismo");
         try {
             const response = await axios.post('http://localhost:3000/amistad/enviarSolicitud', {
                 id_emisor: userId,
@@ -53,31 +54,47 @@ function NavDer() {
         }
     };
 
+    useEffect(() => {
+        if (!userId) return; // Asegúrate de que userId está definido antes de hacer la llamada
+
+        const obtenerUsuarioPorId = async (usuarioId) => {
+            try {
+                const response = await axios.get(`http://localhost:3000/users/${usuarioId}`);
+                setInfoUsuario(response.data.membresia); // Asegúrate de asignar la parte correcta de la respuesta
+                console.log(response.data); // Verifica que los datos son los esperados
+            } catch (error) {
+                console.error('Error al obtener el usuario:', error);
+            }
+        };
+
+        obtenerUsuarioPorId(userId);
+    }, [userId]);
+
     return (
-        <>
-            <section className="lateral-derecha-opciones shadow">
-                <div className="row ">
-                    <div className="row_title">
-                        <span>Friend Suggestions</span>
-                    </div>
-                    {usuariosAleatorios.map(usuario => (
-                        <div className="row_contain" key={usuario.id}>
-                            <img src={usuario.imagen_perfil} alt="" />
-                            <div className='info-navder'> 
-                                <span><b><a href={`/perfil/${usuario.usuario}`}>{usuario.usuario}</a></b></span>
-                            </div>
-                            <button onClick={() => handleEnviarSolicitud(usuario._id)}>+</button>
-                        </div>
-                    ))}
+        <section className="lateral-derecha-opciones shadow">
+            <div className="row">
+                <div className="row_title">
+                    <span>Friend Suggestions</span>
                 </div>
+                {usuariosAleatorios.map(usuario => (
+                    <div className="row_contain" key={usuario.id}>
+                        <img src={usuario.imagen_perfil} alt="" />
+                        <div className='info-navder'> 
+                            <span><b><a href={`/perfil/${usuario.usuario}`}>{usuario.usuario}</a></b></span>
+                        </div>
+                        <button onClick={() => handleEnviarSolicitud(usuario._id)}>+</button>
+                    </div>
+                ))}
+            </div>
+            {infoUsuario != 'premium' ? (
                 <a href="/PagoPremium">
                     <div className='seccion-Premium'> 
-                        <p>Cambiate a premium</p>
+                        <p>Cámbiate a premium</p>
                         <button className='botonPremium diagonal-hover'>Premium</button>
                     </div>
                 </a>
-            </section>
-        </>
+            ) : null}
+        </section>
     );
 }
 

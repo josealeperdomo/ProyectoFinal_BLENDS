@@ -5,7 +5,6 @@ import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
 import NavDer from "../components/NavDer";
 import axios from 'axios';
-import fotoejemplo from "../img/photo-1.jpg";
 import { useParams } from 'react-router-dom';
 
 export function PerfilUser() {
@@ -17,6 +16,8 @@ export function PerfilUser() {
   const [userLikes, setUserLikes] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [activeMenu, setActiveMenu] = useState(null);
+  const [infoUsuario, setInfoUsuario] = useState(null);
 
   const getTokenPayload = () => {
     const token = localStorage.getItem('token');
@@ -36,11 +37,25 @@ export function PerfilUser() {
   const userId = payload ? payload.id : null;
 
   useEffect(() => {
+    if (!userId) return;
+
+    const obtenerUsuarioPorId = async (usuarioid) => {
+      try {
+        const response = await axios.get(`http://localhost:3000/users/${usuarioid}`);
+        setInfoUsuario(response.data);
+      } catch (error) {
+        console.error("Error al obtener el usuario:", error);
+      }
+    };
+
+    obtenerUsuarioPorId(userId);
+  }, [userId]);
+
+  useEffect(() => {
     const obtenerPerfilUsuario = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/users/user/${user}`);
         setPerfilUsuario(response.data);
-        console.log(perfilUsuario);
 
         const publicacionesResponse = await axios.get(`http://localhost:3000/publicaciones/user/${response.data._id}`);
         setPublicaciones(publicacionesResponse.data);
@@ -142,6 +157,21 @@ export function PerfilUser() {
     }
   };
 
+  const handleMenuToggle = (id) => {
+    setActiveMenu(activeMenu === id ? null : id);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/publicaciones/${id}`);
+      setPublicaciones(
+        publicaciones.filter((publicacion) => publicacion._id !== id)
+      );
+    } catch (err) {
+      console.error("Error al eliminar la publicación:", err);
+    }
+  };
+
   const handleEnviarSolicitud = async () => {
     try {
       const response = await axios.post('http://localhost:3000/amistad/enviarSolicitud', {
@@ -209,8 +239,20 @@ export function PerfilUser() {
                                 <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
                             </span>
                             </div>
- 
-                            
+                            {(infoUsuario?.rol === 'admin' || userId === publicacion.usuario_publicacion._id) && (
+                              <div className="feed_menu">
+                                <button onClick={() => handleMenuToggle(publicacion._id)}>
+                                  <i className="fa fa-ellipsis-v"></i>
+                                </button>
+                                {activeMenu === publicacion._id && (
+                                  <div className="feed_menu_dropdown">
+                                    <button onClick={() => handleDelete(publicacion._id)}>
+                                      Eliminar
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            )}
                         </div>
                         <div className="feed_content">
                             <div className="feed_content_text feed_content_image">
