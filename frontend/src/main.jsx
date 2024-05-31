@@ -23,6 +23,8 @@ import { PagoEnviado } from './pages/PagoEnviado.jsx';
 import { CambioFoto } from './pages/CambioFoto.jsx';
 import { EliminarCuenta } from './pages/EliminarCuenta.jsx';
 import { Error404 } from './pages/Error404.jsx'
+import { RecuContrasena } from './pages/RecuContrasena.jsx';
+import { RecuContrasenamail } from './pages/RecuContrasenamail.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -36,6 +38,8 @@ root.render(
         <Route element={<PublicRoute />}>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/recuperacontrasena" element={<RecuContrasena />} />
+          <Route path="/recuperacontrasenam" element={<RecuContrasenamail />} />
         </Route>
         
         <Route element={<PrivateRoute />}>
@@ -57,6 +61,7 @@ root.render(
           <Route path='/UsuariosBlendsAdmin' element={<UsuariosBlendsAdmin/>}/>
           <Route path='/PagoMembresiaAdmin' element={<PagoMembresiaAdmin/>}/>
           <Route path='/Detailsuser/:id' element={<DetailsUser/>}/>
+
         </Route>
       </Routes>
       </SocketContextProvider>

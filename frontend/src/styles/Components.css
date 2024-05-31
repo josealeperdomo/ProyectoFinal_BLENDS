@@ -24,6 +24,7 @@
 }
 .img-user{
     width: 40px;
+    border-radius: 50%;
 }
 .superior-buttons{
     display: flex;
