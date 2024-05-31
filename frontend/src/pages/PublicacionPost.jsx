@@ -209,7 +209,7 @@ export function PublicacionPost() {
                         <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
                       )}
                       {publicacion.usuario_publicacion?.membresia === 'premium' ? (
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/800px-Twitter_Verified_Badge.svg.png" style={{ width: "15px", height: "15px" }} alt="" />
+                        <img className='verified' src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/800px-Twitter_Verified_Badge.svg.png" style={{ width: "15px", height: "15px" }} alt="" />
                       ) : (
                         <div></div>
                       )}
