@@ -3,13 +3,29 @@ import "../styles/General.css";
 import "../styles/Login.css";
 import Logo from "../img/LogoBlends.png";
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import clave from '../assets/password.svg';
 
 export function RecuContrasenamail() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [alerta, setAlerta] = useState("");
+    const {codigo} = useParams()
+
+    const verificarCodigo = () => {
+        axios.post('http://localhost:3000/recuperarPassword/verificarCodigo', { codigo })
+            .then(function (response) {
+                if (response.data.exists) {
+                    console.log(response.data);
+                } else {
+                    window.location.replace("/ingresarcodigo")
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    verificarCodigo()
 
     const restablecerContrasena = (e) => {
         e.preventDefault();
@@ -31,6 +47,19 @@ export function RecuContrasenamail() {
             setAlerta("La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula, un número y un carácter especial.");
             return;
         }
+
+        axios.patch(`http://localhost:3000/recuperarPassword/nuevaContrasena/${codigo}`, {nuevaContrasena: password, nuevaContrasena2: confirmPassword})
+        .then(function (response) {
+            if (response) {
+                alert("Contrasena cambiada por exito")
+                window.location.replace("/")
+            } else {
+                setAlerta("error al cambiar contrasena")
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 
     }
 

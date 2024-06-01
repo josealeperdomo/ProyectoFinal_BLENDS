@@ -79,7 +79,7 @@ export function CambioFoto() {
       }));
 
       alert('Imagen de perfil actualizada exitosamente');
-      navigate('/perfil');
+      navigate(`/perfil/${user.usuario}`);
     } catch (error) {
       console.error('Error al cambiar la imagen de perfil:', error);
     }

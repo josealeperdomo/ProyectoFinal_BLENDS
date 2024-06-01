@@ -245,25 +245,5 @@ const obtenerUsuarioPorUser = async (req, res) => {
     }
   };
 
-  const verificarCorreo = async (req, res) => {
-    try {
-        const { email } = req.body;
 
-        if (!email) {
-            return res.status(400).json({ message: 'El campo de correo electrónico es requerido' });
-        }
-
-        const usuario = await userModel.findOne({ email });
-
-        if (usuario) {
-            return res.status(200).json({ exists: true });
-        } else {
-            return res.status(200).json({ exists: false });
-        }
-    } catch (error) {
-        res.status(500).json({ message: 'Error al verificar el correo' });
-        console.error('Error al verificar el correo:', error);
-    }
-};
-
-module.exports = { getUsers, getUser, getAmigos, createUser, cambiarImagen, updateUser, deleteUser, cambiarContrasena, mostrarUsuariosRandoms, obtenerUsuarioPorUser,verificarCorreo};
+module.exports = { getUsers, getUser, getAmigos, createUser, cambiarImagen, updateUser, deleteUser, cambiarContrasena, mostrarUsuariosRandoms, obtenerUsuarioPorUser};

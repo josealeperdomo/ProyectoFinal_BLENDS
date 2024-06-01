@@ -60,7 +60,7 @@ function NavDer() {
         const obtenerUsuarioPorId = async (usuarioId) => {
             try {
                 const response = await axios.get(`http://localhost:3000/users/${usuarioId}`);
-                setInfoUsuario(response.data.membresia); // Asegúrate de asignar la parte correcta de la respuesta
+                setInfoUsuario(response.data); // Asegúrate de asignar la parte correcta de la respuesta
                 console.log(response.data); // Verifica que los datos son los esperados
             } catch (error) {
                 console.error('Error al obtener el usuario:', error);
@@ -70,13 +70,17 @@ function NavDer() {
         obtenerUsuarioPorId(userId);
     }, [userId]);
 
+    const usuariosFiltrados = usuariosAleatorios.filter(usuario => 
+        usuario._id !== userId && !infoUsuario?.amigos.includes(usuario._id)
+    );
+
     return (
         <section className="lateral-derecha-opciones shadow">
             <div className="row">
                 <div className="row_title">
                     <span>Friend Suggestions</span>
                 </div>
-                {usuariosAleatorios.map(usuario => (
+                {usuariosFiltrados.map(usuario => (
                     <div className="row_contain" key={usuario.id}>
                         <img src={usuario.imagen_perfil} alt="" />
                         <div className='info-navder'> 
@@ -86,7 +90,7 @@ function NavDer() {
                     </div>
                 ))}
             </div>
-            {infoUsuario != 'premium' ? (
+            {infoUsuario?.membresia != 'premium' ? (
                 <a href="/PagoPremium">
                     <div className='seccion-Premium'> 
                         <p>Cámbiate a premium</p>

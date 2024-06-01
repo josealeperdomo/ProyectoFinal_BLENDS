@@ -53,68 +53,134 @@ const PagosController = {
       const usuario = await User.findByIdAndUpdate(pagoAceptado.usuario, {membresia:'premium'})
       const invoiceHtml = `
       <!DOCTYPE html>
-      <html lang="es">
-      <head>
-        <meta charset="UTF-8">
-        <title>Factura</title>
-      </head>
-      <body style="font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f5f5f5;">
-        <div style="max-width: 800px; margin: auto; padding: 30px; border: 1px solid #eee; box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); background-color: #fff;">
-          <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Factura</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .invoice-container {
+      max-width: 800px;
+      margin: auto;
+      padding: 30px;
+      border: 1px solid #eee;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+      background-color: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .header, .footer {
+      padding: 20px 0;
+    }
+    .header-title {
+      font-size: 45px;
+      line-height: 45px;
+      color: #333;
+    }
+    .header-details p {
+      margin: 0;
+    }
+    .company-info, .client-info {
+      padding-bottom: 40px;
+    }
+    .company-info p, .client-info p {
+      margin: 0;
+    }
+    .items-header {
+      background-color: #eee;
+      border-bottom: 1px solid #ddd;
+      font-weight: bold;
+    }
+    .items-header td {
+      padding: 8px;
+    }
+    .item-row {
+      padding: 8px;
+      border-bottom: 1px solid #eee;
+    }
+    .item-row td {
+      padding: 8px;
+    }
+    .text-center {
+      text-align: center;
+    }
+    .text-right {
+      text-align: right;
+    }
+    @media (max-width: 600px) {
+      .header-title {
+        font-size: 32px;
+        line-height: 32px;
+      }
+      .header, .footer {
+        padding: 10px 0;
+      }
+      .company-info, .client-info {
+        padding-bottom: 20px;
+      }
+      .items-header td, .item-row td {
+        padding: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="invoice-container">
+    <table>
+      <tr class="header">
+        <td colspan="2">
+          <table>
             <tr>
-              <td colspan="2" style="padding: 20px 0;">
-                <table width="100%" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td style="font-size: 45px; line-height: 45px; color: #333;">
-                      BLENDS
-                    </td>
-                    <td style="text-align: right;">
-                      <p style="margin: 0;">Factura: ${pagoAceptado.id}</p>
-                      <p style="margin: 0;">Fecha: ${pagoAceptado.fecha_pago}</p>
-                      <p style="margin: 0;">Fecha de recibo: ${dayjs().format('DD-MM-YYYY')}</p>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2" style="padding-bottom: 40px;">
-                <table width="100%" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td>
-                      <p style="margin: 0;">BLENDS</p>
-                      <p style="margin: 0;">Blends 123</p>
-                      <p style="margin: 0;">Caracas, Venezuela</p>
-                    </td>
-                    <td style="text-align: right;">
-                      <p style="margin: 0;">Cliente: ${usuario.usuario}</p>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr style="background-color: #eee; border-bottom: 1px solid #ddd; font-weight: bold;">
-              <td style="padding: 8px;">Descripción</td>
-              <td style="padding: 8px; text-align: right;">Precio</td>
-            </tr>
-            <tr>
-              <td style="padding: 8px; border-bottom: 1px solid #eee;">Servicio Premium</td>
-              <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: right;">$50</td>
-            </tr>
-            <tr>
-              <td colspan="2" style="padding-top: 20px; text-align: center;">
-                <p>Ya puede disfrutar de sus características premium.</p>
+              <td class="header-title">BLENDS</td>
+              <td class="text-right header-details">
+                <p>Factura: ${pagoAceptado.id}</p>
+                <p>Fecha: ${pagoAceptado.fecha_pago}</p>
+                <p>Fecha de recibo: ${dayjs().format('DD-MM-YYYY')}</p>
               </td>
             </tr>
           </table>
-        </div>
-      </body>
-      </html>
+        </td>
+      </tr>
+      <tr class="company-info">
+        <td>
+          <p>BLENDS</p>
+          <p>Blends 123</p>
+          <p>Caracas, Venezuela</p>
+        </td>
+        <td class="text-right client-info">
+          <p>Cliente: ${usuario.usuario}</p>
+        </td>
+      </tr>
+      <tr class="items-header">
+        <td>Descripción</td>
+        <td class="text-right">Precio</td>
+      </tr>
+      <tr class="item-row">
+        <td>Servicio Premium</td>
+        <td class="text-right">$50</td>
+      </tr>
+      <tr>
+        <td colspan="2" class="text-center" style="padding-top: 20px;">
+          <p>Ya puede disfrutar de sus características premium.</p>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>
       `;
       async function main() {     
         let info = await transporter.sendMail({
           from: "BLENDS 👻", 
-          to: "jperdomito0410@gmail.com", 
+          to: usuario.email, 
           subject: "PAGO VERIFICADO CON EXITO",
           html: invoiceHtml, // Cuerpo del mensaje en HTML
         });
@@ -204,7 +270,7 @@ const PagosController = {
       async function main() {     
         let info = await transporter.sendMail({
           from: "BLENDS 👻", 
-          to: "jperdomito0410@gmail.com", 
+          to: usuario.email, 
           subject: "PAGO RECHAZADO",
           html: rejectionHtml, // Cuerpo del mensaje en HTML
         });

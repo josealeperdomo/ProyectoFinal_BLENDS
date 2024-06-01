@@ -24,6 +24,7 @@ app.use('/pagos', require("./backend/app/routes/pagos"))
 app.use('/estadoOnline', require("./backend/app/routes/estadoOnline"))
 app.use('/amistad', require("./backend/app/routes/amistad"))
 app.use('/mensajes', require('./backend/app/routes/mensajes'))
+app.use('/recuperarPassword', require("./backend/app/routes/recuperarPassword"))
 
 
 

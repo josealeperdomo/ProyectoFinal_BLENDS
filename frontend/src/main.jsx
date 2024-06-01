@@ -25,6 +25,7 @@ import { EliminarCuenta } from './pages/EliminarCuenta.jsx';
 import { Error404 } from './pages/Error404.jsx'
 import { RecuContrasena } from './pages/RecuContrasena.jsx';
 import { RecuContrasenamail } from './pages/RecuContrasenamail.jsx';
+import { IngresarCodigo } from './pages/IngresarCodigo.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -39,7 +40,8 @@ root.render(
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/recuperacontrasena" element={<RecuContrasena />} />
-          <Route path="/recuperacontrasenam" element={<RecuContrasenamail />} />
+          <Route path='/ingresarCodigo' element={<IngresarCodigo/>}/>
+          <Route path="/recuperacontrasena/:codigo" element={<RecuContrasenamail />} />
         </Route>
         
         <Route element={<PrivateRoute />}>

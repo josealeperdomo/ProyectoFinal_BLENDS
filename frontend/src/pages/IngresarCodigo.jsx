@@ -4,35 +4,27 @@ import "../styles/Login.css";
 import Logo from "../img/LogoBlends.png";
 import mail from '../assets/mail.svg';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-export function RecuContrasena() {
-    const [email, setEmail] = useState("");
+export function IngresarCodigo() {
+    const [codigo, setCodigo] = useState("");
     const [alerta, setAlerta] = useState("");
 
-    const verificarCorreo = (e) => {
+    const verificarCodigo = (e) => {
         e.preventDefault();
         setAlerta("");
 
-        if (!email) {
+        if (!codigo) {
             setAlerta("El campo de correo electrónico es requerido");
             return;
         }
-
-        const regemail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-        if (!regemail.test(email)) {
-            setAlerta("El correo electrónico no tiene un formato válido.");
-            return;
-        }
-
-        axios.post('http://localhost:3000/recuperarPassword/verificarCorreo', { email })
+        
+        axios.post('http://localhost:3000/recuperarPassword/verificarCodigo', { codigo })
             .then(function (response) {
                 if (response.data.exists) {
-                    setAlerta("Se ha enviado un enlace para restablecer la contraseña a tu correo.");
-                    window.location.replace("/ingresarcodigo")                
+                    window.location.replace(`/recuperacontrasena/${codigo}`)                
                 } else {
-                    setAlerta("Este correo no ha sido registrado antes");
+                    setAlerta("Codigo invalido");
                 }
             })
             .catch(function (error) {
@@ -60,16 +52,16 @@ export function RecuContrasena() {
                 <div className="login-centro">
                     <div className="login-centro-section2">
                         <h1>Recupera tu contraseña</h1>
-                        <p>Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.</p>
-                        <form onSubmit={verificarCorreo}>
+                        <p>Ingresa el codigo que se ha enviado ha tu correo</p>
+                        <form onSubmit={verificarCodigo}>
                             <div className="img-form">
                                 <input 
-                                    type="email" 
-                                    placeholder="Email" 
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)} 
+                                    type="text" 
+                                    placeholder="Codigo" 
+                                    value={codigo}
+                                    onChange={(e) => setCodigo(e.target.value)} 
                                 />
-                                <img className='mail-password' src={mail} alt="Mail Icon" />
+                                
                             </div>
                             <p className='alerta'>{alerta}</p>
                             <button type="submit">Recuperar</button>
