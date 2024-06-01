@@ -10,6 +10,7 @@ import namelname from '../assets/namelname.svg';
 import clave from '../assets/password.svg';
 import axios from 'axios'
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2'
 
 export function Register(){
     const [showPassword, setShowPassword] = useState(false);
@@ -65,7 +66,14 @@ export function Register(){
         axios.post('http://localhost:3000/users', data)
         .then(function (response) {
             console.log(response.data.Message);
-            setAlerta(response.data.Message);
+            Swal.fire({
+                title: "Usuario creado correctamente",
+                text: "Ya puede iniciar sesion",
+                icon: "success",
+                didClose: ()=>{
+                    window.location.replace("/")
+                }
+              });    
         })
         .catch(function (error) {
             console.log(error);

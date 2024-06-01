@@ -5,6 +5,8 @@ import Logo from "../img/LogoBlends.png";
 import mail from '../assets/mail.svg';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'
+
 
 export function RecuContrasena() {
     const [email, setEmail] = useState("");
@@ -29,8 +31,15 @@ export function RecuContrasena() {
         axios.post('http://localhost:3000/recuperarPassword/verificarCorreo', { email })
             .then(function (response) {
                 if (response.data.exists) {
-                    setAlerta("Se ha enviado un enlace para restablecer la contraseña a tu correo.");
-                    window.location.replace("/ingresarcodigo")                
+                    Swal.fire({
+                        title: "Codigo enviado",
+                        text: "El codigo ha sido enviado a su correo electronico",
+                        icon: "success",
+                        didClose: () => {
+                            window.location.replace("/ingresarcodigo")                     
+                        }
+                      });    
+                                      
                 } else {
                     setAlerta("Este correo no ha sido registrado antes");
                 }

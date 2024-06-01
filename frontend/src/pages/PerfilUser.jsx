@@ -6,6 +6,7 @@ import NavIzq from "../components/NavIzq";
 import NavDer from "../components/NavDer";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2'
 
 export function PerfilUser() {
   const { user } = useParams(); // Obtener el valor de user de la URL
@@ -180,7 +181,11 @@ export function PerfilUser() {
       });
       if (response.status === 200) {
         setAmigoEnviado(true);
-        alert('Solicitud de amistad enviada correctamente');
+        Swal.fire({
+          title: "Solicitud enviada!",
+          text: "La solicitud ha sido enviada al usuario",
+          icon: "success"
+        });    
       }
     } catch (error) {
       console.error('Error al enviar la solicitud de amistad:', error);

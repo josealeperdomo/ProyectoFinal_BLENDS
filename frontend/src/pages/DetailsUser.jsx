@@ -5,6 +5,8 @@ import "../styles/General.css";
 import "../styles/Feed.css";
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
+import Swal from 'sweetalert2'
+
 
 export function DetailsUser() {
   const navigate = useNavigate()
@@ -38,7 +40,11 @@ export function DetailsUser() {
     e.preventDefault();
     try {
       await axios.put(`http://localhost:3000/users/${id}`, user);
-      alert('Usuario actualizado correctamente');
+      Swal.fire({
+        title: "Usuario actualizado correctamente",
+        text: "Los datos del usuario han sido actualizados",
+        icon: "success"
+      });
     } catch (error) {
       console.error('Error al actualizar el usuario:', error);
     }
@@ -47,7 +53,11 @@ export function DetailsUser() {
   const handleDelete = async () => {
     try {
       await axios.delete(`http://localhost:3000/users/${id}`);
-      alert('Usuario eliminado correctamente');
+      Swal.fire({
+        title: "Usuario eliminado correctamente",
+        text: "El usuario ha sido eliminado",
+        icon: "success"
+      });    
       navigate('/UsuariosBlendsAdmin')
     } catch (error) {
       console.error('Error al eliminar el usuario:', error);

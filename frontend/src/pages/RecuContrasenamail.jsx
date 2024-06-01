@@ -5,6 +5,7 @@ import Logo from "../img/LogoBlends.png";
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import clave from '../assets/password.svg';
+import Swal from 'sweetalert2'
 
 export function RecuContrasenamail() {
     const [password, setPassword] = useState("");
@@ -51,8 +52,14 @@ export function RecuContrasenamail() {
         axios.patch(`http://localhost:3000/recuperarPassword/nuevaContrasena/${codigo}`, {nuevaContrasena: password, nuevaContrasena2: confirmPassword})
         .then(function (response) {
             if (response) {
-                alert("Contrasena cambiada por exito")
-                window.location.replace("/")
+                Swal.fire({
+                    title: "Contraseña actualizada exitosamente",
+                    text: "Su contraseña ha sido actualizada",
+                    icon: "success",
+                    didClose: ()=>{
+                        window.location.replace("/")
+                    }
+                  });
             } else {
                 setAlerta("error al cambiar contrasena")
             }

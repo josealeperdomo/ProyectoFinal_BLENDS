@@ -2,8 +2,6 @@ const userModel = require('../models/users')
 const codeModel = require('../models/codigoverficacion')
 const nodemailer = require("nodemailer");
 const { v4: uuidv4 } = require('uuid');
-const bcrypt = require('bcrypt')
-
 
 let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",

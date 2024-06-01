@@ -5,6 +5,8 @@ import "../styles/General.css";
 import "../styles/Feed.css";
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
+import Swal from 'sweetalert2'
+
 
 export function EliminarCuenta() {
   const [user, setUser] = useState({
@@ -55,12 +57,21 @@ export function EliminarCuenta() {
       });
 
       localStorage.removeItem('token');
-      alert('Cuenta eliminada exitosamente');
-      navigate('/');  // Redirigir a la página de inicio de sesión o inicio
+      Swal.fire({
+        title: "Cuenta eliminada exitosamente",
+        text: "Su cuenta ha sido eliminada",
+        icon: "success",
+        didClose: () => {
+          navigate('/');
+      }
+      });    
     } catch (error) {
       console.error('Error al eliminar la cuenta:', error);
-      alert('Hubo un problema al eliminar tu cuenta. Inténtalo nuevamente.');
-    }
+      Swal.fire({
+        title: "Error!",
+        text: "Hubo un error al eliminar la cuenta",
+        icon: "error"
+      });    }
   };
 
   return (

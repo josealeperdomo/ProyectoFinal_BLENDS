@@ -5,6 +5,7 @@ import NavIzq from "../components/NavIzq";
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
 export function CambioContrasena() {
   const [anteriorContrasena, setAnteriorContrasena] = useState('');
@@ -22,7 +23,11 @@ export function CambioContrasena() {
   const handleSubmitPassword = async (e) => {
     e.preventDefault();
     if (nuevaContrasena !== confirmarContrasena) {
-      alert('Las contraseñas no coinciden');
+      Swal.fire({
+        title: "Contraseñas distintas",
+        text: "Las contraseñas no coinciden",
+        icon: "error"
+      });
       return;
     }
     try {
@@ -31,15 +36,29 @@ export function CambioContrasena() {
         nuevaContrasena
       });
       if (response.status === 200) {
-        alert('Contraseña cambiada exitosamente');
+        console.log("hola");
+        Swal.fire({
+          title: "Contraseña cambiada exitosamente!",
+          text: "Su contraseña ha sido modificada",
+          icon: "success"
+        });
         setAnteriorContrasena('');
         setNuevaContrasena('');
         setConfirmarContrasena('');
       } else {
-        alert('Hubo un problema al cambiar la contraseña');
+        Swal.fire({
+          title: "Error!",
+          text: "Hubo un error al cambiar la contraseña",
+          icon: "error"
+        });
       }
     } catch (error) {
       console.error('Error al cambiar la contraseña:', error);
+      Swal.fire({
+        title: "Error!",
+        text: "Hubo un error al cambiar la contraseña, Verifica que este poniendo tu anterior contraseña correctamente",
+        icon: "error"
+      });
     }
   };
 

@@ -5,6 +5,7 @@ import "../styles/General.css";
 import "../styles/Feed.css";
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
+import Swal from 'sweetalert2'
 
 export function ConfigUser() {
   const [user, setUser] = useState({
@@ -55,7 +56,11 @@ export function ConfigUser() {
     try {
       if (userId) {
         await axios.put(`http://localhost:3000/users/${userId}`, user);
-        alert('Usuario actualizado correctamente');
+        Swal.fire({
+          title: "Usuario actualizado correctamente",
+          text: "Sus datos han sido actualizados",
+          icon: "success"
+        });      
       } else {
         console.error('ID de usuario no encontrado');
       }

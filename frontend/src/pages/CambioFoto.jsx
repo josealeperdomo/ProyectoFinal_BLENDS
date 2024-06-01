@@ -6,7 +6,8 @@ import "../styles/Feed.css";
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
 import camera from "../assets/camera.svg";
-import fotoprede from "../img/fotopredeterminada.png";
+import Swal from 'sweetalert2'
+
 
 export function CambioFoto() {
   const [user, setUser] = useState({
@@ -78,7 +79,11 @@ export function CambioFoto() {
         imagen_perfil: response.data.user.imagen_perfil
       }));
 
-      alert('Imagen de perfil actualizada exitosamente');
+      Swal.fire({
+        title: "Imagen cambiada con exito!",
+        text: "Su imagen de perfil ha sido actualizada",
+        icon: "success"
+      });      
       navigate(`/perfil/${user.usuario}`);
     } catch (error) {
       console.error('Error al cambiar la imagen de perfil:', error);

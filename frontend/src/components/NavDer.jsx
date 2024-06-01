@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import "../styles/General.css";
 import "../styles/Components.css";
+import Swal from 'sweetalert2'
 
 function NavDer() {
     const [usuariosAleatorios, setUsuariosAleatorios] = useState([]);
@@ -46,11 +47,19 @@ function NavDer() {
                 id_receptor: idReceptor
             });
             if (response.status === 200) {
-                alert('Solicitud de amistad enviada correctamente');
+                Swal.fire({
+                    title: "Solicitud de amistad enviada exitosamente",
+                    text: "Su solicitud ha sido enviada",
+                    icon: "success"
+                  });    
             }
         } catch (error) {
             console.error('Error al enviar la solicitud de amistad:', error);
-            alert(error.response?.data?.message || 'Error al enviar la solicitud de amistad');
+            Swal.fire({
+                title: "Error!",
+                text: error.response?.data?.message || 'Error al enviar la solicitud de amistad',
+                icon: "error"
+              });
         }
     };
 
