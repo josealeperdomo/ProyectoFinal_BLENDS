@@ -5,7 +5,7 @@ import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
 import NavDer from "../components/NavDer";
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2'
 
 export function PerfilUser() {
@@ -240,7 +240,7 @@ export function PerfilUser() {
                             <div className="feed_title2">
                               <img src={publicacion.usuario_publicacion.imagen_perfil} alt="" />
                               <span>
-                                <b><a href={`/perfil/${publicacion.usuario_publicacion.usuario}`}>{publicacion.usuario_publicacion.usuario}</a></b> hizo una <a href={`/publicacion/${publicacion._id}`}>Publicacion</a>
+                                <b><Link to={`/perfil/${publicacion.usuario_publicacion.usuario}`}>{publicacion.usuario_publicacion.usuario}</Link></b> hizo una <Link to={`/publicacion/${publicacion._id}`}>Publicacion</Link>
                                 <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
                             </span>
                             </div>
@@ -278,8 +278,7 @@ export function PerfilUser() {
                             </ul>
                             <ul className="feed_footer_right">
                                 <div>
-                                    <li className="hover-orange selected-orange"><i className="fa fa-share"></i> 7k</li>
-                                    <li className="hover-orange"><i className="fa fa-comments-o"></i> 860 comments</li>
+                                    <li className="hover-orange"><i className="fa fa-comments-o"></i></li>
                                 </div>
                             </ul>
                         </div>

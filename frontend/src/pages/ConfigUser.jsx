@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import "../styles/General.css";
 import "../styles/Feed.css";
@@ -92,24 +92,24 @@ export function ConfigUser() {
                   <div className="menusetting_contain">
                     <ul>
                       <li>
-                        <a href={`/configuracion`} id="settings-select">
+                        <Link to={`/configuracion`} id="settings-select">
                           Informacion Personal
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href={`/cambiocontrasena`}>
+                        <Link to={`/cambiocontrasena`}>
                           Cambio de contraseña
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href={`/cambiofoto`}>
+                        <Link to={`/cambiofoto`}>
                           Cambiar foto de perfil
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href={`/eliminarcuenta`} >
+                        <Link to={`/eliminarcuenta`} >
                           Eliminar cuenta
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </div>

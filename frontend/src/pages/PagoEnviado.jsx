@@ -28,7 +28,7 @@ export function PagoEnviado() {
                 </div>
                 <h1>Tu pago ha sido enviado a revision</h1>
                 <p>Te estaremos informando cuando tu pago sea validado por correo electronico</p>
-                <a href="/home">Volver al feed</a>
+                <Link to="/home">Volver al feed</Link>
 
 
               </div>

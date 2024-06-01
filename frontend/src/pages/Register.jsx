@@ -100,7 +100,7 @@ export function Register(){
                 <div className="login-centro">
                     <div className="login-centro-section2">
                         <h1>Registrate</h1>
-                        <p>¿Ya tienes cuenta? <a href="/">inicia sesion</a></p>
+                        <p>¿Ya tienes cuenta? <Link to="/">inicia sesion</Link></p>
                         <form action="" onSubmit={registrarse}>
                             <div className="img-form">
                                 <input type="text" placeholder="Nombre" onChange={(e)=>setNombre(e.target.value)} />
@@ -127,7 +127,7 @@ export function Register(){
                             <button>Registrarse</button>
                         </form>
                         <div className="login-centro-section2-Oc">
-                            <a href="/recuperacontrasena">¿Olvidaste tu contraseña?</a>
+                            <Link to="/recuperacontrasena">¿Olvidaste tu contraseña?</Link>
                         </div>
                     </div>
                 </div>

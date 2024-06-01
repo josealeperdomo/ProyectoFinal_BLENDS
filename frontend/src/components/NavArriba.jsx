@@ -11,7 +11,7 @@ import buscar from "../assets/buscar.svg";
 import menu from "../assets/menu.svg";
 import like from "../assets/like.svg";
 import share from "../assets/share.svg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function NavArriba() {
@@ -64,11 +64,12 @@ function NavArriba() {
     }
   };
 
+  const navigate = useNavigate()
   const cerrarSesion = () => {
     // Eliminar token
     localStorage.removeItem("token");
     // Redirigir a la página de inicio de sesión
-    window.location.href = "/";
+    navigate('/');
   };
 
   const [solicitudes, setSolicitudes] = useState([]);
@@ -199,29 +200,29 @@ useEffect(() => {
                 <div className="rowmenu">
                   <div className="rowmenu-ul">
                     <li>
-                      <a href="/home">
+                      <Link to="/home">
                         <i className="fa fa-globe"></i>Nuevas publicaciones
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a href={`/perfil/${infoUsuario?.usuario}`}>
+                      <Link to={`/perfil/${infoUsuario?.usuario}`}>
                         <i className="fa fa-user"></i>Mi perfil
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a href="/amigos">
+                      <Link to="/amigos">
                         <i className="fa fa-users"></i>Mis amigos
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a href="/chats">
+                      <Link to="/chats">
                         <i className="fa fa-comments-o"></i>Mis chats
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a href="/PagoPremium">
+                      <Link to="/PagoPremium">
                         <i className="fa fa-money"></i>Comprar premiun
-                      </a>
+                      </Link>
                     </li>
                   </div>
                 </div>
@@ -249,7 +250,9 @@ useEffect(() => {
             onClick={() => toggleDropdown(setIsVisibleAmigos, isVisibleAmigos)}
           >
             <img src={Amigos} alt="Amigos" />
-            <div className="superior-button-number">5</div>
+            {solicitudes.length > 0 ? (
+              <div className="superior-button-number">{solicitudes.length}</div>) : null
+            }
           </div>
 
           <div
@@ -263,9 +266,9 @@ useEffect(() => {
               </div>
               <div className="modal-title">
                 <span>FRIEND REQUESTS</span>
-                <a href="/amigos">
+                <Link to="/amigos">
                   <i className="fa fa-ellipsis-h"></i>
-                </a>
+                </Link>
               </div>
               <div className="modal-content">
                 <ul>
@@ -276,7 +279,7 @@ useEffect(() => {
                   ) : (
                     solicitudes.map((solicitud) => (
                       <li key={solicitud._id}>
-                        <a href="#">
+                        <Link to="/amigos">
                           <img
                             src={solicitud.usuarioEmisor.imagen_perfil}
                             alt={solicitud.nombre}
@@ -308,7 +311,7 @@ useEffect(() => {
                           >
                             Decline
                           </button>
-                        </a>
+                        </Link>
                       </li>
                     ))
                   )}
@@ -319,167 +322,9 @@ useEffect(() => {
 
           <div
             className="superior-button"
-            onClick={() =>
-              toggleDropdown(setIsVisibleMensajes, isVisibleMensajes)
-            }
-          >
+          > <Link to="/chats">
             <img src={mensaje} alt="Mensajes" />
-            <div className="superior-button-number">5</div>
-          </div>
-
-          <div
-            className={
-              isVisibleMensajes ? "dropdown-content show" : "dropdown-content"
-            }
-          >
-            <div className="modal modal-comments">
-              <div className="modal-icon-select">
-                <i className="fa fa-sort-asc" aria-hidden="true"></i>
-              </div>
-              <div className="modal-title">
-                <span>CHAT / MESSAGES</span>
-                <a href="/chats">
-                  <i className="fa fa-ellipsis-h"></i>
-                </a>
-              </div>
-              <div className="modal-content">
-                <ul>
-                  <li>
-                    <a href="#">
-                      <img src="images/user-7.jpg" alt="" />
-                      <div className="modal-content-info-message">
-                        <span>
-                          <b>Diana Jameson</b>
-                        </span>
-                        <span>
-                          Hi James! It’s Diana, I just wanted to let you know
-                          that we have to reschedule...
-                        </span>
-                        <span>
-                          <p>4 hours ago</p>
-                        </span>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <img src="images/user-6.jpg" alt="" />
-                      <div className="modal-content-info-message">
-                        <span>
-                          <b>Elaine Dreyfuss</b>
-                        </span>
-                        <span>
-                          We’ll have to check that at the office and see if the
-                          client is on board with...
-                        </span>
-                        <span>
-                          <p>Yesterday at 9:56pm</p>
-                        </span>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <img src="images/user-3.jpg" alt="" />
-                      <div className="modal-content-info-message">
-                        <span>
-                          <b>Elaine Dreyfuss</b>
-                        </span>
-                        <span>
-                          We’ll have to check that at the office and see if the
-                          client is on board with...
-                        </span>
-                        <span>
-                          <p>Yesterday at 9:56pm</p>
-                        </span>
-                      </div>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="superior-button"
-            onClick={() =>
-              toggleDropdown(
-                setIsVisibleNotificaciones,
-                isVisibleNotificaciones
-              )
-            }
-          >
-            <img src={notificacion} alt="Notificaciones" />
-          </div>
-
-          <div
-            className={
-              isVisibleNotificaciones
-                ? "dropdown-content show"
-                : "dropdown-content"
-            }
-          >
-            <div className="modal modal-comments">
-              <div className="modal-icon-select">
-                <i className="fa fa-sort-asc" aria-hidden="true"></i>
-              </div>
-              <div className="modal-title">
-                <span>NOTIFICACIONES</span>
-                <a href="/chats">
-                  <i className="fa fa-ellipsis-h"></i>
-                </a>
-              </div>
-              <div className="modal-content">
-                <ul>
-                  <li>
-                    <a href="#">
-                      <img src="images/user-7.jpg" alt="" />
-                      <div className="modal-content-info-message">
-                        <span>
-                          <b>Diana Jameson</b>
-                        </span>
-                        <span>
-                          <p>Ha dado like a tu foto de perfil</p>
-                        </span>
-                        <span>4 hours ago</span>
-                      </div>
-
-                      <img className="img-notoficaciones" src={like} alt="" />
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <img src="images/user-6.jpg" alt="" />
-                      <div className="modal-content-info-message">
-                        <span>
-                          <b>Diana Jameson</b>
-                        </span>
-                        <span>
-                          <p>Le gusto tu publicacion</p>
-                        </span>
-                        <span>4 hours ago</span>
-                      </div>
-                      <img className="img-notoficaciones" src={like} alt="" />
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <img src="images/user-3.jpg" alt="" />
-                      <div className="modal-content-info-message">
-                        <span>
-                          <b>Diana Jameson</b>
-                        </span>
-                        <span>
-                          <p>Compartio tu publicacion</p>
-                        </span>
-                        <span>4 hours ago</span>
-                      </div>
-                      <img className="img-notoficaciones" src={share} alt="" />
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            </Link>
           </div>
 
           <div
@@ -508,14 +353,14 @@ useEffect(() => {
               </div>
               <div className="modal-title">
                 <span>YOUR ACCOUNT</span>
-                <a href="/configuracion">
+                <Link to="/configuracion">
                   <i className="fa fa-cogs"></i>
-                </a>
+                </Link>
               </div>
               <div className="modal-content">
                 <ul>
                   <li>
-                    <a href={`/configuracion`}>
+                    <Link to={`/configuracion`}>
                       <i className="fa fa-tasks" aria-hidden="true"></i>
                       <div className="modal-content-info">
                         <span>
@@ -523,10 +368,10 @@ useEffect(() => {
                         </span>
                         <span>Yours profile settings</span>
                       </div>
-                    </a>
+                    </Link>
                   </li>
                   {user.rol === 'admin' ? (<li>
-                    <a href="/UsuariosBlendsAdmin">
+                    <Link to="/UsuariosBlendsAdmin">
                       <i className="fa fa-star-o" aria-hidden="true"></i>
                       <div className="modal-content-info">
                         <span>
@@ -534,10 +379,10 @@ useEffect(() => {
                         </span>
                         <span>sitio para admins</span>
                       </div>
-                    </a>
+                    </Link>
                   </li>) : <div></div>}
                   <li>
-                    <a href="#" onClick={cerrarSesion}>
+                    <Link to="#" onClick={cerrarSesion}>
                       <i className="fa fa-power-off" aria-hidden="true"></i>
                       <div className="modal-content-info">
                         <span>
@@ -545,7 +390,7 @@ useEffect(() => {
                         </span>
                         <span>Cierra tu sesión</span>
                       </div>
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>

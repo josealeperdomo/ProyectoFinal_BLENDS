@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
+import { Link } from 'react-router-dom';
 
 export function PagoMembresiaAdmin() {
   const [pagos, setPagos] = useState([]);
@@ -61,12 +62,12 @@ export function PagoMembresiaAdmin() {
                   <div className="menusetting_contain">
                     <ul>
                       <li>
-                        <a href="/UsuariosBlendsAdmin">Usuarios de blends</a>
+                        <Link to="/UsuariosBlendsAdmin">Usuarios de blends</Link>
                       </li>
                       <li>
-                        <a href="/PagoMembresiaAdmin" id="settings-select">
+                        <Link to="/PagoMembresiaAdmin" id="settings-select">
                           Pagos de Membresia (Premium)
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </div>

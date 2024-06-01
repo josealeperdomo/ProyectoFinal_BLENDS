@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "../styles/General.css";
 import "../styles/Feed.css";
@@ -97,24 +97,24 @@ export function EliminarCuenta() {
                   <div className="menusetting_contain">
                     <ul>
                       <li>
-                        <a href={`/configuracion`} >
+                        <Link to={`/configuracion`} >
                           Informacion Personal
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href={`/cambiocontrasena`}>
+                        <Link to={`/cambiocontrasena`}>
                           Cambio de contraseña
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href={`/cambiofoto`}>
+                        <Link to={`/cambiofoto`}>
                           Cambiar foto de perfil
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href={`/eliminarcuenta`} id="settings-select">
+                        <Link to={`/eliminarcuenta`} id="settings-select">
                           Eliminar cuenta
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </div>

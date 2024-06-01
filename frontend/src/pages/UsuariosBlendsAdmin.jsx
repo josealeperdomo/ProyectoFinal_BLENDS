@@ -3,6 +3,7 @@ import axios from 'axios';
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
 import buscar from "../assets/buscar.svg";
+import { Link } from 'react-router-dom';
 
 export function UsuariosBlendsAdmin() {
   const [usuarios, setUsuarios] = useState([]);
@@ -52,14 +53,14 @@ export function UsuariosBlendsAdmin() {
                   <div className="menusetting_contain">
                     <ul>
                       <li>
-                        <a href="/UsuariosBlendsAdmin" id="settings-select">
+                        <Link to="/UsuariosBlendsAdmin" id="settings-select">
                           Usuarios de blends
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href="/pagoMembresiaadmin">
+                        <Link to="/pagoMembresiaadmin">
                           Pagos de Membresia (Premium)
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </div>
@@ -80,8 +81,8 @@ export function UsuariosBlendsAdmin() {
                     <div className="friend" key={usuario._id}>
                       <div className="friend_title">
                         <img src={usuario.imagen_perfil} alt="" />
-                        <span><b><a href={`/perfil/${usuario.usuario}`}>{usuario.usuario}</a></b></span>
-                        <a href={`/Detailsuser/${usuario._id}`} className="add-friend">Ver detalles</a>
+                        <span><b><Link to={`/perfil/${usuario.usuario}`}>{usuario.usuario}</Link></b></span>
+                        <Link to={`/Detailsuser/${usuario._id}`} className="add-friend">Ver detalles</Link>
                       </div>
                     </div>
                   ))}

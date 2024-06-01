@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import "../styles/General.css";
 import "../styles/Feed.css";
@@ -80,11 +80,11 @@ export function DetailsUser() {
           <section className="central-opciones">
             <div className="seccion-general">
               <div className="row amigos ">
-                <a className="row salir-post" href="javascript:history.back()">
+                <Link className="row salir-post" to="javascript:history.back()">
                   <div className="fa fa-arrow-left ">
                   </div>
                   <h3>Ir a Usuarios</h3>
-                </a>
+                </Link>
 
                 <div className="config-form">
                   <div className="row border-radius">

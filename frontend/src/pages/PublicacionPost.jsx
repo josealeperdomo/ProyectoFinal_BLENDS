@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import '../styles/General.css';
 import '../styles/Feed.css';
 import NavArriba from "../components/NavArriba";
@@ -215,8 +215,8 @@ export function PublicacionPost() {
                       )}
                     </div>
                     <span>
-                      <b><a href={`/perfil/${publicacion.usuario_publicacion?.usuario}`}>{publicacion.usuario_publicacion?.usuario}</a></b> hizo una{" "}
-                      <a href="#">Publicacion</a>
+                      <b><Link to={`/perfil/${publicacion.usuario_publicacion?.usuario}`}>{publicacion.usuario_publicacion?.usuario}</Link></b> hizo una{" "}
+                      <Link to="#">Publicacion</Link>
                       <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
                     </span>
                   </div>
@@ -253,9 +253,6 @@ export function PublicacionPost() {
                   </ul>
                   <ul className="feed_footer_right">
                     <div>
-                      <li className="hover-orange selected-orange">
-                        <i className="fa fa-share"></i> 7k
-                      </li>
                       <li className="hover-orange">
                         <i className="fa fa-comments-o"></i> {comentarios.length} comentarios
                       </li>

@@ -79,7 +79,7 @@ export function Login() {
                         <p>{alerta}</p>
                     </form>
                     <div className="login-centro-section2-Oc">
-                        <a href="/recuperacontrasena">¿Olvidaste tu contraseña?</a>
+                        <Link to="/recuperacontrasena">¿Olvidaste tu contraseña?</Link>
                     </div>
                 </div>
                 <div className="login-centro-section1">

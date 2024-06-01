@@ -102,7 +102,7 @@ export function Messages() {
             {!selectedConversation ? noChatSelected() : (
                 <>
                     <div>
-                        <span>to:</span>
+                        <span>Chat con </span>
                         <span>{selectedConversation.usuario}</span>
                     </div>
                     <div className="mensajes-container">

@@ -2,7 +2,7 @@ import "../styles/General.css";
 import "../styles/Feed.css";
 import NavArriba from "../components/NavArriba";
 import NavIzq from "../components/NavIzq";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2'
@@ -82,24 +82,24 @@ export function CambioContrasena() {
                   <div className="menusetting_contain">
                     <ul>
                       <li>
-                        <a href={`/configuracion`}>
+                        <Link to={`/configuracion`}>
                           Información Personal
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href={`/cambiocontrasena`} id="settings-select">
+                        <Link to={`/cambiocontrasena`} id="settings-select">
                           Cambio de contraseña
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href={`/cambiofoto`}>
+                        <Link to={`/cambiofoto`}>
                           Cambiar foto de perfil
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href={`/eliminarcuenta`}>
+                        <Link to={`/eliminarcuenta`}>
                           Eliminar cuenta
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </div>

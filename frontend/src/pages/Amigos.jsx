@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import "../styles/General.css";
 import "../styles/Feed.css";
@@ -94,7 +94,7 @@ export function Amigos() {
                           {amigo.membresia == 'premium' ? <img className='verified' src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/800px-Twitter_Verified_Badge.svg.png" style={{width: "15px", height: "15px" }} alt="" /> : <div></div>}
                         </div>
                         
-                        <span><b><a href={`/perfil/${amigo.usuario}`}>{amigo.usuario}</a></b></span>
+                        <span><b><Link to={`/perfil/${amigo.usuario}`}>{amigo.usuario}</Link></b></span>
                         <button className="delete-friend" onClick={() => handleEliminarAmigo(amigo._id)}>Eliminar</button>
                       </div>
                     </div>

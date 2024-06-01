@@ -3,6 +3,7 @@ import axios from 'axios';
 import "../styles/General.css";
 import "../styles/Components.css";
 import Swal from 'sweetalert2'
+import { Link } from 'react-router-dom';
 
 function NavDer() {
     const [usuariosAleatorios, setUsuariosAleatorios] = useState([]);
@@ -93,19 +94,19 @@ function NavDer() {
                     <div className="row_contain" key={usuario.id}>
                         <img src={usuario.imagen_perfil} alt="" />
                         <div className='info-navder'> 
-                            <span><b><a href={`/perfil/${usuario.usuario}`}>{usuario.usuario}</a></b></span>
+                            <span><b><Link to={`/perfil/${usuario.usuario}`}>{usuario.usuario}</Link></b></span>
                         </div>
                         <button onClick={() => handleEnviarSolicitud(usuario._id)}>+</button>
                     </div>
                 ))}
             </div>
             {infoUsuario?.membresia != 'premium' ? (
-                <a href="/PagoPremium">
+                <Link to="/PagoPremium">
                     <div className='seccion-Premium'> 
                         <p>Cámbiate a premium</p>
                         <button className='botonPremium diagonal-hover'>Premium</button>
                     </div>
-                </a>
+                </Link>
             ) : null}
         </section>
     );

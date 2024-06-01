@@ -3,6 +3,7 @@ import axios from "axios";
 import "../styles/Feed.css";
 import { useSocketContext } from "../routes/SocketContext";
 import menuPubli from "../assets/menucopubli.svg";
+import { Link } from "react-router-dom";
 
 const Publicaciones = () => {
   const [publicaciones, setPublicaciones] = useState([]);
@@ -185,12 +186,12 @@ const Publicaciones = () => {
                     </div>
                     <span>
                       <b>
-                        <a href={`/perfil/${usuario.usuario}`}>
+                        <Link to={`/perfil/${usuario.usuario}`}>
                           {usuario.usuario}
-                        </a>
+                        </Link>
                       </b>{" "}
                       hizo una{" "}
-                      <a href={`/publicacion/${publicacion._id}`}>Publicacion</a>
+                      <Link to={`/publicacion/${publicacion._id}`}>Publicacion</Link>
                       <p>{new Date(publicacion.createdAt).toLocaleString()}</p>
                     </span>
                   </div>
@@ -252,9 +253,6 @@ const Publicaciones = () => {
                   </ul>
                   <ul className="feed_footer_right">
                     <div>
-                      <li className="hover-orange selected-orange">
-                        <i className="fa fa-share"></i> 7k
-                      </li>
                       <li className="hover-orange">
                         <i className="fa fa-comments-o"></i> comments
                       </li>

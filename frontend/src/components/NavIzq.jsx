@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import "../styles/General.css";
 import "../styles/Components.css";
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function NavIzq() {
 
@@ -27,7 +28,7 @@ function NavIzq() {
 
 
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const obtenerUsuarioPorId = async (usuarioid) => {
             try {
                 const response = await axios.get(`http://localhost:3000/users/${usuarioid}`);
@@ -61,12 +62,11 @@ function NavIzq() {
                 </div>
                 <div className="rowmenu">
                     <div className='rowmenu-ul'>
-                        <li ><a href="/home"><i className="fa fa-globe" ></i>Nuevas publicaciones</a></li>
-                        <li><a href={`/perfil/${infoUsuario?.usuario}`}><i className="fa fa-user"></i>Mi perfil</a></li>
-                        <li><a href="/amigos"><i className="fa fa-users"></i>Mis amigos</a></li>
-                        <li><a href="/chats"><i className="fa fa-comments-o"></i>Mis chats</a></li>
-                        {infoUsuario?.membresia != 'premium' ?                         <li><a href="/PagoPremium"><i className="fa fa-money"></i>Comprar premiun</a></li>
- : <div></div>}
+                        <li ><Link to="/home"><i className="fa fa-globe" ></i>Nuevas publicaciones</Link></li>
+                        <li><Link to={`/perfil/${infoUsuario?.usuario}`}><i className="fa fa-user"></i>Mi perfil</Link></li>
+                        <li><Link to="/amigos"><i className="fa fa-users"></i>Mis amigos</Link></li>
+                        <li><Link to="/chats"><i className="fa fa-comments-o"></i>Mis chats</Link></li>
+                        {infoUsuario?.membresia != 'premium' ? <li><Link to="/PagoPremium"><i className="fa fa-money"></i>Comprar premiun</Link></li> : <div></div>}
                     </div>
                 
                 
