@@ -41,7 +41,7 @@ root.render(
           <Route path="/register" element={<Register />} />
           <Route path="/recuperacontrasena" element={<RecuContrasena />} />
           <Route path='/ingresarCodigo' element={<IngresarCodigo/>}/>
-          <Route path="/recuperacontrasena/:codigo" element={<RecuContrasenamail />} />
+          <Route path="/recuperacontrasena/:codigo" element={<RecuContrasenamail/>} />
         </Route>
         
         <Route element={<PrivateRoute />}>
