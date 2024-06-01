@@ -272,7 +272,7 @@ useEffect(() => {
               </div>
               <div className="modal-content">
                 <ul>
-                  {solicitudes.length === 0 ? (
+                  {solicitudes.length === 0 && solicitudes.usuarioEmisor ? (
                     <ul>
                       <li>No tienes solicitudes</li>
                     </ul>
@@ -286,7 +286,7 @@ useEffect(() => {
                           />
                           <div className="modal-content-info">
                             <span>
-                              <b>{solicitud.usuarioEmisor.usuario}</b>
+                              <b>{solicitud.usuarioEmisor?.usuario}</b>
                             </span>
                           </div>
                           <button

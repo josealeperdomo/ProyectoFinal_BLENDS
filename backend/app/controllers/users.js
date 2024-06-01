@@ -1,4 +1,11 @@
 const userModel = require('../models/users')
+const solicitudModel = require('../models/solicitudesAmistad');
+const Publicacion = require('../models/publicacion');
+const Comentario = require('../models/comentario');  
+const Mensaje = require('../models/mensaje');  
+const Conversacion = require('../models/conversacion');  
+const Like = require('../models/like')
+const Pago = require('../models/pago')
 const bcrypt = require('bcrypt')
 const multer = require('multer')
 const path = require('path')
@@ -212,19 +219,49 @@ const updateUser = async (req, res) => {
         
     }
 }
-
 const deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
+
         const user = await userModel.findByIdAndDelete(id);
         if (!user) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
-        res.status(200).json({ message: 'Usuario eliminado' });
+
+        await solicitudModel.deleteMany({ usuarioEmisor: id });
+
+        await userModel.updateMany(
+            { amigos: id },
+            { $pull: { amigos: id } }
+        );
+
+        await Publicacion.deleteMany({ usuario_publicacion: id });
+
+        await Comentario.deleteMany({ usuario_comentario: id });
+
+        await Mensaje.deleteMany({ $or: [{ senderId: id }, { receiverId: id }] });
+
+        const conversaciones = await Conversacion.find({ participantes: id });
+        for (const conversacion of conversaciones) {
+            await Mensaje.deleteMany({ _id: { $in: conversacion.messages } });
+
+            await Conversacion.findByIdAndDelete(conversacion._id);
+        }
+
+        const likes = await Like.find({ id_usuario: id });
+        for (const like of likes) {
+            await Publicacion.findByIdAndUpdate(like.id_publicacion, { $inc: { likes: -1 } });
+        }
+        await Like.deleteMany({ id_usuario: id });
+
+        await Pago.deleteMany({ usuario: id });
+
+        res.status(200).json({ message: 'Usuario, sus solicitudes, amigos, publicaciones, comentarios, mensajes, conversaciones, likes y pagos eliminados, y los likes restados de las publicaciones correspondientes' });
     } catch (error) {
-        res.status(400).json({ message: 'Error al eliminar usuario' });
+        res.status(400).json({ message: 'Error al eliminar usuario, sus solicitudes, amigos, publicaciones, comentarios, mensajes, conversaciones, likes y pagos' });
     }
 };
+
 
 const obtenerUsuarioPorUser = async (req, res) => {
     try {

@@ -33,40 +33,41 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthContextProvider>
-      <SocketContextProvider>
-      <Routes>
-        <Route path='/*' element={<Error404/>}/>
-        <Route element={<PublicRoute />}>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/recuperacontrasena" element={<RecuContrasena />} />
-          <Route path='/ingresarCodigo' element={<IngresarCodigo/>}/>
-          <Route path="/recuperacontrasena/:codigo" element={<RecuContrasenamail/>} />
-        </Route>
-        
-        <Route element={<PrivateRoute />}>
-          <Route path="/home" element={<Feed />} />
-            <Route path="/publicacion/:id" element={<PublicacionPost />} />
-            <Route path="/perfil/:user" element={<PerfilUser />} />
-            <Route path="/amigos" element={<Amigos />} />
-            <Route path="/configuracion" element={<ConfigUser />}/>
-            <Route path="/cambioContrasena" element={<CambioContrasena />} />
-            <Route path='/chats' element={<Chats/>}/>
-            <Route path='/PagoPremium' element={<PagoPremium/>}/>
-            <Route path='/PagoEnviado' element={<PagoEnviado/>}/>
-            <Route path='/cambiofoto' element={<CambioFoto/>}/>
-            <Route path='/eliminarCuenta' element={<EliminarCuenta/>}/>
+        <SocketContextProvider>
+          <Routes>
 
-        </Route>
+            <Route path='/*' element={<Error404/>}/>
 
-        <Route element={<AdminsRoutes/>}>
-          <Route path='/UsuariosBlendsAdmin' element={<UsuariosBlendsAdmin/>}/>
-          <Route path='/PagoMembresiaAdmin' element={<PagoMembresiaAdmin/>}/>
-          <Route path='/Detailsuser/:id' element={<DetailsUser/>}/>
+            <Route element={<PublicRoute />}>
+              <Route path="/" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/recuperacontrasena" element={<RecuContrasena />} />
+              <Route path='/ingresarCodigo' element={<IngresarCodigo/>}/>
+              <Route path="/recuperacontrasena/:codigo" element={<RecuContrasenamail/>} />
+            </Route>
+            
+            <Route element={<PrivateRoute />}>
+              <Route path="/home" element={<Feed />} />
+              <Route path="/publicacion/:id" element={<PublicacionPost />} />
+              <Route path="/perfil/:user" element={<PerfilUser />} />
+              <Route path="/amigos" element={<Amigos />} />
+              <Route path="/configuracion" element={<ConfigUser />}/>
+              <Route path="/cambioContrasena" element={<CambioContrasena />} />
+              <Route path='/chats' element={<Chats/>}/>
+              <Route path='/PagoPremium' element={<PagoPremium/>}/>
+              <Route path='/PagoEnviado' element={<PagoEnviado/>}/>
+              <Route path='/cambiofoto' element={<CambioFoto/>}/>
+              <Route path='/eliminarCuenta' element={<EliminarCuenta/>}/>
+            </Route>
 
-        </Route>
-      </Routes>
-      </SocketContextProvider>
+            <Route element={<AdminsRoutes/>}>
+              <Route path='/UsuariosBlendsAdmin' element={<UsuariosBlendsAdmin/>}/>
+              <Route path='/PagoMembresiaAdmin' element={<PagoMembresiaAdmin/>}/>
+              <Route path='/Detailsuser/:id' element={<DetailsUser/>}/>
+            </Route>
+
+          </Routes>
+        </SocketContextProvider>
       </AuthContextProvider>
     </BrowserRouter>
   </React.StrictMode>

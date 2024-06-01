@@ -28,7 +28,7 @@ export function Register(){
     const reguser = /^[a-zA-Z0-9_-]{3,16}$/;
     const regemail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const regpassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    const regnombreapellido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ' -]+ [A-Za-zÁÉÍÓÚáéíóúÑñ' -]+$/
+    const regnombreapellido = /^[a-zA-ZÁÉÍÓÚáéíóúÑñ]+$/
 
     const registrarse = (e) => {
         e.preventDefault();
