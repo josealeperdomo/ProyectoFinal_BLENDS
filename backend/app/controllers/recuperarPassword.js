@@ -10,8 +10,8 @@ let transporter = nodemailer.createTransport({
     port: 587, // Cambia el puerto a 587 para una conexión segura (STARTTLS)
     secure: false, // true para 465, false para otros puertos
     auth: {
-      user: 'jperdomito0410@gmail.com', // Cuenta de prueba generada
-      pass: 'nwestqihtadicifp', // Contraseña de la cuenta de prueba
+      user: 'Blendsrsocial@gmail.com', // Cuenta de prueba generada
+      pass: 'vlgybvavdqzjnobm', // Contraseña de la cuenta de prueba
     },
   });
 
