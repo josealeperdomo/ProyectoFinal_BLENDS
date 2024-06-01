@@ -26,8 +26,13 @@ const verificarCorreo = async (req, res) => {
         const usuario = await userModel.findOne({ email });
 
         if (usuario) {
+            const codigoExistente = await codeModel.findOne({ id_usuario: usuario._id });
+
+            if (codigoExistente) {
+                await codeModel.findByIdAndDelete(codigoExistente._id);
+            }
             const codigo = uuidv4();
-            const codigoDB = codeModel.create({id_usuario: usuario._id, codigo})
+            await codeModel.create({ id_usuario: usuario._id, codigo });
             const contenidoCorreo = `<!DOCTYPE html>
             <html lang="es">
             
