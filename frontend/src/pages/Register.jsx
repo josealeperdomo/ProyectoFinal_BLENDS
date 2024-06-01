@@ -28,6 +28,7 @@ export function Register(){
     const reguser = /^[a-zA-Z0-9_-]{3,16}$/;
     const regemail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const regpassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const regnombreapellido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ' -]+ [A-Za-zÁÉÍÓÚáéíóúÑñ' -]+$/
 
     const registrarse = (e) => {
         e.preventDefault();
@@ -46,6 +47,16 @@ export function Register(){
         if (!regemail.test(email)) {
             setAlerta("El correo electrónico no tiene un formato válido.");
             return;
+        }
+
+        if(!regnombreapellido.test(nombre)){
+            setAlerta("El nombre no tiene un formato valido")
+            return
+        }
+
+        if(!regnombreapellido.test(apellido)){
+            setAlerta("El apellido no tiene un formato valido")
+            return
         }
 
         if (!regpassword.test(password)) {

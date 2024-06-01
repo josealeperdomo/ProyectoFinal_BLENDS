@@ -382,7 +382,7 @@ useEffect(() => {
                     </Link>
                   </li>) : <div></div>}
                   <li>
-                    <Link to="#" onClick={cerrarSesion}>
+                    <a href="#" onClick={cerrarSesion}>
                       <i className="fa fa-power-off" aria-hidden="true"></i>
                       <div className="modal-content-info">
                         <span>
@@ -390,7 +390,7 @@ useEffect(() => {
                         </span>
                         <span>Cierra tu sesión</span>
                       </div>
-                    </Link>
+                    </a>
                   </li>
                 </ul>
               </div>
