@@ -79,8 +79,6 @@ export function Usuarios() {
     <>
       <div className="home">
 
-        {/* SECCION SUPERIOR */}
-        <NavArriba />
 
 
         <section className="seccion-principal">
@@ -107,7 +105,7 @@ export function Usuarios() {
                         </div>
                         
                         <span><b><Link to={`/perfil/${usuario.usuario}`}>{usuario.usuario}</Link></b></span>
-                        <button className="delete-friend" onClick={() => handleEnviarSolicitud(usuario._id)}>Agregar amigo</button>
+                        <button  onClick={() => handleEnviarSolicitud(usuario._id)}>Agregar amigo</button>
                       </div>
                     </div>
                   ))}
@@ -117,6 +115,9 @@ export function Usuarios() {
           </section>
           {/* SECCION LATERAL DERECHA */}
         </section>
+        
+        {/* SECCION SUPERIOR */}
+        <NavArriba />
       </div>
     </>
   );

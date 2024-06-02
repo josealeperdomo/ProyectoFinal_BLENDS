@@ -188,7 +188,7 @@ export function PublicacionPost() {
       <div className="lateral-derecha">
         <NavDer />
       </div>
-      <NavArriba />
+      
       <section className="seccion-principal">
         <div className="lateral-izquierda">
           <NavIzq />
@@ -304,6 +304,7 @@ export function PublicacionPost() {
             </div>
           </div>
         </section>
+        <NavArriba />
       </section>
     </div>
   );
