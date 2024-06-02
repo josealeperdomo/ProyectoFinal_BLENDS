@@ -13,6 +13,7 @@ import like from "../assets/like.svg";
 import share from "../assets/share.svg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function NavArriba() {
   const token = localStorage.getItem("token");
@@ -165,7 +166,15 @@ useEffect(() => {
 
   const handleSearch = (e)=>{
     e.preventDefault()
-    navigate(`/usuarios/${busqueda}`)
+    if(busqueda != ""){
+      navigate(`/usuarios/${busqueda}`)
+    }else{
+      Swal.fire({
+        title: "Error!",
+        text: "La busqueda no puede estar vacia",
+        icon: "error"
+      });    
+    }
   }
 
   const handleKeyPress = (e) => {

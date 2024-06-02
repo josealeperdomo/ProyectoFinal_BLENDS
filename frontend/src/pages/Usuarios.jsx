@@ -92,6 +92,7 @@ export function Usuarios() {
           {/* SECCION CENTRO API */}
           <section className="central-opciones">
             <div className="seccion-general">
+                <h1>Los resultados para {user.busqueda} son:</h1>
               {usuarios.length === 0 ? (
                 <div>No hay usuarios que coincidan con su busqueda.</div>
               ) : (
