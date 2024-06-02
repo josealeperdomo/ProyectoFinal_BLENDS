@@ -10,17 +10,20 @@ export function PrivateRoute() {
 
         const validarSesion = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/users', {
+                const response = await axios.get('http://localhost:3000/login/verifyToken', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
                 });
 
-                const informacion = response.data;
+                const informacion = response.data.exists;
                 if (informacion) {
                     setTokenValido(true);
+                } else {
+                    setTokenValido(false);
                 }
             } catch (error) {
+                console.error('Error verifying token:', error);
                 setTokenValido(false);
             }
         };

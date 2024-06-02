@@ -3,23 +3,21 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 
 export function PublicRoute() {
-    const [tokenValido, setTokenValido] = useState(null); // Inicialmente null para mostrar el estado de carga
+    const [tokenValido, setTokenValido] = useState(null);
 
     useEffect(() => {
-        const token = localStorage.getItem('token'); // Obtener el token de localStorage
+        const token = localStorage.getItem('token'); 
 
         const validarSesion = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/users', {
+                const response = await axios.get('http://localhost:3000/login/verifyToken', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
                 });
 
-                const informacion = response.data;
-                if (informacion) {
-                    setTokenValido(true);
-                }
+                const informacion = response.data.exists;
+                setTokenValido(informacion);
             } catch (error) {
                 setTokenValido(false);
             }
@@ -33,7 +31,7 @@ export function PublicRoute() {
     }, []);
 
     if (tokenValido === null) {
-        return <div>Cargando...</div>; // Mostrar un estado de carga mientras se valida el token
+        return <div>Cargando...</div>; 
     }
 
     return tokenValido ? <Navigate to='/home' /> : <Outlet />;
