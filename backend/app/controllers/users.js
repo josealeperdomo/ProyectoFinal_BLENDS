@@ -282,5 +282,24 @@ const obtenerUsuarioPorUser = async (req, res) => {
     }
   };
 
+  const searchUsers = async (req, res) => {
+    try {
+        const { query } = req.query;
 
-module.exports = { getUsers, getUser, getAmigos, createUser, cambiarImagen, updateUser, deleteUser, cambiarContrasena, mostrarUsuariosRandoms, obtenerUsuarioPorUser};
+        if (!query) {
+            return res.status(400).json({ message: 'Query is required' });
+        }
+
+        const users = await userModel.find({
+            usuario: { $regex: query, $options: 'i' } 
+        });
+
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al buscar usuarios' });
+        console.error('Error al buscar usuarios:', error);
+    }
+};
+
+
+module.exports = { getUsers, getUser, getAmigos, createUser, cambiarImagen, updateUser, deleteUser, cambiarContrasena, mostrarUsuariosRandoms, obtenerUsuarioPorUser, searchUsers};

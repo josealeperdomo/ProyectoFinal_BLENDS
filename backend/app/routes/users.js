@@ -11,6 +11,7 @@ const {
     cambiarContrasena,
     mostrarUsuariosRandoms,
     obtenerUsuarioPorUser,
+    searchUsers,
 } = require('../controllers/users');
 
 router.get('/', getUsers);
@@ -23,5 +24,6 @@ router.put('/cambiarimagen/:id', cambiarImagen);
 router.delete('/:id', deleteUser);
 router.put('/:id/contrasena', cambiarContrasena);
 router.get('/users/sugeridos', mostrarUsuariosRandoms)
+router.get('/users/search', searchUsers)
 
 module.exports = router;

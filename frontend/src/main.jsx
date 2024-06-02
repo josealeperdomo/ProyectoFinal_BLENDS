@@ -26,6 +26,7 @@ import { Error404 } from './pages/Error404.jsx'
 import { RecuContrasena } from './pages/RecuContrasena.jsx';
 import { RecuContrasenamail } from './pages/RecuContrasenamail.jsx';
 import { IngresarCodigo } from './pages/IngresarCodigo.jsx';
+import { Usuarios } from './pages/Usuarios.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -58,6 +59,7 @@ root.render(
               <Route path='/PagoEnviado' element={<PagoEnviado/>}/>
               <Route path='/cambiofoto' element={<CambioFoto/>}/>
               <Route path='/eliminarCuenta' element={<EliminarCuenta/>}/>
+              <Route path='/usuarios/:busqueda' element={<Usuarios/>}/>
             </Route>
 
             <Route element={<AdminsRoutes/>}>

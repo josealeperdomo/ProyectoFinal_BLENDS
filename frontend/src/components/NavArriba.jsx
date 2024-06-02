@@ -138,6 +138,7 @@ const userId = payload ? payload.id : null;
 const [infoUsuario, setInfoUsuario] = useState(null);
 const [amigos, setAmigos] = useState([]);
 const [cantidadAmigos, setCantidadAmigos] = useState([]);
+const [busqueda, setBusqueda] = useState('')
 
 
 
@@ -162,17 +163,33 @@ useEffect(() => {
     obtenerUsuarioPorId(userId);
 }, [userId]);
 
+  const handleSearch = (e)=>{
+    e.preventDefault()
+    navigate(`/usuarios/${busqueda}`)
+  }
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch(e);
+    }
+  };
+
   return (
     <>
       <section className="superior shadow">
         <img className="img-logo" src={Logo} alt="" />
         <div className="superior-input">
+          <form onSubmit={handleSearch}>
           <input
             className="superior-input-buscar"
             type="text"
             placeholder="Buscar en Blends"
+            value={busqueda}
+            onChange={e => setBusqueda(e.target.value)}
+            onKeyDown={handleKeyPress}
           />
           <img src={buscar} alt="" />
+          </form>
         </div>
         <div className="superior-buttons">
           <div
