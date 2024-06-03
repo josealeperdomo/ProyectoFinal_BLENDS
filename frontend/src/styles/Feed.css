@@ -345,10 +345,10 @@ flex-wrap: wrap;
 .friend_title span {font-size: .875rem;padding-left: 20px;width: 75%}
 .friend_title span b {color: #38A9FF;}
 .friend_title span p {font-size: .675rem;}
-.friend_title button {border:none;color: white;margin-left:-20px;cursor: pointer;border-radius: 3px;width: 70px;height: 30px; margin-right: 25px;}
-.add-friend {background-color: #38A9FF; padding: 10px 15px;color: white; font-size: 8px; margin-right: 10px;}
+.friend_title button {border:none;color: white;margin-left:-20px;cursor: pointer;border-radius: 3px;padding: 0 20px 0 20px; background-color: #2196F3;}
+.add-friend {background-color: #38A9FF; padding: 10px 15px;color: white; font-size: 15px; margin-right: 30px;}
 .add-friend:hover{ color: white;}
-.delete-friend {background-color: #ff5e3a;}
+.delete-friend {background-color: #c90a0a !important;}
 
 /* SETTINGS PAGE */
 .settings {width: 100%;border-bottom: 5px solid #4EB7D1;}

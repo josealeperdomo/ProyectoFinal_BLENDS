@@ -74,14 +74,14 @@ export function PerfilUser() {
             verificarLike(publicacion._id);
         });
 
-        // Obtenemos los likes cada vez que se monta el componente
+
         await obtenerLikes(publicacionesResponse.data);
       } catch (error) {
         console.error('Error al obtener el perfil del usuario:', error);
       }
     };
     obtenerPerfilUsuario();
-  }, [user]); // Asegúrate de incluir user en la lista de dependencias para que useEffect se ejecute cuando user cambie
+  }, [user]);
 
   useEffect(() => {
     const fetchPublicaciones = async () => {
@@ -245,12 +245,12 @@ export function PerfilUser() {
                             </span>
                             </div>
                             {(infoUsuario?.rol === 'admin' || userId === publicacion.usuario_publicacion._id) && (
-                              <div className="feed_menu">
-                                <button onClick={() => handleMenuToggle(publicacion._id)}>
+                              <div className="menu-container">
+                                <button className='menu-button' onClick={() => handleMenuToggle(publicacion._id)}>
                                   <i className="fa fa-ellipsis-v"></i>
                                 </button>
                                 {activeMenu === publicacion._id && (
-                                  <div className="feed_menu_dropdown">
+                                  <div className="menu-dropdown">
                                     <button onClick={() => handleDelete(publicacion._id)}>
                                       Eliminar
                                     </button>
