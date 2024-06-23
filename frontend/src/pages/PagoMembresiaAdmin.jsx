@@ -76,8 +76,12 @@ export function PagoMembresiaAdmin() {
                   {pagos.map(pago => (
                     <div className="friend" key={pago._id}>
                       <div className="friend_title">
-                        <img src={pago.usuario.imagen_perfil} alt="" />
-                        <span><b>{pago.usuario.usuario}</b></span>
+                        {pago.usuario && (  // Verificar que pago.usuario esté definido
+                          <>
+                            <img src={pago.usuario.imagen_perfil} alt="" />
+                            <span><b>{pago.usuario.usuario}</b></span>
+                          </>
+                        )}
                         <button className="add-friend" onClick={() => aceptarPago(pago._id)}>Aceptar</button>
                         <button className="add-friend userdetailBotonred2" onClick={() => rechazarPago(pago._id)}>Rechazar</button>
                       </div>

@@ -169,25 +169,29 @@ const Publicaciones = () => {
                     <div className="imagen-online">
                       <div
                         className={
-                          onlineUsers.includes(usuario._id)
+                          onlineUsers.includes(usuario?._id)
                             ? "circleGreen"
                             : "circleGray"
                         }
                       ></div>
-                      <img src={usuario.imagen_perfil} alt="" />
-                      {usuario.membresia === "premium" ? (
-                        <img
-                          className="verified"
-                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/800px-Twitter_Verified_Badge.svg.png"
-                          style={{ width: "15px", height: "15px" }}
-                          alt=""
-                        />
-                      ) : null}
+                      {usuario && (
+                        <>
+                          <img src={usuario.imagen_perfil} alt="" />
+                          {usuario.membresia === "premium" ? (
+                            <img
+                              className="verified"
+                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/800px-Twitter_Verified_Badge.svg.png"
+                              style={{ width: "15px", height: "15px" }}
+                              alt=""
+                            />
+                          ) : null}
+                        </>
+                      )}
                     </div>
                     <span>
                       <b>
-                        <Link to={`/perfil/${usuario.usuario}`}>
-                          {usuario.usuario}
+                        <Link to={`/perfil/${usuario?.usuario}`}>
+                          {usuario?.usuario}
                         </Link>
                       </b>{" "}
                       hizo una{" "}
@@ -204,7 +208,7 @@ const Publicaciones = () => {
                     </button>
                     {activeMenu === publicacion._id && (
                       <div className="menu-dropdown">
-                        {userId !== usuario._id && infoUsuario?.rol !== "admin" ? (
+                        {userId !== usuario?._id && infoUsuario?.rol !== "admin" ? (
                           <button onClick={() => handleReport(publicacion._id)}>
                             Reportar
                           </button>
