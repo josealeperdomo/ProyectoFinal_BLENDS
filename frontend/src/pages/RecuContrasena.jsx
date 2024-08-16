@@ -28,7 +28,7 @@ export function RecuContrasena() {
             return;
         }
 
-        axios.post('http://localhost:3000/recuperarPassword/verificarCorreo', { email })
+        axios.post('http://sa.backendprueba.xyz:3001/recuperarPassword/verificarCorreo', { email })
             .then(function (response) {
                 if (response.data.exists) {
                     Swal.fire({

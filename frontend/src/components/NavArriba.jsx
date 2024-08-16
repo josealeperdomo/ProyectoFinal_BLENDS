@@ -32,7 +32,7 @@ function NavArriba() {
     const obtenerUsuario = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/users/${id_usuario}`
+          `http://sa.backendprueba.xyz:3001/users/${id_usuario}`
         );
         setUser(response.data);
       } catch (error) {
@@ -81,7 +81,7 @@ function NavArriba() {
     const obtenerSolicitudes = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/amistad/${id_usuario}`
+          `http://sa.backendprueba.xyz:3001/amistad/${id_usuario}`
         );
         setSolicitudes(response.data);
         setLoading(false);
@@ -98,7 +98,7 @@ function NavArriba() {
   const rechazarSolicitud = async (id_emisor, id_receptor) => {
     try {
       const response = await axios.delete(
-        "http://localhost:3000/amistad/rechazarSolicitud",
+        "http://sa.backendprueba.xyz:3001/amistad/rechazarSolicitud",
         { id_emisor, id_receptor }
       );
       console.log(response.data.message);
@@ -111,7 +111,7 @@ function NavArriba() {
   const aceptarSolicitud = async (id_emisor, id_receptor) => {
     try {
       const response = await axios.patch(
-        "http://localhost:3000/amistad/aceptarSolicitud",
+        "http://sa.backendprueba.xyz:3001/amistad/aceptarSolicitud",
         { id_emisor, id_receptor }
       );
       console.log(response.data.message);
@@ -146,7 +146,7 @@ const [busqueda, setBusqueda] = useState('')
 useEffect(() => {
     const obtenerUsuarioPorId = async (usuarioid) => {
         try {
-            const response = await axios.get(`http://localhost:3000/users/${usuarioid}`);
+            const response = await axios.get(`http://sa.backendprueba.xyz:3001/users/${usuarioid}`);
             setInfoUsuario(response.data);
             const amigosData = response.data.amigos;
             if (Array.isArray(amigosData)) {

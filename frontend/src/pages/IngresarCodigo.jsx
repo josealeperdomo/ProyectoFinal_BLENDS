@@ -19,7 +19,7 @@ export function IngresarCodigo() {
             return;
         }
         
-        axios.post('http://localhost:3000/recuperarPassword/verificarCodigo', { codigo })
+        axios.post('http://sa.backendprueba.xyz:3001/recuperarPassword/verificarCodigo', { codigo })
             .then(function (response) {
                 if (response.data.exists) {
                     window.location.replace(`/recuperacontrasena/${codigo}`)                

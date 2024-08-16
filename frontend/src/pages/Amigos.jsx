@@ -23,7 +23,7 @@ export function Amigos() {
     const obtenerAmigos = async () => {
       try {
         // Realizar una solicitud al servidor para obtener los amigos del usuario utilizando el ID
-        const response = await axios.get(`http://localhost:3000/users/amigos/${id}`);
+        const response = await axios.get(`http://sa.backendprueba.xyz:3001/users/amigos/${id}`);
         if (Array.isArray(response.data)) {
           setAmigos(response.data);
         } else {
@@ -43,7 +43,7 @@ export function Amigos() {
   const handleEliminarAmigo = async (idAmigo) => {
     try {
       // Realizar una solicitud DELETE al servidor para eliminar el amigo
-      await axios.patch('http://localhost:3000/amistad/eliminarAmigo', {
+      await axios.patch('http://sa.backendprueba.xyz:3001/amistad/eliminarAmigo', {
     
           id_emisor: id,
           id_receptor: idAmigo

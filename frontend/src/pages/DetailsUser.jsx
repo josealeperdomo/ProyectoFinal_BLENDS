@@ -21,7 +21,7 @@ export function DetailsUser() {
   useEffect(() => {
     const obtenerUsuario = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/users/${id}`);
+        const response = await axios.get(`http://sa.backendprueba.xyz:3001/users/${id}`);
         setUser(response.data);
       } catch (error) {
         console.error('Error al obtener los detalles del usuario:', error);
@@ -39,7 +39,7 @@ export function DetailsUser() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3000/users/${id}`, user);
+      await axios.put(`http://sa.backendprueba.xyz:3001/users/${id}`, user);
       Swal.fire({
         title: "Usuario actualizado correctamente",
         text: "Los datos del usuario han sido actualizados",
@@ -52,7 +52,7 @@ export function DetailsUser() {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3000/users/${id}`);
+      await axios.delete(`http://sa.backendprueba.xyz:3001/users/${id}`);
       Swal.fire({
         title: "Usuario eliminado correctamente",
         text: "El usuario ha sido eliminado",

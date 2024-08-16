@@ -10,7 +10,7 @@ export function PrivateRoute() {
 
         const validarSesion = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/login/verifyToken', {
+                const response = await axios.get('http://sa.backendprueba.xyz:3001/login/verifyToken', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

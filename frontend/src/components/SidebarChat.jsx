@@ -33,7 +33,7 @@ export function SidebarChat() {
     useEffect(() => {
         const fetchAmigos = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/users/amigos/${userId}`);
+                const response = await axios.get(`http://sa.backendprueba.xyz:3001/users/amigos/${userId}`);
                 if (Array.isArray(response.data)) {
                     setAmigos(response.data);
                 } else {

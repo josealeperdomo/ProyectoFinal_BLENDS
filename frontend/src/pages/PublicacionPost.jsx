@@ -20,7 +20,7 @@ export function PublicacionPost() {
   const { onlineUsers } = useSocketContext();
   const [infoUsuario, setInfoUsuario] = useState(null);
   const [activeMenu, setActiveMenu] = useState(null);
-  const [imagendeperfil, setImagendeperfil] = useState("http://localhost:3000/public/img-user.png");
+  const [imagendeperfil, setImagendeperfil] = useState("http://sa.backendprueba.xyz:3001/public/img-user.png");
 
   const handleMenuToggle = (id) => {
     setActiveMenu(activeMenu === id ? null : id);
@@ -28,7 +28,7 @@ export function PublicacionPost() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/publicaciones/${id}`);
+      await axios.delete(`http://sa.backendprueba.xyz:3001/publicaciones/${id}`);
       window.location.replace('/');
     } catch (err) {
       console.error('Error al eliminar la publicación:', err);
@@ -37,7 +37,7 @@ export function PublicacionPost() {
 
   const fetchComentarios = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/comentarios/publicaciones/${id}`);
+      const response = await axios.get(`http://sa.backendprueba.xyz:3001/comentarios/publicaciones/${id}`);
       setComentarios(response.data);
     } catch (error) {
       console.error('Error al obtener los comentarios:', error);
@@ -64,7 +64,7 @@ export function PublicacionPost() {
   useEffect(() => {
     const obtenerUsuarioPorId = async (usuarioid) => {
       try {
-        const response = await axios.get(`http://localhost:3000/users/${usuarioid}`);
+        const response = await axios.get(`http://sa.backendprueba.xyz:3001/users/${usuarioid}`);
         setInfoUsuario(response.data);
         setImagendeperfil(response.data.imagen_perfil);
       } catch (error) {
@@ -77,7 +77,7 @@ export function PublicacionPost() {
 
   const verificarLike = async (publicacionId) => {
     try {
-      const response = await axios.get(`http://localhost:3000/likes/publicaciones/${publicacionId}/usuario/${userId}/like`);
+      const response = await axios.get(`http://sa.backendprueba.xyz:3001/likes/publicaciones/${publicacionId}/usuario/${userId}/like`);
       setUserLiked(response.data.liked);
     } catch (error) {
       console.error('Error al verificar el like:', error);
@@ -87,7 +87,7 @@ export function PublicacionPost() {
   useEffect(() => {
     const fetchPublicacion = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/publicaciones/${id}`);
+        const response = await axios.get(`http://sa.backendprueba.xyz:3001/publicaciones/${id}`);
         setPublicacion(response.data);
         setLikes(response.data.cantidad_likes);
         verificarLike(id);
@@ -112,7 +112,7 @@ export function PublicacionPost() {
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
       const usuario_comentario = decodedToken.id;
 
-      await axios.post(`http://localhost:3000/comentarios/publicaciones`, {
+      await axios.post(`http://sa.backendprueba.xyz:3001/comentarios/publicaciones`, {
         id_Publicacion: id,
         usuario_comentario,
         texto: comentario,
@@ -154,7 +154,7 @@ export function PublicacionPost() {
 
   const darLike = async () => {
     try {
-      await axios.post(`http://localhost:3000/likes/publicaciones/${id}/like`, {
+      await axios.post(`http://sa.backendprueba.xyz:3001/likes/publicaciones/${id}/like`, {
         id_usuario: userId
       }, {
         headers: {
@@ -168,7 +168,7 @@ export function PublicacionPost() {
 
   const quitarLike = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/likes/publicaciones/${id}/unlike/${userId}`, {
+      await axios.delete(`http://sa.backendprueba.xyz:3001/likes/publicaciones/${id}/unlike/${userId}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }

@@ -31,7 +31,7 @@ function NavIzq() {
     useLayoutEffect(() => {
         const obtenerUsuarioPorId = async (usuarioid) => {
             try {
-                const response = await axios.get(`http://localhost:3000/users/${usuarioid}`);
+                const response = await axios.get(`http://sa.backendprueba.xyz:3001/users/${usuarioid}`);
                 setInfoUsuario(response.data);
                 const amigosData = response.data.amigos;
                 if (Array.isArray(amigosData)) {

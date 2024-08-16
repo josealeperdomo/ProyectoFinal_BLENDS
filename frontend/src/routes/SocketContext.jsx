@@ -33,7 +33,7 @@ export const SocketContextProvider = ({ children }) => {
 
 	useEffect(() => {
 		if (authUser) {
-			const socket = io("http://localhost:3000", {query: {
+			const socket = io("http://sa.backendprueba.xyz:3001", {query: {
 				userId: userId
 			}});
 

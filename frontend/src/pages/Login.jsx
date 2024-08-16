@@ -30,7 +30,7 @@ export function Login() {
             return;
         }
 
-        axios.post('http://localhost:3000/login', {
+        axios.post('http://sa.backendprueba.xyz:3001/login', {
             email,
             password
         })

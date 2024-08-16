@@ -41,7 +41,7 @@ const useSendMessage = () => {
     const sendMessage = async (message) => {
         setLoading(true);
         try {
-            const res = await axios.post(`http://localhost:3000/mensajes/enviar/${selectedConversation._id}`, { message, senderId: userId });
+            const res = await axios.post(`http://sa.backendprueba.xyz:3001/mensajes/enviar/${selectedConversation._id}`, { message, senderId: userId });
             const data = res.data;
             if (data.error) throw new Error(data.error);
 
@@ -64,7 +64,7 @@ const useGetMessages = () => {
         const getMessages = async () => {
             setLoading(true);
             try {
-                const res = await axios.get(`http://localhost:3000/mensajes/${selectedConversation._id}/${userId}`);
+                const res = await axios.get(`http://sa.backendprueba.xyz:3001/mensajes/${selectedConversation._id}/${userId}`);
                 const data = res.data;
                 if (data.error) throw new Error(data.error);
                 setMessages(data);

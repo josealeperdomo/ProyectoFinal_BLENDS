@@ -34,7 +34,7 @@ export function CambioFoto() {
   useEffect(() => {
     const obtenerIdUsuario = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/users/${id_usuario}`);
+        const response = await axios.get(`http://sa.backendprueba.xyz:3001/users/${id_usuario}`);
         const userFound = response.data;
 
         if (userFound) {
@@ -67,7 +67,7 @@ export function CambioFoto() {
     formData.append('imagen_perfil', selectedFile);
 
     try {
-      const response = await axios.put(`http://localhost:3000/users/cambiarimagen/${userId}`, formData, {
+      const response = await axios.put(`http://sa.backendprueba.xyz:3001/users/cambiarimagen/${userId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`

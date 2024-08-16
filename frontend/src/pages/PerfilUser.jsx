@@ -42,7 +42,7 @@ export function PerfilUser() {
 
     const obtenerUsuarioPorId = async (usuarioid) => {
       try {
-        const response = await axios.get(`http://localhost:3000/users/${usuarioid}`);
+        const response = await axios.get(`http://sa.backendprueba.xyz:3001/users/${usuarioid}`);
         setInfoUsuario(response.data);
       } catch (error) {
         console.error("Error al obtener el usuario:", error);
@@ -55,10 +55,10 @@ export function PerfilUser() {
   useEffect(() => {
     const obtenerPerfilUsuario = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/users/user/${user}`);
+        const response = await axios.get(`http://sa.backendprueba.xyz:3001/users/user/${user}`);
         setPerfilUsuario(response.data);
 
-        const publicacionesResponse = await axios.get(`http://localhost:3000/publicaciones/user/${response.data._id}`);
+        const publicacionesResponse = await axios.get(`http://sa.backendprueba.xyz:3001/publicaciones/user/${response.data._id}`);
         setPublicaciones(publicacionesResponse.data);
         
         const likesData = {};
@@ -87,7 +87,7 @@ export function PerfilUser() {
     const fetchPublicaciones = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:3000/publicaciones/user/${perfilUsuario._id}`);
+            const response = await axios.get(`http://sa.backendprueba.xyz:3001/publicaciones/user/${perfilUsuario._id}`);
             setPublicaciones(response.data);
 
             const likesData = {};
@@ -114,7 +114,7 @@ export function PerfilUser() {
 
   const verificarLike = async (publicacionId) => {
     try {
-        const response = await axios.get(`http://localhost:3000/likes/publicaciones/${publicacionId}/usuario/${userId}/like`);
+        const response = await axios.get(`http://sa.backendprueba.xyz:3001/likes/publicaciones/${publicacionId}/usuario/${userId}/like`);
         setUserLikes(prevUserLikes => ({
             ...prevUserLikes,
             [publicacionId]: response.data.liked
@@ -126,7 +126,7 @@ export function PerfilUser() {
 
   const handleLike = async (publicacionId) => {
     try {
-        const response = await axios.post(`http://localhost:3000/likes/publicaciones/${publicacionId}/like`, {
+        const response = await axios.post(`http://sa.backendprueba.xyz:3001/likes/publicaciones/${publicacionId}/like`, {
             id_usuario: userId
         });
         setLikes(prevLikes => ({
@@ -144,7 +144,7 @@ export function PerfilUser() {
 
   const handleUnlike = async (publicacionId) => {
     try {
-        const response = await axios.delete(`http://localhost:3000/likes/publicaciones/${publicacionId}/unlike/${userId}`);
+        const response = await axios.delete(`http://sa.backendprueba.xyz:3001/likes/publicaciones/${publicacionId}/unlike/${userId}`);
         setLikes(prevLikes => ({
             ...prevLikes,
             [publicacionId]: response.data.cantidad_likes
@@ -164,7 +164,7 @@ export function PerfilUser() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/publicaciones/${id}`);
+      await axios.delete(`http://sa.backendprueba.xyz:3001/publicaciones/${id}`);
       setPublicaciones(
         publicaciones.filter((publicacion) => publicacion._id !== id)
       );
@@ -175,7 +175,7 @@ export function PerfilUser() {
 
   const handleEnviarSolicitud = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/amistad/enviarSolicitud', {
+      const response = await axios.post('http://sa.backendprueba.xyz:3001/amistad/enviarSolicitud', {
         id_emisor: userId,
         id_receptor: perfilUsuario._id
       });

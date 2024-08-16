@@ -29,7 +29,7 @@ export function PagoPremium() {
       const usuario = id_usuario; 
       const monto = 50; 
 
-      const response = await axios.post('http://localhost:3000/pagos/insertar', {
+      const response = await axios.post('http://sa.backendprueba.xyz:3001/pagos/insertar', {
         usuario,
         monto,
         fecha_pago: fechaPago,
