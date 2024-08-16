@@ -116,7 +116,7 @@ const PublicacionesController = {
     try {
       const { userId } = req.params;
   
-      const publicaciones = await Publicacion.find({ usuario_publicacion: userId }).populate("usuario_publicacion", "usuario imagen_perfil")
+      const publicaciones = await Publicacion.find({ usuario_publicacion: userId }).populate("usuario_publicacion", "usuario imagen_perfil").sort({ createdAt: -1 })
   
       res.status(200).json(publicaciones);
     } catch (error) {
