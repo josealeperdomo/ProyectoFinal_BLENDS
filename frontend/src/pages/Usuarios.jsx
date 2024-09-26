@@ -25,8 +25,8 @@ export function Usuarios() {
   useEffect(() => {
     const obtenerUsuarios = async () => {
       try {
-        console.log(`http://sa.backendprueba.xyz:3001/users/search?query=${user.busqueda}`);
-        const response = await axios.get(`http://sa.backendprueba.xyz:3001/users/users/search?query=${user.busqueda}`);
+        console.log(`https://estudiantes12.backendprueba.xyz/users/search?query=${user.busqueda}`);
+        const response = await axios.get(`https://estudiantes12.backendprueba.xyz/users/users/search?query=${user.busqueda}`);
         if (Array.isArray(response.data)) {
           setUsuarios(response.data);
         } else {
@@ -46,7 +46,7 @@ export function Usuarios() {
   const handleEnviarSolicitud = async (idReceptor) => {
     if (idReceptor === id) return alert("No puedes enviarte una solicitud a ti mismo");
     try {
-        const response = await axios.post('http://sa.backendprueba.xyz:3001/amistad/enviarSolicitud', {
+        const response = await axios.post('https://estudiantes12.backendprueba.xyz/amistad/enviarSolicitud', {
             id_emisor: id,
             id_receptor: idReceptor
         });

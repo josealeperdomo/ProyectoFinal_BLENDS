@@ -9,7 +9,7 @@ export function PagoMembresiaAdmin() {
 
   const obtenerPagos = async () => {
     try {
-      const response = await axios.get('http://sa.backendprueba.xyz:3001/pagos');
+      const response = await axios.get('https://estudiantes12.backendprueba.xyz/pagos');
       const pagosPendientes = response.data.filter(pago => pago.estado_pago === 'pendiente');
       setPagos(pagosPendientes);
     } catch (error) {
@@ -23,7 +23,7 @@ export function PagoMembresiaAdmin() {
 
   const aceptarPago = async (id) => {
     try {
-      await axios.patch(`http://sa.backendprueba.xyz:3001/pagos/pagos/${id}/aceptar`);
+      await axios.patch(`https://estudiantes12.backendprueba.xyz/pagos/pagos/${id}/aceptar`);
       obtenerPagos();
     } catch (error) {
       console.error('Error al aceptar el pago:', error);
@@ -32,7 +32,7 @@ export function PagoMembresiaAdmin() {
 
   const rechazarPago = async (id) => {
     try {
-      await axios.delete(`http://sa.backendprueba.xyz:3001/pagos/pagos/${id}/rechazar`);
+      await axios.delete(`https://estudiantes12.backendprueba.xyz/pagos/pagos/${id}/rechazar`);
       obtenerPagos();
     } catch (error) {
       console.error('Error al rechazar el pago:', error);

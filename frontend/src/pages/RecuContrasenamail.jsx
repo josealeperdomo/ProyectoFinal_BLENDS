@@ -14,7 +14,7 @@ export function RecuContrasenamail() {
     const {codigo} = useParams()
 
     const verificarCodigo = () => {
-        axios.post('http://sa.backendprueba.xyz:3001/recuperarPassword/verificarCodigo', { codigo })
+        axios.post('https://estudiantes12.backendprueba.xyz/recuperarPassword/verificarCodigo', { codigo })
             .then(function (response) {
                 if (response.data.exists) {
                     console.log(response.data);
@@ -49,7 +49,7 @@ export function RecuContrasenamail() {
             return;
         }
 
-        axios.patch(`http://sa.backendprueba.xyz:3001/recuperarPassword/nuevaContrasena/${codigo}`, {nuevaContrasena: password, nuevaContrasena2: confirmPassword})
+        axios.patch(`https://estudiantes12.backendprueba.xyz/recuperarPassword/nuevaContrasena/${codigo}`, {nuevaContrasena: password, nuevaContrasena2: confirmPassword})
         .then(function (response) {
             if (response) {
                 Swal.fire({

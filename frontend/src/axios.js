@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const axiosInstance = axios.create({
-    baseURL: "http://sa.backendprueba.xyz:3001",
+    baseURL: "https://estudiantes12.backendprueba.xyz",
 });
 
 export default axiosInstance

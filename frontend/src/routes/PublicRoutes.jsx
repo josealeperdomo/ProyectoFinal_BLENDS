@@ -10,7 +10,7 @@ export function PublicRoute() {
 
         const validarSesion = async () => {
             try {
-                const response = await axios.get('http://sa.backendprueba.xyz:3001/login/verifyToken', {
+                const response = await axios.get('https://estudiantes12.backendprueba.xyz/login/verifyToken', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

@@ -29,7 +29,7 @@ export function ConfigUser() {
   useEffect(() => {
     const obtenerIdUsuario = async () => {
       try {
-        const response = await axios.get(`http://sa.backendprueba.xyz:3001/users/${id_usuario}`);
+        const response = await axios.get(`https://estudiantes12.backendprueba.xyz/users/${id_usuario}`);
         const userFound = response.data
 
         if (userFound) {
@@ -55,7 +55,7 @@ export function ConfigUser() {
     e.preventDefault();
     try {
       if (userId) {
-        await axios.put(`http://sa.backendprueba.xyz:3001/users/${userId}`, user);
+        await axios.put(`https://estudiantes12.backendprueba.xyz/users/${userId}`, user);
         Swal.fire({
           title: "Usuario actualizado correctamente",
           text: "Sus datos han sido actualizados",

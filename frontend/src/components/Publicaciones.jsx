@@ -37,7 +37,7 @@ const Publicaciones = () => {
 
     const obtenerUsuarioPorId = async (usuarioid) => {
       try {
-        const response = await axios.get(`http://sa.backendprueba.xyz:3001/users/${usuarioid}`);
+        const response = await axios.get(`https://estudiantes12.backendprueba.xyz/users/${usuarioid}`);
         setInfoUsuario(response.data);
       } catch (error) {
         console.error("Error al obtener el usuario:", error);
@@ -51,7 +51,7 @@ const Publicaciones = () => {
     const fetchPublicaciones = async () => {
       setLoading(true);
       try {
-        const response = await axios.get("http://sa.backendprueba.xyz:3001/publicaciones/all");
+        const response = await axios.get("https://estudiantes12.backendprueba.xyz/publicaciones/all");
         setPublicaciones(response.data);
 
         const likesData = {};
@@ -79,7 +79,7 @@ const Publicaciones = () => {
   const verificarLike = async (publicacionId) => {
     try {
       const response = await axios.get(
-        `http://sa.backendprueba.xyz:3001/likes/publicaciones/${publicacionId}/usuario/${userId}/like`
+        `https://estudiantes12.backendprueba.xyz/likes/publicaciones/${publicacionId}/usuario/${userId}/like`
       );
       setUserLikes((prevUserLikes) => ({
         ...prevUserLikes,
@@ -93,7 +93,7 @@ const Publicaciones = () => {
   const handleLike = async (publicacionId) => {
     try {
       const response = await axios.post(
-        `http://sa.backendprueba.xyz:3001/likes/publicaciones/${publicacionId}/like`,
+        `https://estudiantes12.backendprueba.xyz/likes/publicaciones/${publicacionId}/like`,
         {
           id_usuario: userId,
         }
@@ -114,7 +114,7 @@ const Publicaciones = () => {
   const handleUnlike = async (publicacionId) => {
     try {
       const response = await axios.delete(
-        `http://sa.backendprueba.xyz:3001/likes/publicaciones/${publicacionId}/unlike/${userId}`
+        `https://estudiantes12.backendprueba.xyz/likes/publicaciones/${publicacionId}/unlike/${userId}`
       );
       setLikes((prevLikes) => ({
         ...prevLikes,
@@ -135,7 +135,7 @@ const Publicaciones = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://sa.backendprueba.xyz:3001/publicaciones/${id}`);
+      await axios.delete(`https://estudiantes12.backendprueba.xyz/publicaciones/${id}`);
       setPublicaciones(
         publicaciones.filter((publicacion) => publicacion._id !== id)
       );

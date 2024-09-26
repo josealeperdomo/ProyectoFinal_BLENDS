@@ -33,7 +33,7 @@ export function Chats() {
     useEffect(() => {
         const obtenerUsuarioPorId = async (usuarioid) => {
             try {
-                const response = await axios.get(`http://sa.backendprueba.xyz:3001/users/${usuarioid}`);
+                const response = await axios.get(`https://estudiantes12.backendprueba.xyz/users/${usuarioid}`);
                 setInfoUsuario(response.data);
             } catch (error) {
                 console.error('Error al obtener el usuario:', error);

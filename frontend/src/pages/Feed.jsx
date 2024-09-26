@@ -34,7 +34,7 @@ export function Feed(){
     useEffect(() => {
         const obtenerUsuarioPorId = async (usuarioid) => {
             try {
-                const response = await axios.get(`http://sa.backendprueba.xyz:3001/users/${usuarioid}`);
+                const response = await axios.get(`https://estudiantes12.backendprueba.xyz/users/${usuarioid}`);
                 setInfoUsuario(response.data);
             } catch (error) {
                 console.error('Error al obtener el usuario:', error);
@@ -53,7 +53,7 @@ export function Feed(){
         formData.append('usuario_publicacion', userId);
 
         try {
-            await axios.post('http://sa.backendprueba.xyz:3001/publicaciones', formData, {
+            await axios.post('https://estudiantes12.backendprueba.xyz/publicaciones', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'authorization': `Bearer ${localStorage.getItem('token')}`

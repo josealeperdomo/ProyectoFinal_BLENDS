@@ -12,7 +12,7 @@ export function UsuariosBlendsAdmin() {
   useEffect(() => {
     const obtenerUsuarios = async () => {
       try {
-        const response = await axios.get('http://sa.backendprueba.xyz:3001/users');
+        const response = await axios.get('https://estudiantes12.backendprueba.xyz/users');
         setUsuarios(response.data);
       } catch (error) {
         console.error('Error al obtener usuarios:', error);

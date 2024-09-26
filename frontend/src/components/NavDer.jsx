@@ -29,7 +29,7 @@ function NavDer() {
     useEffect(() => {
         const obtenerUsuariosAleatorios = async () => {
             try {
-                const response = await axios.get('http://sa.backendprueba.xyz:3001/users/users/sugeridos');
+                const response = await axios.get('https://estudiantes12.backendprueba.xyz/users/users/sugeridos');
                 setUsuariosAleatorios(response.data);
                 console.log(response.data); // Asegúrate de que los datos están correctos
             } catch (error) {
@@ -43,7 +43,7 @@ function NavDer() {
     const handleEnviarSolicitud = async (idReceptor) => {
         if (idReceptor === userId) return alert("No puedes enviarte una solicitud a ti mismo");
         try {
-            const response = await axios.post('http://sa.backendprueba.xyz:3001/amistad/enviarSolicitud', {
+            const response = await axios.post('https://estudiantes12.backendprueba.xyz/amistad/enviarSolicitud', {
                 id_emisor: userId,
                 id_receptor: idReceptor
             });
@@ -69,7 +69,7 @@ function NavDer() {
 
         const obtenerUsuarioPorId = async (usuarioId) => {
             try {
-                const response = await axios.get(`http://sa.backendprueba.xyz:3001/users/${usuarioId}`);
+                const response = await axios.get(`https://estudiantes12.backendprueba.xyz/users/${usuarioId}`);
                 setInfoUsuario(response.data); // Asegúrate de asignar la parte correcta de la respuesta
                 console.log(response.data); // Verifica que los datos son los esperados
             } catch (error) {

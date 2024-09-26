@@ -31,7 +31,7 @@ export function CambioContrasena() {
       return;
     }
     try {
-      const response = await axios.put(`http://sa.backendprueba.xyz:3001/users/${id_usuario}/contrasena`, {
+      const response = await axios.put(`https://estudiantes12.backendprueba.xyz/users/${id_usuario}/contrasena`, {
         anteriorContrasena,
         nuevaContrasena
       });

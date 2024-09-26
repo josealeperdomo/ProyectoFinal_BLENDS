@@ -74,7 +74,7 @@ export function Register(){
         };
 
         // Enviar los datos al servidor
-        axios.post('http://sa.backendprueba.xyz:3001/users', data)
+        axios.post('https://estudiantes12.backendprueba.xyz/users', data)
         .then(function (response) {
             console.log(response.data.Message);
             Swal.fire({

@@ -18,7 +18,7 @@ export function AdminsRoutes() {
 
         const validarSesion = async () => {
             try {
-                const response = await axios.get(`http://sa.backendprueba.xyz:3001/users/${id_usuario}`,);
+                const response = await axios.get(`https://estudiantes12.backendprueba.xyz/users/${id_usuario}`,);
 
                 const informacion = response.data;
                 if (informacion) {

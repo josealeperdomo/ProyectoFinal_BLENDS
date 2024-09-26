@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema({
     },
     imagen_perfil:{
         type: String,
-        default: "http://sa.backendprueba.xyz:3001/public/img-user.png"
+        default: "https://estudiantes12.backendprueba.xyz/public/img-user.png"
     },
     amigos:
         [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
